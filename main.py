@@ -662,13 +662,81 @@ ERC20_DECIMALS_ABI = [
 
 
 async def get_token_decimals(executor, token_address: str) -> int:
+    """Fetch ERC20 token decimals from chain via the executor's web3 instance."""
     contract = executor.trade.w3.eth.contract(
         address=Web3.to_checksum_address(token_address),
         abi=ERC20_DECIMALS_ABI,
     )
-    return await contract.functions.decimals().call()
+    return contract.functions.decimals().call()
 
 
+# ----------------
+# AMM pair-based quote
+# ----------------
+PAIR_ABI = [
+    {
+        "constant": True,
+        "inputs": [],
+        "name": "getReserves",
+        "outputs": [
+            {"name": "reserve0", "type": "uint112"},
+            {"name": "reserve1", "type": "uint112"},
+            {"name": "blockTimestampLast", "type": "uint32"},
+        ],
+        "type": "function",
+    },
+    {
+        "constant": True,
+        "inputs": [],
+        "name": "token0",
+        "outputs": [{"name": "", "type": "address"}],
+        "type": "function",
+    },
+    {
+        "constant": True,
+        "inputs": [],
+        "name": "token1",
+        "outputs": [{"name": "", "type": "address"}],
+        "type": "function",
+    },
+]
+
+SEER_PAIR_ADDRESS = "0xA7283d07812a02AFB7C09B60f8896bCEA3F90aCE"
+
+
+def get_amount_out_from_pair(w3, pair_address, token_in, amount_in_raw):
+    """Compute expected output using Uniswap V2 AMM formula from pair reserves."""
+    pair = w3.eth.contract(
+        address=Web3.to_checksum_address(pair_address),
+        abi=PAIR_ABI,
+    )
+
+    reserve0, reserve1, _ = pair.functions.getReserves().call()
+    token0 = pair.functions.token0().call()
+    token1 = pair.functions.token1().call()
+
+    token_in = Web3.to_checksum_address(token_in)
+    token0 = Web3.to_checksum_address(token0)
+    token1 = Web3.to_checksum_address(token1)
+
+    if token_in == token0:
+        reserve_in = reserve0
+        reserve_out = reserve1
+    elif token_in == token1:
+        reserve_in = reserve1
+        reserve_out = reserve0
+    else:
+        raise Exception("Token not found in pair")
+
+    if reserve_in == 0 or reserve_out == 0:
+        raise Exception("Pair has zero liquidity")
+
+    # Uniswap V2 0.3% fee model
+    amount_in_with_fee = amount_in_raw * 997
+    numerator = amount_in_with_fee * reserve_out
+    denominator = reserve_in * 1000 + amount_in_with_fee
+
+    return numerator // denominator
 
 
 # ----------------
@@ -1012,28 +1080,20 @@ def main() -> None:
                     # Fetch real token decimals (cached in memory)
                     if not executor.dry_run and executor.trade:
                         sys_data = memory.setdefault("system", {})
-                    
                         if "seer_decimals" not in sys_data:
-                            # Async call → нужно asyncio.run и await внутри функции
-                            decimals = asyncio.run(
-                                get_token_decimals(executor, SEER_TOKEN_ADDRESS)
-                            )
-                    
-                            # защита от странных значений
-                            if not isinstance(decimals, int):
-                                raise Exception(f"Invalid decimals value: {decimals}")
-                    
+                            decimals = asyncio.run(get_token_decimals(executor, SEER_TOKEN_ADDRESS))
                             sys_data["seer_decimals"] = decimals
                             print(f"[CORE DECIMALS] Fetched SEER decimals: {decimals}")
                         else:
                             decimals = sys_data["seer_decimals"]
-                    
                     else:
                         decimals = 18  # fallback for safety
 
                     budget_raw = int(sell_budget * (10 ** decimals))
-                    budget_quote = asyncio.run(executor.get_quote(SEER_TOKEN_ADDRESS, budget_raw, is_buy=False))
-                    budget_mon_out = budget_quote["amount"] / 10**18
+                    amount_out_raw = get_amount_out_from_pair(
+                        executor.trade.w3, SEER_PAIR_ADDRESS, SEER_TOKEN_ADDRESS, budget_raw
+                    )
+                    budget_mon_out = amount_out_raw / 10**18
 
                     if budget_mon_out <= 0:
                         append_event(memory, {"type": "core_quote_zero", "sell_budget": sell_budget})
@@ -1047,8 +1107,10 @@ def main() -> None:
                         # More than enough; estimate smaller SEER amount, then re-quote for exact output
                         est_seer = sell_budget * (mon_gap / budget_mon_out)
                         est_raw = int(est_seer * (10 ** decimals))
-                        exact_quote = asyncio.run(executor.get_quote(SEER_TOKEN_ADDRESS, est_raw, is_buy=False))
-                        expected_mon_out = exact_quote["amount"] / 10**18
+                        exact_out_raw = get_amount_out_from_pair(
+                            executor.trade.w3, SEER_PAIR_ADDRESS, SEER_TOKEN_ADDRESS, est_raw
+                        )
+                        expected_mon_out = exact_out_raw / 10**18
                         required_core_to_sell = est_seer
 
                     print(f"[CORE QUOTE] {required_core_to_sell:.6f} SEER → {expected_mon_out:.6f} MON (budget={sell_budget:.6f})")

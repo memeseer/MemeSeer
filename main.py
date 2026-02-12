@@ -661,12 +661,13 @@ ERC20_DECIMALS_ABI = [
 ]
 
 
-def get_token_decimals(executor, token_address: str) -> int:
+async def get_token_decimals(executor, token_address: str) -> int:
     contract = executor.trade.w3.eth.contract(
         address=Web3.to_checksum_address(token_address),
         abi=ERC20_DECIMALS_ABI,
     )
-    return contract.functions.decimals().call()
+    return await contract.functions.decimals().call()
+
 
 
 
@@ -1011,12 +1012,22 @@ def main() -> None:
                     # Fetch real token decimals (cached in memory)
                     if not executor.dry_run and executor.trade:
                         sys_data = memory.setdefault("system", {})
+                    
                         if "seer_decimals" not in sys_data:
-                            decimals = get_token_decimals(executor, SEER_TOKEN_ADDRESS)
+                            # Async call → нужно asyncio.run и await внутри функции
+                            decimals = asyncio.run(
+                                get_token_decimals(executor, SEER_TOKEN_ADDRESS)
+                            )
+                    
+                            # защита от странных значений
+                            if not isinstance(decimals, int):
+                                raise Exception(f"Invalid decimals value: {decimals}")
+                    
                             sys_data["seer_decimals"] = decimals
                             print(f"[CORE DECIMALS] Fetched SEER decimals: {decimals}")
                         else:
                             decimals = sys_data["seer_decimals"]
+                    
                     else:
                         decimals = 18  # fallback for safety
 

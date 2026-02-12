@@ -704,16 +704,15 @@ PAIR_ABI = [
 SEER_PAIR_ADDRESS = "0xA7283d07812a02AFB7C09B60f8896bCEA3F90aCE"
 
 
-def get_amount_out_from_pair(w3, pair_address, token_in, amount_in_raw):
-    """Compute expected output using Uniswap V2 AMM formula from pair reserves."""
+async def get_amount_out_from_pair(w3, pair_address, token_in, amount_in_raw):
     pair = w3.eth.contract(
         address=Web3.to_checksum_address(pair_address),
-        abi=PAIR_ABI,
+        abi=PAIR_ABI
     )
 
-    reserve0, reserve1, _ = pair.functions.getReserves().call()
-    token0 = pair.functions.token0().call()
-    token1 = pair.functions.token1().call()
+    reserve0, reserve1, _ = await pair.functions.getReserves().call()
+    token0 = await pair.functions.token0().call()
+    token1 = await pair.functions.token1().call()
 
     token_in = Web3.to_checksum_address(token_in)
     token0 = Web3.to_checksum_address(token0)
@@ -731,7 +730,7 @@ def get_amount_out_from_pair(w3, pair_address, token_in, amount_in_raw):
     if reserve_in == 0 or reserve_out == 0:
         raise Exception("Pair has zero liquidity")
 
-    # Uniswap V2 0.3% fee model
+    # 0.3% fee model
     amount_in_with_fee = amount_in_raw * 997
     numerator = amount_in_with_fee * reserve_out
     denominator = reserve_in * 1000 + amount_in_with_fee
@@ -1090,8 +1089,13 @@ def main() -> None:
                         decimals = 18  # fallback for safety
 
                     budget_raw = int(sell_budget * (10 ** decimals))
-                    amount_out_raw = get_amount_out_from_pair(
-                        executor.trade.w3, SEER_PAIR_ADDRESS, SEER_TOKEN_ADDRESS, budget_raw
+                    amount_out_raw = asyncio.run(
+                        get_amount_out_from_pair(
+                            executor.trade.w3,
+                            PAIR_ADDRESS,
+                            SEER_TOKEN_ADDRESS,
+                            budget_raw
+                        )
                     )
                     budget_mon_out = amount_out_raw / 10**18
 

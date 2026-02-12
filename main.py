@@ -662,12 +662,12 @@ ERC20_DECIMALS_ABI = [
 
 
 async def get_token_decimals(executor, token_address: str) -> int:
-    """Fetch ERC20 token decimals from chain via the executor's web3 instance."""
     contract = executor.trade.w3.eth.contract(
         address=Web3.to_checksum_address(token_address),
         abi=ERC20_DECIMALS_ABI,
     )
-    return contract.functions.decimals().call()
+    return await contract.functions.decimals().call()
+
 
 
 # ----------------
@@ -1092,7 +1092,7 @@ def main() -> None:
                     amount_out_raw = asyncio.run(
                         get_amount_out_from_pair(
                             executor.trade.w3,
-                            PAIR_ADDRESS,
+                            SEER_PAIR_ADDRESS,
                             SEER_TOKEN_ADDRESS,
                             budget_raw
                         )
@@ -1111,9 +1111,15 @@ def main() -> None:
                         # More than enough; estimate smaller SEER amount, then re-quote for exact output
                         est_seer = sell_budget * (mon_gap / budget_mon_out)
                         est_raw = int(est_seer * (10 ** decimals))
-                        exact_out_raw = get_amount_out_from_pair(
-                            executor.trade.w3, SEER_PAIR_ADDRESS, SEER_TOKEN_ADDRESS, est_raw
+                        exact_out_raw = asyncio.run(
+                            get_amount_out_from_pair(
+                                executor.trade.w3,
+                                SEER_PAIR_ADDRESS,
+                                SEER_TOKEN_ADDRESS,
+                                est_raw
+                            )
                         )
+
                         expected_mon_out = exact_out_raw / 10**18
                         required_core_to_sell = est_seer
 

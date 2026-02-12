@@ -27,6 +27,7 @@ from policy import (
 )
 from social_ritual import prepare_ritual_post
 import asyncio
+from web3 import Web3
 from execution.nadfun_executor import sync_buy, sync_sell, sync_wait_for_receipt, NadFunExecutor
 from scripts.generate_token_image import generate_token_image as generate_image
 from portfolio import manage_portfolio, get_blocking_positions
@@ -647,6 +648,29 @@ def should_call_llm(action: str) -> bool:
 
 
 # ----------------
+# ERC20 decimals helper
+# ----------------
+ERC20_DECIMALS_ABI = [
+    {
+        "constant": True,
+        "inputs": [],
+        "name": "decimals",
+        "outputs": [{"name": "", "type": "uint8"}],
+        "type": "function",
+    }
+]
+
+
+async def get_token_decimals(executor, token_address: str) -> int:
+    """Fetch ERC20 token decimals from chain via the executor's web3 instance."""
+    contract = executor.trade.w3.eth.contract(
+        address=Web3.to_checksum_address(token_address),
+        abi=ERC20_DECIMALS_ABI,
+    )
+    return contract.functions.decimals().call()
+
+
+# ----------------
 # Main
 # ----------------
 def main() -> None:
@@ -983,9 +1007,22 @@ def main() -> None:
                 else:
                     # Quote max allowed sell to determine effective AMM output
                     executor = NadFunExecutor()
-                    budget_raw = int(sell_budget * 10**18)
-                    budget_quote = asyncio.run(executor.trade.get_amount_out(SEER_TOKEN_ADDRESS, budget_raw, is_buy=False))
-                    budget_mon_out = budget_result.amount / 10**18
+
+                    # Fetch real token decimals (cached in memory)
+                    if not executor.dry_run and executor.trade:
+                        sys_data = memory.setdefault("system", {})
+                        if "seer_decimals" not in sys_data:
+                            decimals = asyncio.run(get_token_decimals(executor, SEER_TOKEN_ADDRESS))
+                            sys_data["seer_decimals"] = decimals
+                            print(f"[CORE DECIMALS] Fetched SEER decimals: {decimals}")
+                        else:
+                            decimals = sys_data["seer_decimals"]
+                    else:
+                        decimals = 18  # fallback for safety
+
+                    budget_raw = int(sell_budget * (10 ** decimals))
+                    budget_quote = asyncio.run(executor.get_quote(SEER_TOKEN_ADDRESS, budget_raw, is_buy=False))
+                    budget_mon_out = budget_quote["amount"] / 10**18
 
                     if budget_mon_out <= 0:
                         append_event(memory, {"type": "core_quote_zero", "sell_budget": sell_budget})
@@ -998,7 +1035,7 @@ def main() -> None:
                     else:
                         # More than enough; estimate smaller SEER amount, then re-quote for exact output
                         est_seer = sell_budget * (mon_gap / budget_mon_out)
-                        est_raw = int(est_seer * 10**18)
+                        est_raw = int(est_seer * (10 ** decimals))
                         exact_quote = asyncio.run(executor.get_quote(SEER_TOKEN_ADDRESS, est_raw, is_buy=False))
                         expected_mon_out = exact_quote["amount"] / 10**18
                         required_core_to_sell = est_seer
@@ -1006,8 +1043,8 @@ def main() -> None:
                     print(f"[CORE QUOTE] {required_core_to_sell:.6f} SEER → {expected_mon_out:.6f} MON (budget={sell_budget:.6f})")
 
                     # Execute onchain sell
-                    sell_amount_tokens = int(required_core_to_sell * 10**18)
-                    print(f"[CORE SELL] Selling {required_core_to_sell:.6f} SEER ({sell_amount_tokens} raw) via {SEER_TOKEN_ADDRESS}")
+                    sell_amount_tokens = int(required_core_to_sell * (10 ** decimals))
+                    print(f"[CORE SELL] Selling {required_core_to_sell:.6f} SEER ({sell_amount_tokens} raw, decimals={decimals}) via {SEER_TOKEN_ADDRESS}")
 
                     try:
                         sell_tx_hash = sync_sell(SEER_TOKEN_ADDRESS, sell_amount_tokens)

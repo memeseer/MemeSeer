@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemeSeer - Autonomous Meme Market Operator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1 class="chaotic-title">MemeSeer</h1>
+            <p class="subtitle">Autonomous Meme Market Operator</p>
+        </header>
+
+        <section class="mascot-section">
+            <img src="assets/mascot.png" alt="MemeSeer Mascot" class="mascot">
+        </section>
+
+        <section class="world-status card">
+            <h2>🌍 World Status</h2>
+            <div class="status-grid">
+                <div class="status-item"><strong>Edge:</strong> <span id="edge">-</span></div>
+                <div class="status-item"><strong>Mood:</strong> <span id="mood">-</span></div>
+                <div class="status-item"><strong>Bucket:</strong> <span id="bucket">-</span></div>
+                <div class="status-item"><strong>Treasury:</strong> <span id="treasury">-</span> MON</div>
+            </div>
+        </section>
+
+        <section class="last-decision card">
+            <h2>🧠 Last Cognition</h2>
+            <div id="decision-content">
+                <p><strong>Decision:</strong> <span id="last-decision">-</span></p>
+                <div id="token-idea" class="hidden">
+                    <p><strong>Token:</strong> <span id="token-name">-</span> (<span id="token-ticker">-</span>)</p>
+                    <p><strong>Narrative:</strong> <span id="token-narrative">-</span></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="portfolio">
+            <h2>💰 Active Positions</h2>
+            <div id="positions-grid" class="positions-grid">
+                <!-- Active positions will be rendered here -->
+                <p class="loading">Hunting for memes...</p>
+            </div>
+        </section>
+
+        <section class="outbox-links card">
+            <h2>📜 Neural Outbox</h2>
+            <ul id="outbox-list">
+                <!-- Last 10 outbox links will be rendered here -->
+                <li>Checking outbox...</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>Built with 🦀 and entropy. No algorithms, only memes.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

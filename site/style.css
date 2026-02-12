@@ -1,0 +1,185 @@
+body {
+    background-color: #e6d3b3;
+    color: #1a1a1a;
+    font-family: 'Gloria Hallelujah', cursive;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    max-width: 900px;
+    width: 100%;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    transform: rotate(-1deg);
+}
+
+.chaotic-title {
+    font-size: 4rem;
+    margin: 0;
+    text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    margin-top: -10px;
+}
+
+.mascot-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.mascot {
+    max-width: 300px;
+    border: 4px solid #000;
+    border-radius: 15% 85% 20% 80% / 80% 20% 80% 20%;
+    /* Hand-drawn feel */
+    background: #fff;
+    padding: 10px;
+    transform: rotate(2deg);
+    box-shadow: 10px 10px 0px #000;
+}
+
+.card {
+    background: #fff;
+    border: 4px solid #000;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 8px 8px 0px #000;
+}
+
+.card:nth-child(odd) {
+    transform: rotate(-1deg);
+}
+
+.card:nth-child(even) {
+    transform: rotate(1deg);
+}
+
+h2 {
+    margin-top: 0;
+    border-bottom: 3px solid #000;
+    display: inline-block;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+/* World Status Grid */
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.status-item {
+    font-size: 1.1rem;
+}
+
+/* Positions Grid */
+.positions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.position-card {
+    background: #fff;
+    border: 4px solid #000;
+    padding: 15px;
+    box-shadow: 6px 6px 0px #000;
+    transition: transform 0.2s;
+}
+
+.position-card:hover {
+    transform: scale(1.05) rotate(2deg);
+}
+
+.position-card h3 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.position-card .roi {
+    font-size: 1.5rem;
+    color: #d00;
+    font-weight: bold;
+}
+
+.positive-roi {
+    color: #080 !important;
+}
+
+/* Paper Card Style */
+.paper-card {
+    background: #fff;
+    border: 4px solid #000;
+    padding: 25px;
+    margin-bottom: 40px;
+    box-shadow: 10px 10px 0px #000;
+    position: relative;
+    overflow: hidden;
+    line-height: 1.6;
+}
+
+.rotate-plus {
+    transform: rotate(1deg);
+}
+
+.rotate-minus {
+    transform: rotate(-1.2deg);
+}
+
+.paper-card h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #000;
+    display: inline-block;
+}
+
+.post-footer {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 20px;
+    border-top: 1px dashed #ccc;
+    padding-top: 5px;
+    text-align: right;
+}
+
+/* Markdown simple styles */
+.paper-card b,
+.paper-card strong {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 0 4px;
+}
+
+.paper-card blockquote {
+    border-left: 5px solid #000;
+    margin: 10px 0;
+    padding-left: 15px;
+    font-style: italic;
+    background: #f9f9f9;
+}
+
+.hidden {
+    display: none;
+}
+
+footer {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+    .chaotic-title {
+        font-size: 2.5rem;
+    }
+}

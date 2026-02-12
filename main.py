@@ -661,13 +661,13 @@ ERC20_DECIMALS_ABI = [
 ]
 
 
-async def get_token_decimals(executor, token_address: str) -> int:
-    """Fetch ERC20 token decimals from chain via the executor's web3 instance."""
+def get_token_decimals(executor, token_address: str) -> int:
     contract = executor.trade.w3.eth.contract(
         address=Web3.to_checksum_address(token_address),
         abi=ERC20_DECIMALS_ABI,
     )
     return contract.functions.decimals().call()
+
 
 
 # ----------------
@@ -1012,7 +1012,7 @@ def main() -> None:
                     if not executor.dry_run and executor.trade:
                         sys_data = memory.setdefault("system", {})
                         if "seer_decimals" not in sys_data:
-                            decimals = asyncio.run(get_token_decimals(executor, SEER_TOKEN_ADDRESS))
+                            decimals = get_token_decimals(executor, SEER_TOKEN_ADDRESS)
                             sys_data["seer_decimals"] = decimals
                             print(f"[CORE DECIMALS] Fetched SEER decimals: {decimals}")
                         else:

@@ -984,8 +984,8 @@ def main() -> None:
                     # Quote max allowed sell to determine effective AMM output
                     executor = NadFunExecutor()
                     budget_raw = int(sell_budget * 10**18)
-                    budget_quote = asyncio.run(executor.get_quote(SEER_TOKEN_ADDRESS, budget_raw, is_buy=False))
-                    budget_mon_out = budget_quote["amount"] / 10**18
+                    budget_quote = asyncio.run(executor.trade.get_amount_out(SEER_TOKEN_ADDRESS, budget_raw, is_buy=False))
+                    budget_mon_out = budget_result.amount / 10**18
 
                     if budget_mon_out <= 0:
                         append_event(memory, {"type": "core_quote_zero", "sell_budget": sell_budget})

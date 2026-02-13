@@ -243,5 +243,6 @@ class NadfunExecutor:
         
         return {
             "token_address": predicted_address,
-            "tx_hash": tx_hash.hex()
+            "tx_hash": tx_hash.hex(),
+            "tokens_received_raw": int(expected_out)
         }

@@ -2,7 +2,7 @@ name: MemeSeer Hourly Execution
 
 on:
   schedule:
-    - cron: '0 18 * * *'
+    - cron: '0 16 * * *'
   workflow_dispatch:
 
 permissions:

@@ -1047,14 +1047,19 @@ def main() -> None:
             
             new_position = {
                 "address": token_address,
-                "symbol": token_idea.get("ticker"),
-                "entry_mon": 200,
-                "tx_hash": tx_hash,
+                "ticker": token_idea.get("ticker"),
+                "token_address": token_address,
+                "entry_cost_mon": 200.0,
+                "token_amount": int(launch_result.get("tokens_received_raw", 0)),
+                "sold_pct_total": 0.0,
+                "ladder_hits": [],
+                "tx_pending": False,
                 "mode": mode,
-                "status": "active",
+                "status": "ACTIVE",
                 "timestamp": utc_now_ts(),
                 "iso_date": utc_now_iso(),
-                "image_path": img_path
+                "image_path": img_path,
+                "tx_hash": tx_hash
             }
             
             memory["portfolio"]["active_positions"].append(new_position)
@@ -1084,6 +1089,7 @@ def main() -> None:
                 "created_at": utc_now_iso(),
                 "ts": utc_now_ts(),
                 "status": "LAUNCH_COMPLETE",
+                "token_address": token_address,
                 "token_idea": {k: v for k, v in token_idea.items() if k in ("name", "ticker", "narrative", "why_now")},
                 "world": world_text,
                 "thought": thought,

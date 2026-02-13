@@ -78,32 +78,75 @@ class NadFunExecutor:
             logger.error(f"Buy failed: {e}")
             raise
 
-    async def sell(self, token_address: str, token_amount: int, slippage_pct: int = 5) -> str:
-        """Executes a sell transaction."""
-        if self.dry_run or not self.trade:
-            logger.info(f"[DRY_RUN] SELL {token_amount} tokens of {token_address} (Slippage: {slippage_pct}%)")
-            return "0x" + "e" * 64 # Mock tx hash
-        
-        try:
-            # For sell, we need to convert token_amount to mon to get a quote, 
-            # OR we can just use get_amount_out directly.
-            # get_amount_out(token, amount_in, is_buy=False)
-            quote = await self.trade.get_amount_out(token_address, int(token_amount), is_buy=False)
-            amount_out_min = calculate_slippage(quote.amount, slippage_pct)
-            
-            params = SellParams(
-                token=token_address,
-                amount_in=int(token_amount),
-                amount_out_min=amount_out_min,
-                to=self.trade.address
-            )
-            
-            tx_hash = await self.trade.sell(params, quote.router)
-            logger.info(f"Sell TX sent: {tx_hash}")
-            return tx_hash
-        except Exception as e:
-            logger.error(f"Sell failed: {e}")
-            raise
+    async def sell(self, token_address: str, token_amount: int, slippage_pct: float = 5.0) -> str:
+        if not self.trade:
+            raise Exception("Trade object not initialized")
+
+        token_address = self.trade.w3.to_checksum_address(token_address)
+
+        logger.info(f"Selling {token_amount} of token {token_address}")
+
+        # --- 1️⃣ Get quote first (needed for router address + expected out) ---
+        quote = await self.trade.get_amount_out(token_address, int(token_amount), is_buy=False)
+        min_amount_out = int(quote.amount * (1 - slippage_pct / 100))
+        router_address = quote.router
+
+        logger.info(f"Quote amount out: {quote.amount}")
+        logger.info(f"Min amount out (after {slippage_pct}% slippage): {min_amount_out}")
+
+        # --- 2️⃣ Ensure allowance ---
+        ERC20_ABI = [
+            {
+                "constant": True,
+                "inputs": [
+                    {"name": "_owner", "type": "address"},
+                    {"name": "_spender", "type": "address"}
+                ],
+                "name": "allowance",
+                "outputs": [{"name": "", "type": "uint256"}],
+                "type": "function"
+            },
+            {
+                "constant": False,
+                "inputs": [
+                    {"name": "_spender", "type": "address"},
+                    {"name": "_value", "type": "uint256"}
+                ],
+                "name": "approve",
+                "outputs": [{"name": "", "type": "bool"}],
+                "type": "function"
+            }
+        ]
+
+        token_contract = self.trade.w3.eth.contract(
+            address=token_address,
+            abi=ERC20_ABI
+        )
+
+        owner = self.trade.address
+        current_allowance = await token_contract.functions.allowance(owner, router_address).call()
+
+        if current_allowance < token_amount:
+            logger.info("Allowance insufficient. Sending approve transaction...")
+            approve_tx = await token_contract.functions.approve(router_address, 2**256 - 1).transact({
+                "from": owner
+            })
+            await self.trade.wait_for_transaction(approve_tx)
+            logger.info("Approval confirmed.")
+
+        # --- 3️⃣ Execute sell ---
+        params = {
+            'amount_in': int(token_amount),
+            'min_amount_out': min_amount_out,
+            'token': token_address,
+            'slippage': slippage_pct
+        }
+
+        tx_hash = await self.trade.sell(params, router_address)
+
+        logger.info(f"Sell transaction sent: {tx_hash}")
+        return tx_hash
+
 
     async def wait_for_receipt(self, tx_hash: str, timeout: int = 60) -> Optional[Dict[str, Any]]:
         """Waits for transaction receipt."""

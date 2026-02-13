@@ -142,6 +142,12 @@ class NadFunExecutor:
             'slippage': slippage_pct
         }
 
+        logger.info(f"Router used: {router_address}")
+        logger.info(f"Owner address: {owner}")
+        logger.info(f"Token address: {token_address}")
+        logger.info(f"Amount in: {token_amount}")
+        logger.info(f"Min amount out: {min_amount_out}")
+
         tx_hash = await self.trade.sell(params, router_address)
 
         logger.info(f"Sell transaction sent: {tx_hash}")
@@ -177,3 +183,4 @@ def sync_sell(token_address, token_amount, slippage_pct=5):
 def sync_wait_for_receipt(tx_hash, timeout=60):
     executor = NadFunExecutor()
     return asyncio.run(executor.wait_for_receipt(tx_hash, timeout))
+

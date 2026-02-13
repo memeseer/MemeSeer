@@ -120,7 +120,7 @@ class NadfunExecutor:
         router_sell = self.w3.eth.contract(address=self.ROUTER_ADDR, abi=self.router_sell_abi)
         
         # Slippage: we want at least our shortfall
-        amount_out_min = dy
+        amount_out_min = int(dy * 0.95)
         
         # Deadline: 20 mins
         deadline = int(time.time() + 1200)
@@ -246,4 +246,5 @@ class NadfunExecutor:
             "tx_hash": tx_hash.hex(),
             "tokens_received_raw": int(expected_out)
         }
+
 

@@ -60,9 +60,15 @@ class NadFunExecutor:
             return "0x" + "d" * 64 # Mock tx hash
         
         try:
+            logger.info("BUY STEP 1: Getting quote...")
+            logger.info(f"  Token: {token_address}")
+            logger.info(f"  MON amount: {mon_amount}")
+            logger.info(f"  Slippage: {slippage_pct}%")
             quote = await self.get_quote(token_address, mon_amount, is_buy=True)
             amount_in_wei = parseMon(mon_amount)
             amount_out_min = calculate_slippage(quote["amount"], slippage_pct)
+            logger.info(f"BUY STEP 1 DONE: quote.amount={quote['amount']}, router={quote['router']}")
+            logger.info(f"  amount_in_wei={amount_in_wei}, amount_out_min={amount_out_min}")
             
             params = BuyParams(
                 token=token_address,
@@ -71,11 +77,13 @@ class NadFunExecutor:
                 to=self.trade.address
             )
             
+            logger.info("BUY STEP 2: Executing trade.buy()...")
+            logger.info(f"  Owner: {self.trade.address}")
             tx_hash = await self.trade.buy(params, quote["router"])
-            logger.info(f"Buy TX sent: {tx_hash}")
+            logger.info(f"BUY STEP 2 DONE: tx_hash={tx_hash}")
             return tx_hash
         except Exception as e:
-            logger.error(f"Buy failed: {e}")
+            logger.exception("BUY FULL TRACE:")
             raise
 
     async def sell(self, token_address: str, token_amount: int, slippage_pct: float = 5.0) -> str:
@@ -84,74 +92,87 @@ class NadFunExecutor:
 
         token_address = self.trade.w3.to_checksum_address(token_address)
 
-        logger.info(f"Selling {token_amount} of token {token_address}")
+        logger.info(f"=== SELL START ===")
+        logger.info(f"  Token: {token_address}")
+        logger.info(f"  Amount in: {token_amount}")
+        logger.info(f"  Slippage: {slippage_pct}%")
+        logger.info(f"  Owner: {self.trade.address}")
 
-        # --- 1️⃣ Get quote first (needed for router address + expected out) ---
-        quote = await self.trade.get_amount_out(token_address, int(token_amount), is_buy=False)
-        min_amount_out = int(quote.amount * (1 - slippage_pct / 100))
-        router_address = quote.router
+        try:
+            # --- 1️⃣ Get quote first (needed for router address + expected out) ---
+            logger.info("SELL STEP 1: Getting quote...")
+            quote = await self.trade.get_amount_out(token_address, int(token_amount), is_buy=False)
+            amount_out_min = calculate_slippage(quote.amount, slippage_pct)
+            router_address = quote.router
+            logger.info(f"SELL STEP 1 DONE: quote.amount={quote.amount}, router={router_address}")
+            logger.info(f"  Min amount out (after {slippage_pct}% slippage): {amount_out_min}")
 
-        logger.info(f"Quote amount out: {quote.amount}")
-        logger.info(f"Min amount out (after {slippage_pct}% slippage): {min_amount_out}")
+            # --- 2️⃣ Ensure allowance ---
+            logger.info("SELL STEP 2: Checking allowance / approving token spend...")
+            ERC20_ABI = [
+                {
+                    "constant": True,
+                    "inputs": [
+                        {"name": "_owner", "type": "address"},
+                        {"name": "_spender", "type": "address"}
+                    ],
+                    "name": "allowance",
+                    "outputs": [{"name": "", "type": "uint256"}],
+                    "type": "function"
+                },
+                {
+                    "constant": False,
+                    "inputs": [
+                        {"name": "_spender", "type": "address"},
+                        {"name": "_value", "type": "uint256"}
+                    ],
+                    "name": "approve",
+                    "outputs": [{"name": "", "type": "bool"}],
+                    "type": "function"
+                }
+            ]
 
-        # --- 2️⃣ Ensure allowance ---
-        ERC20_ABI = [
-            {
-                "constant": True,
-                "inputs": [
-                    {"name": "_owner", "type": "address"},
-                    {"name": "_spender", "type": "address"}
-                ],
-                "name": "allowance",
-                "outputs": [{"name": "", "type": "uint256"}],
-                "type": "function"
-            },
-            {
-                "constant": False,
-                "inputs": [
-                    {"name": "_spender", "type": "address"},
-                    {"name": "_value", "type": "uint256"}
-                ],
-                "name": "approve",
-                "outputs": [{"name": "", "type": "bool"}],
-                "type": "function"
-            }
-        ]
+            token_contract = self.trade.w3.eth.contract(
+                address=token_address,
+                abi=ERC20_ABI
+            )
 
-        token_contract = self.trade.w3.eth.contract(
-            address=token_address,
-            abi=ERC20_ABI
-        )
+            owner = self.trade.address
+            current_allowance = await token_contract.functions.allowance(owner, router_address).call()
+            logger.info(f"  Current allowance: {current_allowance}, needed: {token_amount}")
 
-        owner = self.trade.address
-        current_allowance = await token_contract.functions.allowance(owner, router_address).call()
+            if current_allowance < token_amount:
+                logger.info("  Allowance insufficient. Sending approve transaction...")
+                approve_tx = await token_contract.functions.approve(router_address, 2**256 - 1).transact({
+                    "from": owner
+                })
+                await self.trade.wait_for_transaction(approve_tx)
+                logger.info("SELL STEP 2 DONE: Approve confirmed")
+            else:
+                logger.info("SELL STEP 2 DONE: Allowance sufficient, skipping approve")
 
-        if current_allowance < token_amount:
-            logger.info("Allowance insufficient. Sending approve transaction...")
-            approve_tx = await token_contract.functions.approve(router_address, 2**256 - 1).transact({
-                "from": owner
-            })
-            await self.trade.wait_for_transaction(approve_tx)
-            logger.info("Approval confirmed.")
+            # --- 3️⃣ Execute sell ---
+            logger.info("SELL STEP 3: Executing trade.sell()...")
+            logger.info(f"  Token: {token_address}")
+            logger.info(f"  Amount in: {int(token_amount)}")
+            logger.info(f"  Min amount out: {amount_out_min}")
+            logger.info(f"  Router: {router_address}")
 
-        # --- 3️⃣ Execute sell ---
-        params = {
-            'amount_in': int(token_amount),
-            'min_amount_out': min_amount_out,
-            'token': token_address,
-            'slippage': slippage_pct
-        }
+            sell_params = SellParams(
+                token=token_address,
+                to=self.trade.address,
+                amount_in=int(token_amount),
+                amount_out_min=amount_out_min,
+                deadline=None
+            )
 
-        logger.info(f"Router used: {router_address}")
-        logger.info(f"Owner address: {owner}")
-        logger.info(f"Token address: {token_address}")
-        logger.info(f"Amount in: {token_amount}")
-        logger.info(f"Min amount out: {min_amount_out}")
+            tx_hash = await self.trade.sell(sell_params, router_address)
+            logger.info(f"SELL STEP 3 DONE: tx_hash={tx_hash}")
+            return tx_hash
 
-        tx_hash = await self.trade.sell(params, router_address)
-
-        logger.info(f"Sell transaction sent: {tx_hash}")
-        return tx_hash
+        except Exception as e:
+            logger.exception("SELL FULL TRACE:")
+            raise
 
 
     async def wait_for_receipt(self, tx_hash: str, timeout: int = 60) -> Optional[Dict[str, Any]]:
@@ -183,4 +204,3 @@ def sync_sell(token_address, token_amount, slippage_pct=5):
 def sync_wait_for_receipt(tx_hash, timeout=60):
     executor = NadFunExecutor()
     return asyncio.run(executor.wait_for_receipt(tx_hash, timeout))
-

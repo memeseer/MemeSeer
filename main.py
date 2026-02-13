@@ -28,11 +28,13 @@ from policy import (
 from social_ritual import prepare_ritual_post
 import asyncio
 from web3 import Web3
-from execution.nadfun_executor import sync_buy, sync_sell, sync_wait_for_receipt, NadFunExecutor
+from onchain.nadfun_executor import NadfunExecutor
 from scripts.generate_token_image import generate_token_image as generate_image
 from portfolio import manage_portfolio, get_blocking_positions
 
 AGENT_NAME = "MemeSeer"
+
+MAX_ACTIVE_POSITIONS = 3
 
 MEMORY_PATH = os.getenv("MEMESEER_MEMORY_PATH", "memory.json")
 OUTBOX_DIR = os.getenv("MEMESEER_OUTBOX_DIR", "outbox")
@@ -239,6 +241,15 @@ def duplicate_ticker(memory: Dict[str, Any], token_idea: Dict[str, Any]) -> bool
             return True
     return False
 
+
+# Portfolio helpers
+def get_active_position_count(memory: Dict[str, Any]) -> int:
+    """
+    Returns number of ACTIVE positions in memory.
+    """
+    portfolio = memory.get("portfolio", {})
+    active = portfolio.get("active_positions", [])
+    return sum(1 for p in active if p.get("status") == "active")
 
 # Portfolio logic moved to portfolio/portfolio.py
 
@@ -662,12 +673,12 @@ ERC20_DECIMALS_ABI = [
 
 
 async def get_token_decimals(executor, token_address: str) -> int:
+    """Fetch ERC20 token decimals from chain via the executor's web3 instance."""
     contract = executor.trade.w3.eth.contract(
         address=Web3.to_checksum_address(token_address),
         abi=ERC20_DECIMALS_ABI,
     )
-    return await contract.functions.decimals().call()
-
+    return contract.functions.decimals().call()
 
 
 # ----------------
@@ -704,15 +715,16 @@ PAIR_ABI = [
 SEER_PAIR_ADDRESS = "0xA7283d07812a02AFB7C09B60f8896bCEA3F90aCE"
 
 
-async def get_amount_out_from_pair(w3, pair_address, token_in, amount_in_raw):
+def get_amount_out_from_pair(w3, pair_address, token_in, amount_in_raw):
+    """Compute expected output using Uniswap V2 AMM formula from pair reserves."""
     pair = w3.eth.contract(
         address=Web3.to_checksum_address(pair_address),
-        abi=PAIR_ABI
+        abi=PAIR_ABI,
     )
 
-    reserve0, reserve1, _ = await pair.functions.getReserves().call()
-    token0 = await pair.functions.token0().call()
-    token1 = await pair.functions.token1().call()
+    reserve0, reserve1, _ = pair.functions.getReserves().call()
+    token0 = pair.functions.token0().call()
+    token1 = pair.functions.token1().call()
 
     token_in = Web3.to_checksum_address(token_in)
     token0 = Web3.to_checksum_address(token0)
@@ -730,7 +742,7 @@ async def get_amount_out_from_pair(w3, pair_address, token_in, amount_in_raw):
     if reserve_in == 0 or reserve_out == 0:
         raise Exception("Pair has zero liquidity")
 
-    # 0.3% fee model
+    # Uniswap V2 0.3% fee model
     amount_in_with_fee = amount_in_raw * 997
     numerator = amount_in_with_fee * reserve_out
     denominator = reserve_in * 1000 + amount_in_with_fee
@@ -844,10 +856,17 @@ def main() -> None:
         return
 
     # Portfolio gate
-    blocking_positions = get_blocking_positions(memory)
-    if len(blocking_positions) >= 2:
-        reason = f"Portfolio full: {len(blocking_positions)} active positions (max 2)"
-        append_event(memory, {"type": "gating_portfolio", "mode": mode, "bucket": bucket, "edge": edge, "reason": reason})
+    active_count = get_active_position_count(memory)
+    if active_count >= MAX_ACTIVE_POSITIONS:
+        reason = f"Portfolio full: {active_count} active positions (max {MAX_ACTIVE_POSITIONS})"
+        append_event(memory, {
+            "type": "gating_portfolio",
+            "mode": mode,
+            "bucket": bucket,
+            "edge": edge,
+            "reason": reason
+        })
+
         bandit_update = update_bandit(memory, bucket, mode, 0.0)
         append_event(memory, {"type": "learning_update", **bandit_update})
 
@@ -861,10 +880,11 @@ def main() -> None:
             "bucket": bucket,
             "reward": bandit_update.get("reward"),
         }
+
         append_event(memory, {"type": "run", "record": record})
         print(f"World Edge: {edge:.2f}")
         print(f"Policy: {mode} ({bucket})")
-        print(f"Selected action: {mode} (LLM: no, reason: {reason})")
+        print(f"GATED: {reason}")
         save_memory(memory, MEMORY_PATH)
         print("memory.json saved.")
         return
@@ -992,270 +1012,60 @@ def main() -> None:
             save_memory(memory, MEMORY_PATH)
             return
 
-        # 3️⃣ Start Atomic Launch
-        temp_position = None
+        # 3️⃣ Execute Launch via NadfunExecutor
         try:
             memory["launch_control"]["launch_in_progress"] = True
             save_memory(memory, MEMORY_PATH) # Save immediately to lock
 
+            # 3.1 Rate limit check
             if is_rate_limited(memory):
                 append_event(memory, {"type": "launch_blocked", "reason": "rate_limited"})
                 raise Exception("Rate limited")
+
+            # 3.2 Image generation
+            print(f"[LAUNCH] Generating image for {token_idea.get('ticker')}...")
+            img_path = generate_image(
+                token_idea.get("name", "Unknown"),
+                token_idea.get("ticker", "TKN"),
+                memory.get("world", {}).get("mood", "Neutral")
+            )
             
-            # 3.5️⃣ Snapshot balances for atomic rollback
-            pre_launch_balances = copy.deepcopy(memory["economy"]["balances"])
-
-            # Funding Checks
-            # CORE Guard Variant A Pre-funding checks
-            eco = memory.get("economy", {})
-            bal = read_balances(memory)
-            mon_needed = float(eco.get("params", {}).get("mon_per_launch", 5.0))
-            mon_gap = max(0.0, mon_needed - bal.mon)
-
-            guard = memory.setdefault("core_guard", {})
-            now = utc_now_ts()
-
-            # 🛡 5️⃣ BLOCK LAUNCH IF PAUSED (Loss Streak)
-            blocked_until = guard.get("launch_blocked_until", 0)
-            if now < blocked_until:
-                append_event(memory, {"type": "core_guard_blocked_pause", "blocked_until": blocked_until})
-                raise Exception("CORE_GUARD_PAUSE")
-
-            # Reset daily counter if daily_reset_ts >= 86400
-            last_reset = guard.get("daily_reset_ts", 0)
-            if now - last_reset >= 86400:
-                guard["daily_core_sold"] = 0.0
-                guard["daily_reset_ts"] = now
-
-            # 🛡 2️⃣ PER-LAUNCH CORE CAP
-            treasury_core = bal.seer
-            max_single_launch_sell = treasury_core * guard.get("max_single_launch_pct_treasury", 0.05)
-
-            # 🛡 1️⃣ DAILY CORE SELL CAP
-            max_daily_sell = treasury_core * guard.get("max_daily_sell_pct_treasury", 0.05)
-            daily_sold = guard.get("daily_core_sold", 0.0)
-
-            # Execute Funding — onchain SEER sell
-            dry_run_funding = os.getenv("EXECUTION_DRY_RUN", "0") == "1"
-
-            if dry_run_funding:
-                # --- DRY RUN: use mock price, update internal balances only ---
-                price = float(eco.get("seer_price_mon", 1.0))
-                required_core_to_sell = mon_gap / price if price > 0 else 0.0
-
-                if required_core_to_sell > max_single_launch_sell:
-                    required_core_to_sell = max_single_launch_sell
-                    append_event(memory, {"type": "core_guard_clamped_single_launch", "original": mon_gap / price if price > 0 else 0.0, "clamped": required_core_to_sell})
-                    print(f"[CORE_GUARD] Clamped required_core to {required_core_to_sell:.4f}")
-
-                if daily_sold + required_core_to_sell > max_daily_sell:
-                    append_event(memory, {"type": "core_guard_blocked_daily_limit", "daily_sold": daily_sold, "required": required_core_to_sell, "limit": max_daily_sell})
-                    raise Exception("CORE_GUARD_BLOCKED")
-
-                print(f"[CORE SELL] Simulating sale of {required_core_to_sell:.6f} SEER (DRY_RUN)")
-                funding = fund_launch_by_selling_seer(memory, bucket=bucket, edge=edge)
-                actual_sold = float(funding.get("sold_seer", 0.0))
-                guard["daily_core_sold"] = guard.get("daily_core_sold", 0.0) + actual_sold
-                append_event(memory, {"type": "seer_sale_for_launch", **funding})
-            else:
-                # --- REAL: onchain quote + sell via NadFunExecutor ---
-                # Compute guard-limited sell budget (SEER)
-                daily_remaining = max(0.0, max_daily_sell - daily_sold)
-                sell_budget = min(max_single_launch_sell, daily_remaining)
-
-                if sell_budget <= 0:
-                    append_event(memory, {"type": "core_guard_blocked_daily_limit", "daily_sold": daily_sold, "required": 0.0, "limit": max_daily_sell})
-                    raise Exception("CORE_GUARD_BLOCKED")
-
-                if mon_gap <= 0:
-                    # Already funded, no sell needed
-                    required_core_to_sell = 0.0
-                    expected_mon_out = 0.0
-                    append_event(memory, {"type": "seer_sale_for_launch", "sold_seer": 0.0, "got_mon": 0.0, "note": "already_funded"})
-                else:
-                    # Quote max allowed sell to determine effective AMM output
-                    executor = NadFunExecutor()
-
-                    # Fetch real token decimals (cached in memory)
-                    if not executor.dry_run and executor.trade:
-                        sys_data = memory.setdefault("system", {})
-                        if "seer_decimals" not in sys_data:
-                            decimals = asyncio.run(get_token_decimals(executor, SEER_TOKEN_ADDRESS))
-                            sys_data["seer_decimals"] = decimals
-                            print(f"[CORE DECIMALS] Fetched SEER decimals: {decimals}")
-                        else:
-                            decimals = sys_data["seer_decimals"]
-                    else:
-                        decimals = 18  # fallback for safety
-
-                    budget_raw = int(sell_budget * (10 ** decimals))
-                    amount_out_raw = asyncio.run(
-                        get_amount_out_from_pair(
-                            executor.trade.w3,
-                            SEER_PAIR_ADDRESS,
-                            SEER_TOKEN_ADDRESS,
-                            budget_raw
-                        )
-                    )
-                    budget_mon_out = amount_out_raw / 10**18
-
-                    if budget_mon_out <= 0:
-                        append_event(memory, {"type": "core_quote_zero", "sell_budget": sell_budget})
-                        raise Exception("CORE_QUOTE_ZERO: AMM returned 0 MON for sell")
-
-                    if budget_mon_out <= mon_gap:
-                        # Max allowed sell doesn't cover gap; sell all we can
-                        required_core_to_sell = sell_budget
-                        expected_mon_out = budget_mon_out
-                    else:
-                        # More than enough; estimate smaller SEER amount, then re-quote for exact output
-                        est_seer = sell_budget * (mon_gap / budget_mon_out)
-                        est_raw = int(est_seer * (10 ** decimals))
-                        exact_out_raw = asyncio.run(
-                            get_amount_out_from_pair(
-                                executor.trade.w3,
-                                SEER_PAIR_ADDRESS,
-                                SEER_TOKEN_ADDRESS,
-                                est_raw
-                            )
-                        )
-
-                        expected_mon_out = exact_out_raw / 10**18
-                        required_core_to_sell = est_seer
-
-                    print(f"[CORE QUOTE] {required_core_to_sell:.6f} SEER → {expected_mon_out:.6f} MON (budget={sell_budget:.6f})")
-
-                    # Execute onchain sell
-                    sell_amount_tokens = int(required_core_to_sell * (10 ** decimals))
-                    print(f"[CORE SELL] Selling {required_core_to_sell:.6f} SEER ({sell_amount_tokens} raw, decimals={decimals}) via {SEER_TOKEN_ADDRESS}")
-
-                    try:
-                        sell_tx_hash = sync_sell(SEER_TOKEN_ADDRESS, sell_amount_tokens)
-                        append_event(memory, {"type": "onchain_seer_sell_sent", "token": SEER_TOKEN_ADDRESS, "tx_hash": sell_tx_hash, "amount": required_core_to_sell})
-
-                        sell_receipt = sync_wait_for_receipt(sell_tx_hash)
-                        if not sell_receipt or sell_receipt.get("status") != 1:
-                            raise Exception(f"[CORE SELL FAILED] Receipt failed. Receipt: {sell_receipt}")
-
-                        print(f"[CORE SELL SUCCESS] Tx: {sell_tx_hash}")
-                    except Exception as sell_err:
-                        print(f"[CORE SELL FAILED] {sell_err}")
-                        raise  # propagate to atomic rollback
-
-                    # Only after confirmed receipt: update balances directly (no mock price)
-                    actual_sold = required_core_to_sell
-                    real_mon_received = expected_mon_out
-
-                    bal = read_balances(memory)
-                    bal.seer -= actual_sold
-                    bal.mon += real_mon_received
-                    write_balances(memory, bal)
-
-                    eco["stats"]["seer_sold_total"] = float(eco["stats"].get("seer_sold_total", 0.0)) + actual_sold
-                    guard["daily_core_sold"] = guard.get("daily_core_sold", 0.0) + actual_sold
-
-                    append_event(memory, {
-                        "type": "seer_sale_for_launch",
-                        "sold_seer": round(actual_sold, 8),
-                        "got_mon": round(real_mon_received, 8),
-                        "onchain_tx": sell_tx_hash
-                    })
-
-            spend = spend_mon_for_launch(memory)
-            append_event(memory, {"type": "mon_spent_for_launch", **spend})
-
-            if not spend or not spend.get("ok"):
-                append_event(memory, {"type": "launch_aborted_insufficient_mon"})
-                raise Exception("Insufficient MON for launch")
-
-            # Image generation
-            img_path = ""
-            try:
-                img_path = generate_image(
-                    token_idea.get("name", "Unknown"),
-                    token_idea.get("ticker", "TKN"),
-                    memory.get("world", {}).get("mood", "Neutral")
-                )
-            except Exception as e:
-                print(f"Image generation failed: {e}")
-                # We might want to fail the launch if image generation is required
-                # Requirement 5 says "Still require image generation" for dry-run. 
-                # Let's be strict.
-                raise Exception(f"Image generation failed: {str(e)}")
-
-            # Create temporary position (PENDING)
-            token_address = token_idea.get("address", "0x" + "0"*40)
-            entry_cost_mon = float(spend.get("spent_mon", 0.0))
+            # 3.3 On-chain Launch
+            executor = NadfunExecutor()
+            print(f"[LAUNCH] Executing on-chain launch for {token_idea.get('ticker')}...")
             
-            temp_position = {
+            launch_result = executor.launch_token(
+                name=token_idea.get("name"),
+                symbol=token_idea.get("ticker"),
+                description=token_idea.get("narrative", "Generated by MemeSeer"),
+                image_path=img_path
+            )
+            
+            # 3.4 Success: Update memory and positions
+            token_address = launch_result["token_address"]
+            tx_hash = launch_result["tx_hash"]
+            
+            new_position = {
                 "address": token_address,
-                "name": token_idea.get("name"),
-                "ticker": token_idea.get("ticker"),
+                "symbol": token_idea.get("ticker"),
+                "entry_mon": 200,
+                "tx_hash": tx_hash,
+                "mode": mode,
+                "status": "active",
                 "timestamp": utc_now_ts(),
                 "iso_date": utc_now_iso(),
-                "entry_cost_mon": entry_cost_mon,
-                "token_amount": 1_000_000_000,
-                "allocation_pct": 100.0,
-                "ladder_hits": [],
-                "sold_pct_total": 0.0,
-                "status": "PENDING",
-                "tx_hash": "",
                 "image_path": img_path
             }
-
-            # On-chain Execution
-            dry_run = os.getenv("EXECUTION_DRY_RUN", "0") == "1"
-            tx_hash = ""
-            if dry_run:
-                print(f"[DRY_RUN] Simulating TX success for {token_idea.get('ticker')}")
-                tx_hash = "0x" + "d" * 64
-                receipt = {"status": 1, "transactionHash": tx_hash}
-            else:
-                tx_hash = sync_buy(token_address, entry_cost_mon)
-                append_event(memory, {"type": "onchain_buy_sent", "token": token_address, "tx_hash": tx_hash})
-                
-                receipt = sync_wait_for_receipt(tx_hash)
-                if not receipt or receipt.get("status") != 1:
-                    raise Exception(f"Transaction failed or record not found. Receipt: {receipt}")
-
-            # Finalize Position
-            temp_position["status"] = "ACTIVE"
-            temp_position["tx_hash"] = tx_hash
-            memory["portfolio"]["active_positions"].append(temp_position)
-            temp_position = None # Mark as finalized so except block doesn't remove it
             
-            append_event(memory, {"type": "portfolio_entry", **memory["portfolio"]["active_positions"][-1]})
-
-            # Update last launch timestamp
+            memory["portfolio"]["active_positions"].append(new_position)
             memory["launch_control"]["last_launch_timestamp"] = utc_now_ts()
-
-            # Payout and simulation logic
-            # Requirement 7: Remove simulate_meme_outcome From Real Launch.
-            # Simulation must not affect real treasury. Keep simulation only for dry-run.
-            if dry_run:
-                outcome = simulate_meme_outcome(memory, mode=mode, edge=edge)
-                append_event(memory, {"type": "meme_outcome_simulated", **outcome})
-                
-                payout_mon = float(outcome.get("payout_mon", 0.0) or 0.0)
-                stake = float(memory["economy"]["params"].get("mon_per_launch", 5.0))
-                reward = compute_reward(payout_mon, stake, mode, bucket, edge)
-                bandit_update = update_bandit(memory, bucket, mode, reward)
-                append_event(memory, {"type": "learning_update_simulated", **bandit_update})
-            else:
-                # Real launch: learning update based on successful launch event
-                # We don't know the "payout" yet in real life, but we reward the launch itself?
-                # Usually, bandit is updated after exit. For launch, we can give a small base reward or wait.
-                # The prompt doesn't specify reward logic for real launch after atomic flow, 
-                # but says "Do NOT call simulate_meme_outcome for launch".
-                pass
-
-            # Update prev balances (real balances)
-            newb = memory.get("economy", {}).get("balances", {}) or {}
-            set_prev_balances(memory, {"seer": float(newb.get("seer", 0.0) or 0.0), "mon": float(newb.get("mon", 0.0) or 0.0)})
-
-            # Social Ritual
+            memory["launch_control"]["launch_in_progress"] = False
+            
+            append_event(memory, {"type": "portfolio_entry", **new_position})
+            
+            # 3.5 Social Ritual
             signals = {
-                "social": {"highlights": ["Atomic launch successful", "Position ACTIVE"]},
+                "social": {"highlights": ["On-chain launch successful", "Position ACTIVE"]},
                 "onchain": {"highlights": [f"TX confirmed: {tx_hash}"]},
             }
             result = prepare_ritual_post(
@@ -1269,7 +1079,7 @@ def main() -> None:
                 },
             )
             outbox_path = result.outbox_path
-
+            
             memory["launches"][result.launch_id] = {
                 "created_at": utc_now_iso(),
                 "ts": utc_now_ts(),
@@ -1284,22 +1094,15 @@ def main() -> None:
             memory["social"]["last_ritual_post_ts"] = utc_now_ts()
             memory["stats"]["ritual_posts_total"] = int(memory["stats"].get("ritual_posts_total", 0)) + 1
             append_event(memory, {"type": "ritual_post_written", "launch_id": result.launch_id, "outbox_path": outbox_path})
-
+            
             launch_successful = True
-            memory["launch_control"]["launch_in_progress"] = False
             save_memory(memory, MEMORY_PATH)
+            print(f"[LAUNCH SUCCESS] Token: {token_address}, Tx: {tx_hash}")
 
         except Exception as e:
-            print(f"Launch failed: {e}")
-            if "pre_launch_balances" in locals():
-                memory["economy"]["balances"] = pre_launch_balances
-            
+            print(f"[LAUNCH ERROR] {e}")
             memory["launch_control"]["launch_in_progress"] = False
             append_event(memory, {"type": "launch_failed", "reason": str(e)})
-            
-            # Rollback: remove temporary position if it exists (not finalized)
-            # Active positions are only appended after confirmation.
-            
             save_memory(memory, MEMORY_PATH)
 
     record = {

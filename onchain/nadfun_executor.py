@@ -169,19 +169,44 @@ class NadfunExecutor:
 
     def launch_token(self, name, symbol, description, image_path):
         self.ensure_mon_balance()
-
+    
         print(f"Launching token {name} ({symbol})...")
-
+    
+        # ---------- Retry helper ----------
+        def _post_with_retry(url, **kwargs):
+            max_retries = 5
+            for attempt in range(max_retries):
+                resp = requests.post(url, **kwargs)
+    
+                if resp.status_code == 429:
+                    wait_time = 2 ** attempt
+                    print(f"[RateLimit] 429 received. Retrying in {wait_time}s...")
+                    time.sleep(wait_time)
+                    continue
+    
+                try:
+                    resp.raise_for_status()
+                    return resp
+                except Exception as e:
+                    if attempt == max_retries - 1:
+                        raise
+                    wait_time = 2 ** attempt
+                    print(f"[HTTP Error] Retrying in {wait_time}s...")
+                    time.sleep(wait_time)
+    
+            raise Exception("Max retries exceeded for API call")
+    
+        # ---------- 1. Upload Image ----------
         with open(image_path, "rb") as f:
-            img_resp = requests.post(
+            img_resp = _post_with_retry(
                 "https://api.nad.fun/metadata/image",
                 headers={"Content-Type": "image/png"},
                 data=f.read(),
             )
-            img_resp.raise_for_status()
             image_uri = img_resp.json()["image_uri"]
-
-        meta_resp = requests.post(
+    
+        # ---------- 2. Upload Metadata ----------
+        meta_resp = _post_with_retry(
             "https://api.nad.fun/metadata/metadata",
             json={
                 "image_uri": image_uri,
@@ -190,10 +215,10 @@ class NadfunExecutor:
                 "description": description,
             },
         )
-        meta_resp.raise_for_status()
         metadata_uri = meta_resp.json()["metadata_uri"]
-
-        salt_resp = requests.post(
+    
+        # ---------- 3. Mine Salt ----------
+        salt_resp = _post_with_retry(
             "https://api.nad.fun/token/salt",
             json={
                 "creator": self.address,
@@ -202,20 +227,20 @@ class NadfunExecutor:
                 "metadata_uri": metadata_uri,
             },
         )
-        salt_resp.raise_for_status()
         salt_data = salt_resp.json()
         salt = salt_data["salt"]
         predicted_address = salt_data["address"]
-
+    
+        # ---------- 4. On-chain Logic ----------
         deploy_fee = self.curve.functions.feeConfig().call()[0]
         amount_in_wei = self.w3.to_wei(LAUNCH_BUDGET_MON, "ether")
-
+    
         expected_out = self.lens.functions.getInitialBuyAmountOut(amount_in_wei).call()
         amount_out_min = expected_out * SLIPPAGE_BPS // 10000
-
+    
         buffer_wei = self.w3.to_wei(BUFFER_MON, "ether")
         total_value = deploy_fee + amount_in_wei + buffer_wei
-
+    
         params = (
             name,
             symbol,
@@ -224,9 +249,9 @@ class NadfunExecutor:
             salt,
             1,
         )
-
+    
         nonce = self.w3.eth.get_transaction_count(self.address)
-
+    
         tx = self.router.functions.create(params).build_transaction(
             {
                 "from": self.address,
@@ -236,25 +261,27 @@ class NadfunExecutor:
                 "chainId": self.w3.eth.chain_id,
             }
         )
-
+    
         tx["gas"] = int(self.w3.eth.estimate_gas(tx) * 1.2)
-
+    
         signed = self.w3.eth.account.sign_transaction(tx, self.private_key)
         tx_hash = self.w3.eth.send_raw_transaction(signed.raw_transaction)
-
+    
         print(f"Launch TX sent: {tx_hash.hex()}")
-
+    
         receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
         if receipt.status != 1:
             raise Exception(f"Launch failed. Status: {receipt.status}")
-
+    
         print(f"Launch successful! Token: {predicted_address}")
-
+    
         return {
             "token_address": predicted_address,
             "tx_hash": tx_hash.hex(),
             "tokens_received_raw": int(expected_out),
         }
+
+
 
 
 

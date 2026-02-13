@@ -174,6 +174,131 @@ class NadFunExecutor:
             logger.exception("SELL FULL TRACE:")
             raise
 
+    # ----------------
+    # BondingCurveRouter Integration
+    # ----------------
+    async def launch_token_onchain(
+        self,
+        name: str,
+        symbol: str,
+        token_uri: str,
+        initial_mon: float
+    ) -> str:
+        """Launch a new token on Monad via nad.fun BondingCurveRouter."""
+        if not self.trade:
+            raise Exception("Trade object not initialized")
+
+        BONDING_CURVE_ROUTER = "0x6F6B8F1a20703309951a5127c45B49b1CD981A22"
+        
+        BONDING_CURVE_ROUTER_ABI = [
+            {
+                "inputs": [
+                    {
+                        "components": [
+                            {"internalType": "string", "name": "name", "type": "string"},
+                            {"internalType": "string", "name": "symbol", "type": "string"},
+                            {"internalType": "string", "name": "tokenURI", "type": "string"},
+                            {"internalType": "uint256", "name": "amountOut", "type": "uint256"},
+                            {"internalType": "bytes32", "name": "salt", "type": "bytes32"},
+                            {"internalType": "uint8", "name": "actionId", "type": "uint8"}
+                        ],
+                        "internalType": "struct CreateParams",
+                        "name": "params",
+                        "type": "tuple"
+                    }
+                ],
+                "name": "create",
+                "outputs": [],
+                "stateMutability": "payable",
+                "type": "function"
+            },
+            {
+                "anonymous": False,
+                "inputs": [
+                    {"indexed": True, "internalType": "address", "name": "creator", "type": "address"},
+                    {"indexed": True, "internalType": "address", "name": "token", "type": "address"},
+                    {"indexed": False, "internalType": "address", "name": "pool", "type": "address"},
+                    {"indexed": False, "internalType": "string", "name": "name", "type": "string"},
+                    {"indexed": False, "internalType": "string", "name": "symbol", "type": "string"},
+                    {"indexed": False, "internalType": "string", "name": "tokenURI", "type": "string"},
+                    {"indexed": False, "internalType": "uint256", "name": "virtualMonReserve", "type": "uint256"},
+                    {"indexed": False, "internalType": "uint256", "name": "virtualTokenReserve", "type": "uint256"},
+                    {"indexed": False, "internalType": "uint256", "name": "targetTokenAmount", "type": "uint256"}
+                ],
+                "name": "CurveCreate",
+                "type": "event"
+            }
+        ]
+
+        logger.info("=== LAUNCH TOKEN START ===")
+        logger.info(f"  Name: {name}")
+        logger.info(f"  Symbol: {symbol}")
+        logger.info(f"  Token URI: {token_uri}")
+        logger.info(f"  Initial MON: {initial_mon}")
+
+        try:
+            # Instantiate router contract
+            router = self.trade.w3.eth.contract(
+                address=self.trade.w3.to_checksum_address(BONDING_CURVE_ROUTER),
+                abi=BONDING_CURVE_ROUTER_ABI
+            )
+
+            # Convert MON to wei
+            initial_mon_wei = self.trade.w3.to_wei(initial_mon, 'ether')
+
+            # Generate random salt
+            salt = os.urandom(32)
+
+            logger.info("LAUNCH STEP 1: Sending create transaction...")
+            logger.info(f"  Router: {BONDING_CURVE_ROUTER}")
+            logger.info(f"  Initial MON (wei): {initial_mon_wei}")
+            logger.info(f"  Salt: 0x{salt.hex()}")
+
+            # Build create params tuple
+            create_params = (
+                name,
+                symbol,
+                token_uri,
+                0,              # amountOut (we rely on value)
+                salt,
+                0               # actionId
+            )
+
+            # Send create transaction
+            tx_hash = router.functions.create(create_params).transact({
+                "from": self.trade.address,
+                "value": initial_mon_wei
+            })
+
+            logger.info(f"LAUNCH STEP 2: Waiting for receipt (tx: {tx_hash})...")
+
+            # Wait for receipt
+            receipt = await self.trade.wait_for_transaction(tx_hash)
+
+            if not receipt or receipt.get("status") != 1:
+                raise Exception(f"Launch transaction failed. Receipt: {receipt}")
+
+            logger.info("LAUNCH STEP 3: Parsing CurveCreate event...")
+
+            # Parse CurveCreate event
+            events = router.events.CurveCreate().process_receipt(receipt)
+
+            if not events:
+                raise Exception("CurveCreate event not found in receipt")
+
+            token_address = events[0]['args']['token']
+            token_address_checksum = self.trade.w3.to_checksum_address(token_address)
+
+            logger.info(f"LAUNCH STEP 4: Token address found: {token_address_checksum}")
+            logger.info(f"  Pool: {events[0]['args']['pool']}")
+            logger.info(f"  Virtual MON Reserve: {events[0]['args']['virtualMonReserve']}")
+            logger.info(f"  Virtual Token Reserve: {events[0]['args']['virtualTokenReserve']}")
+
+            return token_address_checksum
+
+        except Exception as e:
+            logger.exception("LAUNCH FULL TRACE:")
+            raise
 
     async def wait_for_receipt(self, tx_hash: str, timeout: int = 60) -> Optional[Dict[str, Any]]:
         """Waits for transaction receipt."""

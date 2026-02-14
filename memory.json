@@ -803,6 +803,22 @@
         }
       },
       "ts": 1771017807
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "good",
+      "edge": 0.26,
+      "ucb_score": 1000000000.0,
+      "t": 1,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771064437
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771064446
     }
   ],
   "launches": {
@@ -988,17 +1004,18 @@
       "sentiment": 0.5,
       "novelty": 0.5,
       "liquidity": 0.5,
-      "competition": 0.0
+      "competition": 0.3
     },
-    "edge": 0.5,
+    "edge": 0.26,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "No external posts indicate a neutral market environment.",
-      "Recent events reflect a mix of failed launches and a focus on community resilience."
+      "There are no external posts indicating hype or caution.",
+      "The market is characterized by a neutral sentiment with a focus on humor and patience.",
+      "Few launches have occurred recently, leading to low competition."
     ],
-    "world_text": "The current crypto/meme market is in a neutral state, characterized by a lack of external posts and mixed recent events. Investors are embracing themes of patience and humor, sharing memes that depict the trials of waiting through market stagnation. There is a notable absence of competition, as few launches are occurring, leading to a collective sentiment of endurance among community members.",
-    "ts": "2026-02-13T21:23:13+00:00",
+    "world_text": "The current crypto/meme market is in a neutral state, with investors embracing humor and patience during a stagnant phase. Memes depicting the struggles of waiting resonate within the community, fostering camaraderie. The absence of new competition and launches contributes to a collective endurance sentiment, as investors humorously cope with the current market conditions.",
+    "ts": "2026-02-14T10:20:37+00:00",
     "feed": {
       "source": "none",
       "status": "missing",

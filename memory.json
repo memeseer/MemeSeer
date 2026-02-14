@@ -913,6 +913,52 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771066088
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "balanced",
+      "bucket": "good",
+      "edge": 0.35500000000000004,
+      "ucb_score": 1000000000.0,
+      "t": 2,
+      "buyback_pct": 0.5,
+      "burn_pct": 0.0,
+      "ts": 1771066230
+    },
+    {
+      "type": "gating_decide_no_launch",
+      "mode": "balanced",
+      "bucket": "good",
+      "edge": 0.35500000000000004,
+      "reason": "The current neutral sentiment and low liquidity suggest a lack of enthusiasm and potential for speculative investments, making it an unfavorable time to launch a memecoin.",
+      "ts": 1771066235
+    },
+    {
+      "type": "learning_update",
+      "bucket": "good",
+      "mode": "balanced",
+      "n": 1,
+      "mean_reward": 0.0,
+      "reward": 0.0,
+      "ts": 1771066235
+    },
+    {
+      "type": "run",
+      "record": {
+        "timestamp": "2026-02-14T10:50:35",
+        "timestamp_utc": "2026-02-14T10:50:35+00:00",
+        "agent": "MemeSeer",
+        "world_edge": 0.35500000000000004,
+        "decision": {
+          "launch": false,
+          "reason": "The current neutral sentiment and low liquidity suggest a lack of enthusiasm and potential for speculative investments, making it an unfavorable time to launch a memecoin.",
+          "_raw": "{\n  \"launch\": false,\n  \"reason\": \"The current neutral sentiment and low liquidity suggest a lack of enthusiasm and potential for speculative investments, making it an unfavorable time to launch a memecoin.\"\n}"
+        },
+        "mode": "balanced",
+        "bucket": "good",
+        "reward": 0.0
+      },
+      "ts": 1771066235
     }
   ],
   "launches": {
@@ -958,7 +1004,7 @@
         "iso_date": "2026-02-13T21:23:27+00:00",
         "image_path": "assets/token_images/hodl_1771017800.png",
         "tx_hash": "376e61507b4e558707b45fd1e5407b3907bb5db30cd22471b0fdef883727e2b8",
-        "_current_valuation_mon": 0.0
+        "_current_valuation_mon": 196.00706171444503
       }
     ]
   },
@@ -1063,7 +1109,7 @@
             "mean_reward": 0.0
           },
           "balanced": {
-            "n": 0,
+            "n": 1,
             "mean_reward": 0.0
           },
           "growth": {
@@ -1096,20 +1142,20 @@
   "world": {
     "signals": {
       "trend": 0.5,
-      "sentiment": 0.5,
-      "novelty": 0.5,
-      "liquidity": 0.5,
-      "competition": 0.5
+      "sentiment": 0.4,
+      "novelty": 0.0,
+      "liquidity": 0.4,
+      "competition": 0.0
     },
-    "edge": 0.09999999999999998,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.35500000000000004,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "External posts are empty, defaulting to a neutral signal.",
-      "Recent decisions indicate a conservative approach due to neutral sentiment and lack of strong entry signals."
+      "The current neutral sentiment lacks strong signals for new entries.",
+      "No external posts indicate market hype or fear, leading to a default trend and sentiment."
     ],
-    "world_text": "The current crypto/meme market state appears neutral with a balanced sentiment of 0.5, indicating neither strong optimism nor pessimism. Recent events suggest a conservative strategy is being applied, avoiding new launches due to insufficient signals and competition. Overall, the market remains cautious as it navigates through a cooldown period.",
-    "ts": "2026-02-14T10:48:01+00:00",
+    "world_text": "The current state of the crypto/meme market is characterized by a neutral sentiment with no strong signals for new entries. A conservative approach has been taken due to the lack of established narratives or competition. Liquidity appears low, and there are no recent external posts to indicate significant market movements.",
+    "ts": "2026-02-14T10:50:30+00:00",
     "feed": {
       "source": "none",
       "status": "missing",

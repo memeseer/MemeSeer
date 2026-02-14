@@ -897,6 +897,22 @@
         "reward": 0.0
       },
       "ts": 1771065921
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "neutral",
+      "edge": 0.09999999999999998,
+      "ucb_score": 1000000000.0,
+      "t": 1,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771066081
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771066088
     }
   ],
   "launches": {
@@ -1081,19 +1097,19 @@
     "signals": {
       "trend": 0.5,
       "sentiment": 0.5,
-      "novelty": 0.0,
+      "novelty": 0.5,
       "liquidity": 0.5,
-      "competition": 0.0
+      "competition": 0.5
     },
-    "edge": 0.4,
-    "bucket": "good",
-    "mood": "🟢 Bullish",
+    "edge": 0.09999999999999998,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
     "why": [
-      "No external posts to indicate market sentiment.",
-      "Recent events indicate a conservative policy with blocked launches due to cooldown periods."
+      "External posts are empty, defaulting to a neutral signal.",
+      "Recent decisions indicate a conservative approach due to neutral sentiment and lack of strong entry signals."
     ],
-    "world_text": "The current crypto/meme market state appears neutral, with no external signals providing clear direction. Internal events suggest a conservative approach to market activity, with multiple blocked launches due to active cooldowns. This leads to a balanced sentiment and trend, with limited competition as no new launches are mentioned.",
-    "ts": "2026-02-14T10:45:16+00:00",
+    "world_text": "The current crypto/meme market state appears neutral with a balanced sentiment of 0.5, indicating neither strong optimism nor pessimism. Recent events suggest a conservative strategy is being applied, avoiding new launches due to insufficient signals and competition. Overall, the market remains cautious as it navigates through a cooldown period.",
+    "ts": "2026-02-14T10:48:01+00:00",
     "feed": {
       "source": "none",
       "status": "missing",

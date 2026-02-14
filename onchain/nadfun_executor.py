@@ -158,26 +158,40 @@ class NadfunExecutor:
     async def get_quote(self, token_address: str, amount: int, is_buy: bool):
         """
         Returns quote via Lens.getAmountOut.
+
         amount:
             - if is_buy=True → MON amount in wei
             - if is_buy=False → token amount in raw units
+
+        Always returns: {"amount": int}
         """
+
         token_address = Web3.to_checksum_address(token_address)
 
-        if is_buy:
-            out = self.lens.functions.getAmountOut(
+        try:
+            raw_out = self.lens.functions.getAmountOut(
                 token_address,
                 int(amount),
-                True
+                is_buy
             ).call()
-            return {"amount": out}
-        else:
-            out = self.lens.functions.getAmountOut(
-                token_address,
-                int(amount),
-                False
-            ).call()
-            return {"amount": out}
+
+            # Handle tuple / list returns
+            if isinstance(raw_out, (list, tuple)):
+                if len(raw_out) == 0:
+                    raise Exception("Empty quote response from Lens")
+                amount_out = raw_out[0]
+            else:
+                amount_out = raw_out
+
+            # Ensure int
+            amount_out = int(amount_out)
+
+            return {"amount": amount_out}
+
+        except Exception as e:
+            print(f"[QUOTE ERROR] {e}")
+            return {"amount": 0}
+
 
     def launch_token(self, name, symbol, description, image_path):
         self.ensure_mon_balance()
@@ -291,6 +305,7 @@ class NadfunExecutor:
             "tx_hash": tx_hash.hex(),
             "tokens_received_raw": int(expected_out),
         }
+
 
 
 

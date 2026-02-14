@@ -42,7 +42,7 @@ def manage_portfolio(memory: Dict[str, Any]) -> None:
         return
 
     current_ts = utc_now_ts()
-    executor = NadFunExecutor()
+     = NadfunExecutor()
     dry_run = os.getenv("EXECUTION_DRY_RUN", "0") == "1"
 
     def save_mem():
@@ -270,4 +270,5 @@ def manage_portfolio(memory: Dict[str, Any]) -> None:
             if pos.get("tx_pending"):
                 pos["tx_pending"] = False
                 save_mem()
+
 

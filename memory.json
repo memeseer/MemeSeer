@@ -819,6 +819,22 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771064446
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "good",
+      "edge": 0.5,
+      "ucb_score": 1000000000.0,
+      "t": 1,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771064858
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771064865
     }
   ],
   "launches": {
@@ -1004,18 +1020,17 @@
       "sentiment": 0.5,
       "novelty": 0.5,
       "liquidity": 0.5,
-      "competition": 0.3
+      "competition": 0.0
     },
-    "edge": 0.26,
+    "edge": 0.5,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "There are no external posts indicating hype or caution.",
-      "The market is characterized by a neutral sentiment with a focus on humor and patience.",
-      "Few launches have occurred recently, leading to low competition."
+      "There are no external posts indicating hype or fear.",
+      "The recent internal events reflect a neutral market state with a focus on humor and patience."
     ],
-    "world_text": "The current crypto/meme market is in a neutral state, with investors embracing humor and patience during a stagnant phase. Memes depicting the struggles of waiting resonate within the community, fostering camaraderie. The absence of new competition and launches contributes to a collective endurance sentiment, as investors humorously cope with the current market conditions.",
-    "ts": "2026-02-14T10:20:37+00:00",
+    "world_text": "The current crypto/meme market is in a neutral state, characterized by a lack of external posts and mixed recent events. Investors are embracing themes of patience and humor, sharing memes that depict the trials of waiting through market stagnation. The absence of fresh competition has fostered camaraderie among community members, who are using humor to cope with the lack of excitement.",
+    "ts": "2026-02-14T10:27:38+00:00",
     "feed": {
       "source": "none",
       "status": "missing",

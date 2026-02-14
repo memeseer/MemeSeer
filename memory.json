@@ -835,6 +835,22 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771064865
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "good",
+      "edge": 0.4,
+      "ucb_score": 1000000000.0,
+      "t": 1,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771065217
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771065223
     }
   ],
   "launches": {
@@ -879,7 +895,8 @@
         "timestamp": 1771017807,
         "iso_date": "2026-02-13T21:23:27+00:00",
         "image_path": "assets/token_images/hodl_1771017800.png",
-        "tx_hash": "376e61507b4e558707b45fd1e5407b3907bb5db30cd22471b0fdef883727e2b8"
+        "tx_hash": "376e61507b4e558707b45fd1e5407b3907bb5db30cd22471b0fdef883727e2b8",
+        "_current_valuation_mon": 0.0
       }
     ]
   },
@@ -1018,19 +1035,19 @@
     "signals": {
       "trend": 0.5,
       "sentiment": 0.5,
-      "novelty": 0.5,
+      "novelty": 0.0,
       "liquidity": 0.5,
       "competition": 0.0
     },
-    "edge": 0.5,
+    "edge": 0.4,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "There are no external posts indicating hype or fear.",
-      "The recent internal events reflect a neutral market state with a focus on humor and patience."
+      "There are no external posts indicating market hype or fear.",
+      "The internal context reflects a neutral market state with mixed sentiments and a focus on humor and patience."
     ],
-    "world_text": "The current crypto/meme market is in a neutral state, characterized by a lack of external posts and mixed recent events. Investors are embracing themes of patience and humor, sharing memes that depict the trials of waiting through market stagnation. The absence of fresh competition has fostered camaraderie among community members, who are using humor to cope with the lack of excitement.",
-    "ts": "2026-02-14T10:27:38+00:00",
+    "world_text": "The current crypto/meme market is neutral, marked by a lack of external posts and mixed recent events. Investors are sharing memes about waiting through stagnation, fostering camaraderie. With few new launches, the community emphasizes humor and resilience while navigating a stagnant phase, leading to a light-hearted atmosphere.",
+    "ts": "2026-02-14T10:33:37+00:00",
     "feed": {
       "source": "none",
       "status": "missing",

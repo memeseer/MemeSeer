@@ -157,10 +157,7 @@ class NadfunExecutor:
 
     async def get_quote(self, token_address: str, amount: int, is_buy: bool):
         """
-        Returns quote via Lens.getAmountOut.
-    
-        ABI:
-        getAmountOut(address token, uint256 amountIn, bool isBuy)
+        Returns quote via Lens.getAmountOut(address,uint256,bool)
         """
     
         token_address = Web3.to_checksum_address(token_address)
@@ -168,18 +165,27 @@ class NadfunExecutor:
         try:
             raw_out = self.lens.functions.getAmountOut(
                 token_address,
-                int(amount),   # <-- СНАЧАЛА amount
-                is_buy         # <-- ПОТОМ bool
+                int(amount),
+                is_buy
             ).call()
     
-            if isinstance(raw_out, (list, tuple)):
-                raw_out = raw_out[0]
+            # Если это просто число
+            if isinstance(raw_out, int):
+                return {"amount": raw_out}
     
-            return {"amount": int(raw_out)}
+            # Если это tuple/list
+            if isinstance(raw_out, (list, tuple)):
+                for item in raw_out:
+                    # Берем первый uint256
+                    if isinstance(item, int):
+                        return {"amount": item}
+    
+            raise Exception(f"Unexpected getAmountOut return: {raw_out}")
     
         except Exception as e:
             print(f"[QUOTE ERROR] {e}")
             return {"amount": 0}
+
 
 
 
@@ -296,6 +302,7 @@ class NadfunExecutor:
             "tx_hash": tx_hash.hex(),
             "tokens_received_raw": int(expected_out),
         }
+
 
 
 

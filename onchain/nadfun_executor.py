@@ -62,22 +62,18 @@ class NadfunExecutor:
     def sell_core_for_mon(self, amount_mon_needed):
         print(f"Executing sell for {amount_mon_needed:.2f} MON shortfall...")
 
-        # 1️⃣ decimals
         token_contract = self.w3.eth.contract(
             address=self.SEER_TOKEN,
-            abi=[
-                {
-                    "inputs": [],
-                    "name": "decimals",
-                    "outputs": [{"internalType": "uint8", "name": "", "type": "uint8"}],
-                    "stateMutability": "view",
-                    "type": "function",
-                }
-            ],
+            abi=[{
+                "inputs": [],
+                "name": "decimals",
+                "outputs": [{"internalType": "uint8", "name": "", "type": "uint8"}],
+                "stateMutability": "view",
+                "type": "function",
+            }]
         )
         decimals = token_contract.functions.decimals().call()
 
-        # 2️⃣ curve reserves
         reserves = self.curve.functions.curves(self.SEER_TOKEN).call()
         virt_mon = reserves[2]
         virt_token = reserves[3]
@@ -88,35 +84,30 @@ class NadfunExecutor:
         needed_raw = (virt_token * dy_with_fee) // (virt_mon - dy_with_fee)
         print(f"  Quoted {needed_raw / (10**decimals):.6f} SEER for {amount_mon_needed:.2f} MON")
 
-        # 3️⃣ approve first
         erc20 = self.w3.eth.contract(
             address=self.SEER_TOKEN,
-            abi=[
-                {
-                    "name": "approve",
-                    "type": "function",
-                    "stateMutability": "nonpayable",
-                    "inputs": [
-                        {"name": "spender", "type": "address"},
-                        {"name": "amount", "type": "uint256"},
-                    ],
-                    "outputs": [{"name": "", "type": "bool"}],
-                }
-            ],
+            abi=[{
+                "name": "approve",
+                "type": "function",
+                "stateMutability": "nonpayable",
+                "inputs": [
+                    {"name": "spender", "type": "address"},
+                    {"name": "amount", "type": "uint256"},
+                ],
+                "outputs": [{"name": "", "type": "bool"}],
+            }]
         )
 
         nonce = self.w3.eth.get_transaction_count(self.address)
 
         approve_tx = erc20.functions.approve(
             self.ROUTER_ADDR, needed_raw
-        ).build_transaction(
-            {
-                "from": self.address,
-                "nonce": nonce,
-                "gasPrice": self.w3.eth.gas_price,
-                "chainId": self.w3.eth.chain_id,
-            }
-        )
+        ).build_transaction({
+            "from": self.address,
+            "nonce": nonce,
+            "gasPrice": self.w3.eth.gas_price,
+            "chainId": self.w3.eth.chain_id,
+        })
 
         approve_tx["gas"] = int(self.w3.eth.estimate_gas(approve_tx) * 1.2)
 
@@ -131,7 +122,6 @@ class NadfunExecutor:
 
         print("Approve successful.")
 
-        # 4️⃣ sell
         amount_out_min = int(dy * 0.95)
         deadline = int(time.time() + 1200)
 
@@ -145,14 +135,12 @@ class NadfunExecutor:
 
         nonce += 1
 
-        sell_tx = self.router.functions.sell(params).build_transaction(
-            {
-                "from": self.address,
-                "nonce": nonce,
-                "gasPrice": self.w3.eth.gas_price,
-                "chainId": self.w3.eth.chain_id,
-            }
-        )
+        sell_tx = self.router.functions.sell(params).build_transaction({
+            "from": self.address,
+            "nonce": nonce,
+            "gasPrice": self.w3.eth.gas_price,
+            "chainId": self.w3.eth.chain_id,
+        })
 
         sell_tx["gas"] = int(self.w3.eth.estimate_gas(sell_tx) * 1.2)
 
@@ -167,9 +155,32 @@ class NadfunExecutor:
 
         print("CORE sell successful.")
 
+    async def get_quote(self, token_address: str, amount: int, is_buy: bool):
+        """
+        Returns quote via Lens.getAmountOut.
+        amount:
+            - if is_buy=True → MON amount in wei
+            - if is_buy=False → token amount in raw units
+        """
+        token_address = Web3.to_checksum_address(token_address)
+
+        if is_buy:
+            out = self.lens.functions.getAmountOut(
+                token_address,
+                int(amount),
+                True
+            ).call()
+            return {"amount": out}
+        else:
+            out = self.lens.functions.getAmountOut(
+                token_address,
+                int(amount),
+                False
+            ).call()
+            return {"amount": out}
+
     def launch_token(self, name, symbol, description, image_path):
         self.ensure_mon_balance()
-    
         print(f"Launching token {name} ({symbol})...")
     
         # ---------- Retry helper ----------
@@ -280,6 +291,7 @@ class NadfunExecutor:
             "tx_hash": tx_hash.hex(),
             "tokens_received_raw": int(expected_out),
         }
+
 
 
 

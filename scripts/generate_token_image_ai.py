@@ -5,7 +5,7 @@ import requests
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
-OPENROUTER_URL = "https://openrouter.ai/api/v1/images/generations"
+OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 OUTPUT_DIR = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "assets", "token_images")
@@ -15,13 +15,17 @@ OUTPUT_DIR = os.path.abspath(
 def _post_with_retry(payload):
     max_retries = 4
 
+    headers = {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "http://localhost",
+        "X-Title": "MemeSeer",
+    }
+
     for attempt in range(max_retries):
         resp = requests.post(
             OPENROUTER_URL,
-            headers={
-                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-                "Content-Type": "application/json",
-            },
+            headers=headers,
             json=payload,
             timeout=120,
         )
@@ -56,29 +60,38 @@ No watermark. No extra text.
 """
 
     payload = {
-        "model": "openai/dall-e-3",
-        "prompt": prompt,
-        "size": "1024x1024",
+        "model": "google/gemini-2.5-flash-image",
+        "messages": [
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
     }
 
     data = _post_with_retry(payload)
 
     image_bytes = None
 
-    # OpenRouter returns either url or b64_json
-    if "data" in data and len(data["data"]) > 0:
-        img_data = data["data"][0]
+    # OpenRouter returns images inside choices
+    if "choices" in data and len(data["choices"]) > 0:
+        message = data["choices"][0]["message"]
 
-        if "b64_json" in img_data:
-            image_bytes = base64.b64decode(img_data["b64_json"])
+        # Some models return images array
+        if "images" in message and len(message["images"]) > 0:
+            image_info = message["images"][0]
 
-        elif "url" in img_data:
-            img_resp = requests.get(img_data["url"], timeout=60)
-            img_resp.raise_for_status()
-            image_bytes = img_resp.content
+            if "b64_json" in image_info:
+                image_bytes = base64.b64decode(image_info["b64_json"])
+
+            elif "image_url" in image_info:
+                url = image_info["image_url"]["url"]
+                img_resp = requests.get(url, timeout=60)
+                img_resp.raise_for_status()
+                image_bytes = img_resp.content
 
     if not image_bytes:
-        raise Exception("No image returned from OpenRouter")
+        raise Exception(f"No image returned from OpenRouter. Raw: {data}")
 
     filename = f"{ticker.lower()}_{int(time.time())}.png"
     output_path = os.path.join(OUTPUT_DIR, filename)

@@ -74,7 +74,7 @@ class NadfunExecutor:
         
         # 2. Get Quote (using AMM formula)
         # Bonding Curve for SEER is self.CURVE_ADDR (from main.py logic)
-        reserves = self.curve.functions.curves(token_address).call()
+        reserves = self.curve.functions.curves(self.SEER_TOKEN).call()
         # reserves = (realMon, realToken, virtMon, virtToken)
         virt_mon = reserves[2]
         virt_token = reserves[3]
@@ -246,4 +246,5 @@ class NadfunExecutor:
             "tx_hash": tx_hash.hex(),
             "tokens_received_raw": int(expected_out)
         }
+
 

@@ -59,100 +59,119 @@ class NadfunExecutor:
         print(f"Shortfall detected: {shortfall:.2f} MON. Funding via CORE...")
         self.sell_core_for_mon(shortfall)
 
-    def sell_core_for_mon(self, amount_mon_needed):
-        """
-        Sells CORE (SEER) tokens for MON to cover shortfall.
-        """
-        print(f"Executing sell for {amount_mon_needed:.2f} MON shortfall...")
-        
-        # 1. Get Decimals
-        # We'll try to call decimals() on SEER token
-        token_contract = self.w3.eth.contract(address=self.SEER_TOKEN, abi=[
-            {"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"}
-        ])
-        decimals = token_contract.functions.decimals().call()
-        
-        # 2. Get Quote (using AMM formula)
-        # Bonding Curve for SEER is self.CURVE_ADDR (from main.py logic)
-        reserves = self.curve.functions.curves(self.SEER_TOKEN).call()
-        # reserves = (realMon, realToken, virtMon, virtToken)
-        virt_mon = reserves[2]
-        virt_token = reserves[3]
-        
-        # We need to receive 'amount_mon_needed'
-        # dy = amount_mon_needed * 1e18
-        # Formula: dx = (x * dy) / (y - dy)
-        dy = self.w3.to_wei(amount_mon_needed, "ether")
-        
-        # Safety: add buffer for fee (approx 1%)
-        dy_with_fee = int(dy * 1.01)
-        
-        needed_raw = (virt_token * dy_with_fee) // (virt_mon - dy_with_fee)
-        print(f"  Quoted {needed_raw / (10**decimals):.6f} SEER for {amount_mon_needed:.2f} MON")
-        
-        # 3. Sell
-        # We need SellParams equivalent for the router create
-        # But wait, we are selling an EXISTING token. We call router.sell()
-        if not hasattr(self, "router_sell_abi"):
-             self.router_sell_abi = [
-                {
-                    "inputs": [
-                        {
-                            "components": [
-                                {"internalType": "uint256", "name": "amountIn", "type": "uint256"},
-                                {"internalType": "uint256", "name": "amountOutMin", "type": "uint256"},
-                                {"internalType": "address", "name": "token", "type": "address"},
-                                {"internalType": "address", "name": "to", "type": "address"},
-                                {"internalType": "uint256", "name": "deadline", "type": "uint256"}
-                            ],
-                            "internalType": "struct SellParams",
-                            "name": "params",
-                            "type": "tuple"
-                        }
-                    ],
-                    "name": "sell",
-                    "outputs": [],
-                    "stateMutability": "nonpayable",
-                    "type": "function"
-                }
-            ]
-        
-        router_sell = self.w3.eth.contract(address=self.ROUTER_ADDR, abi=self.router_sell_abi)
-        
-        # Slippage: we want at least our shortfall
-        amount_out_min = dy
-        
-        # Deadline: 20 mins
-        deadline = int(time.time() + 1200)
-        
-        params = (
-            needed_raw,
-            amount_out_min,
-            self.SEER_TOKEN,
-            self.address,
-            deadline
-        )
-        
-        # Build and send
-        nonce = self.w3.eth.get_transaction_count(self.address)
-        tx = router_sell.functions.sell(params).build_transaction({
-            "from": self.address,
-            "nonce": nonce,
-            "gasPrice": self.w3.eth.gas_price,
-            "chainId": self.w3.eth.chain_id
-        })
-        
-        tx["gas"] = int(self.w3.eth.estimate_gas(tx) * 1.2)
-        signed = self.w3.eth.account.sign_transaction(tx, self.private_key)
-        tx_hash = self.w3.eth.send_raw_transaction(signed.raw_transaction)
-        
-        print(f"Sell TX sent: {tx_hash.hex()}")
-        receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
-        
-        if receipt.status != 1:
-            raise Exception("CORE sell failed")
-            
-        print("CORE sell successful.")
+def sell_core_for_mon(self, amount_mon_needed):
+    """
+    Sells CORE (SEER) tokens for MON to cover shortfall.
+    Compatible with current IBondingCurveRouter ABI:
+    sell(address to, address token)
+    """
+
+    print(f"Executing sell for {amount_mon_needed:.2f} MON shortfall...")
+
+    # --------------------------------------------------
+    # 1️⃣ Get SEER decimals
+    # --------------------------------------------------
+    token_contract = self.w3.eth.contract(
+        address=self.SEER_TOKEN,
+        abi=[{
+            "inputs": [],
+            "name": "decimals",
+            "outputs": [{"internalType": "uint8", "name": "", "type": "uint8"}],
+            "stateMutability": "view",
+            "type": "function",
+        }]
+    )
+
+    decimals = token_contract.functions.decimals().call()
+
+    # --------------------------------------------------
+    # 2️⃣ Estimate required SEER using bonding curve
+    # --------------------------------------------------
+    reserves = self.curve.functions.curves(self.SEER_TOKEN).call()
+    # reserves = (realMon, realToken, virtMon, virtToken)
+
+    virt_mon = reserves[2]
+    virt_token = reserves[3]
+
+    dy = self.w3.to_wei(amount_mon_needed, "ether")
+    dy_with_fee = int(dy * 1.01)  # 1% safety buffer
+
+    needed_raw = (virt_token * dy_with_fee) // (virt_mon - dy_with_fee)
+
+    print(f"  Quoted {needed_raw / (10**decimals):.6f} SEER for {amount_mon_needed:.2f} MON")
+
+    # --------------------------------------------------
+    # 3️⃣ Approve router to spend SEER
+    # --------------------------------------------------
+    erc20 = self.w3.eth.contract(
+        address=self.SEER_TOKEN,
+        abi=[{
+            "name": "approve",
+            "type": "function",
+            "stateMutability": "nonpayable",
+            "inputs": [
+                {"name": "spender", "type": "address"},
+                {"name": "amount", "type": "uint256"},
+            ],
+            "outputs": [{"name": "", "type": "bool"}],
+        }]
+    )
+
+    nonce = self.w3.eth.get_transaction_count(self.address)
+
+    approve_tx = erc20.functions.approve(
+        self.ROUTER_ADDR,
+        needed_raw
+    ).build_transaction({
+        "from": self.address,
+        "nonce": nonce,
+        "gasPrice": self.w3.eth.gas_price,
+        "chainId": self.w3.eth.chain_id,
+    })
+
+    approve_tx["gas"] = int(self.w3.eth.estimate_gas(approve_tx) * 1.2)
+
+    signed_approve = self.w3.eth.account.sign_transaction(approve_tx, self.private_key)
+    approve_hash = self.w3.eth.send_raw_transaction(signed_approve.raw_transaction)
+
+    print(f"Approve TX sent: {approve_hash.hex()}")
+
+    approve_receipt = self.w3.eth.wait_for_transaction_receipt(approve_hash)
+
+    if approve_receipt.status != 1:
+        raise Exception("Approve failed")
+
+    print("Approve successful.")
+
+    # --------------------------------------------------
+    # 4️⃣ Call router.sell(to, token)
+    # --------------------------------------------------
+    nonce += 1
+
+    sell_tx = self.router.functions.sell(
+        self.address,        # to
+        self.SEER_TOKEN      # token
+    ).build_transaction({
+        "from": self.address,
+        "nonce": nonce,
+        "gasPrice": self.w3.eth.gas_price,
+        "chainId": self.w3.eth.chain_id,
+    })
+
+    sell_tx["gas"] = int(self.w3.eth.estimate_gas(sell_tx) * 1.2)
+
+    signed_sell = self.w3.eth.account.sign_transaction(sell_tx, self.private_key)
+    sell_hash = self.w3.eth.send_raw_transaction(signed_sell.raw_transaction)
+
+    print(f"Sell TX sent: {sell_hash.hex()}")
+
+    receipt = self.w3.eth.wait_for_transaction_receipt(sell_hash)
+
+    if receipt.status != 1:
+        raise Exception("CORE sell failed")
+
+    print("CORE sell successful.")
+
 
     def launch_token(self, name, symbol, description, image_path):
         """
@@ -246,5 +265,6 @@ class NadfunExecutor:
             "tx_hash": tx_hash.hex(),
             "tokens_received_raw": int(expected_out)
         }
+
 
 

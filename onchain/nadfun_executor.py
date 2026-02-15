@@ -62,8 +62,8 @@ class NadfunExecutor:
     def sell_core_for_mon(self, amount_mon_needed):
         """
         Sells CORE (SEER) tokens for MON to cover shortfall.
-        Compatible with current IBondingCurveRouter ABI:
-        sell(address to, address token)
+        Uses router.sell(SellParams) where SellParams is:
+        (amountIn, amountOutMin, token, to, deadline)
         """
     
         print(f"Executing sell for {amount_mon_needed:.2f} MON shortfall...")
@@ -94,7 +94,12 @@ class NadfunExecutor:
         virt_token = reserves[3]
     
         dy = self.w3.to_wei(amount_mon_needed, "ether")
-        dy_with_fee = int(dy * 1.01)  # 1% safety buffer
+    
+        # 1% safety buffer
+        dy_with_fee = int(dy * 1.01)
+    
+        if dy_with_fee >= virt_mon:
+            raise Exception("Shortfall too large relative to curve liquidity")
     
         needed_raw = (virt_token * dy_with_fee) // (virt_mon - dy_with_fee)
     
@@ -144,14 +149,22 @@ class NadfunExecutor:
         print("Approve successful.")
     
         # --------------------------------------------------
-        # 4️⃣ Call router.sell(to, token)
+        # 4️⃣ Execute router.sell(SellParams)
         # --------------------------------------------------
+        amount_out_min = dy  # want at least the shortfall
+        deadline = int(time.time() + 1200)
+    
+        params = (
+            needed_raw,       # amountIn
+            amount_out_min,   # amountOutMin
+            self.SEER_TOKEN,  # token
+            self.address,     # to
+            deadline          # deadline
+        )
+    
         nonce += 1
     
-        sell_tx = self.router.functions.sell(
-            self.address,        # to
-            self.SEER_TOKEN      # token
-        ).build_transaction({
+        sell_tx = self.router.functions.sell(params).build_transaction({
             "from": self.address,
             "nonce": nonce,
             "gasPrice": self.w3.eth.gas_price,
@@ -171,6 +184,7 @@ class NadfunExecutor:
             raise Exception("CORE sell failed")
     
         print("CORE sell successful.")
+
 
 
     def launch_token(self, name, symbol, description, image_path):
@@ -265,6 +279,7 @@ class NadfunExecutor:
             "tx_hash": tx_hash.hex(),
             "tokens_received_raw": int(expected_out)
         }
+
 
 
 

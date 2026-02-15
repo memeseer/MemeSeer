@@ -4,7 +4,7 @@ import time
 import asyncio
 from typing import Any, Dict, Optional
 from economy import apply_flywheel
-from onchain.nadfun_executor import NadfunExecutor
+from execution.nadfun_executor import NadFunExecutor
 
 # Constants
 TRAILING_FACTOR = 0.7
@@ -42,9 +42,8 @@ def manage_portfolio(memory: Dict[str, Any]) -> None:
         return
 
     current_ts = utc_now_ts()
-    executor = NadfunExecutor()
+    executor = NadFunExecutor()
     dry_run = os.getenv("EXECUTION_DRY_RUN", "0") == "1"
-
 
     def save_mem():
         # Using the same logic as main.py save_memory
@@ -271,6 +270,3 @@ def manage_portfolio(memory: Dict[str, Any]) -> None:
             if pos.get("tx_pending"):
                 pos["tx_pending"] = False
                 save_mem()
-
-
-

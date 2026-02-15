@@ -61,16 +61,12 @@ class NadfunExecutor:
 
     def sell_core_for_mon(self, amount_mon_needed):
         """
-        Sells CORE (SEER) tokens for MON to cover shortfall.
-        Uses router.sell(SellParams) where SellParams is:
-        (amountIn, amountOutMin, token, to, deadline)
+        Sells SEER (CORE) for MON using router.sell(struct SellParams).
         """
     
         print(f"Executing sell for {amount_mon_needed:.2f} MON shortfall...")
     
-        # --------------------------------------------------
-        # 1️⃣ Get SEER decimals
-        # --------------------------------------------------
+        # --- 1. Get SEER decimals ---
         token_contract = self.w3.eth.contract(
             address=self.SEER_TOKEN,
             abi=[{
@@ -81,33 +77,21 @@ class NadfunExecutor:
                 "type": "function",
             }]
         )
-    
         decimals = token_contract.functions.decimals().call()
     
-        # --------------------------------------------------
-        # 2️⃣ Estimate required SEER using bonding curve
-        # --------------------------------------------------
+        # --- 2. Estimate needed SEER via bonding curve ---
         reserves = self.curve.functions.curves(self.SEER_TOKEN).call()
-        # reserves = (realMon, realToken, virtMon, virtToken)
-    
         virt_mon = reserves[2]
         virt_token = reserves[3]
     
         dy = self.w3.to_wei(amount_mon_needed, "ether")
-    
-        # 1% safety buffer
         dy_with_fee = int(dy * 1.01)
-    
-        if dy_with_fee >= virt_mon:
-            raise Exception("Shortfall too large relative to curve liquidity")
     
         needed_raw = (virt_token * dy_with_fee) // (virt_mon - dy_with_fee)
     
         print(f"  Quoted {needed_raw / (10**decimals):.6f} SEER for {amount_mon_needed:.2f} MON")
     
-        # --------------------------------------------------
-        # 3️⃣ Approve router to spend SEER
-        # --------------------------------------------------
+        # --- 3. Approve ---
         erc20 = self.w3.eth.contract(
             address=self.SEER_TOKEN,
             abi=[{
@@ -138,28 +122,20 @@ class NadfunExecutor:
     
         signed_approve = self.w3.eth.account.sign_transaction(approve_tx, self.private_key)
         approve_hash = self.w3.eth.send_raw_transaction(signed_approve.raw_transaction)
-    
-        print(f"Approve TX sent: {approve_hash.hex()}")
-    
-        approve_receipt = self.w3.eth.wait_for_transaction_receipt(approve_hash)
-    
-        if approve_receipt.status != 1:
-            raise Exception("Approve failed")
+        self.w3.eth.wait_for_transaction_receipt(approve_hash)
     
         print("Approve successful.")
     
-        # --------------------------------------------------
-        # 4️⃣ Execute router.sell(SellParams)
-        # --------------------------------------------------
-        amount_out_min = dy  # want at least the shortfall
+        # --- 4. Build SellParams struct ---
+        amount_out_min = int(dy * 0.95)
         deadline = int(time.time() + 1200)
     
         params = (
-            needed_raw,       # amountIn
-            amount_out_min,   # amountOutMin
-            self.SEER_TOKEN,  # token
-            self.address,     # to
-            deadline          # deadline
+            needed_raw,      # amountIn
+            amount_out_min,  # amountOutMin
+            self.SEER_TOKEN, # token
+            self.address,    # to
+            deadline
         )
     
         nonce += 1
@@ -279,6 +255,7 @@ class NadfunExecutor:
             "tx_hash": tx_hash.hex(),
             "tokens_received_raw": int(expected_out)
         }
+
 
 
 

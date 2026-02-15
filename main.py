@@ -270,6 +270,10 @@ def load_external_feed(path: str = "external_feed.json") -> Dict[str, Any]:
     Supports list of strings or dict with "posts".
     Returns {"posts": [str], "meta": dict}
     """
+    if not os.path.isabs(path):
+        root = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(root, path)
+
     if not os.path.exists(path):
         return {"posts": [], "meta": {"source": "none", "status": "missing"}}
     
@@ -754,7 +758,16 @@ def get_amount_out_from_pair(w3, pair_address, token_in, amount_in_raw):
 # Main
 # ----------------
 def main() -> None:
+    import subprocess
+    import sys
     print(f"[{AGENT_NAME}] booted.")
+
+    try:
+        # Run ingestion as a separate process before observe()
+        ingest_script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ingest", "fetch_external_feed.py")
+        subprocess.run([sys.executable, ingest_script], check=False)
+    except Exception as e:
+        print(f"[INGEST WARNING] Ingestion trigger failed: {e}")
 
     memory = load_memory(MEMORY_PATH)
     ensure_memory(memory)

@@ -49,14 +49,30 @@ def generate_ai_token_image(name, ticker, mood):
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     prompt = f"""
-Create a high quality crypto memecoin logo.
+Create a viral crypto memecoin logo.
+
 1:1 square format.
-Clean solid background.
-Bold centered mascot-style character.
-Large readable ticker text: {ticker}.
-Theme mood: {mood}.
-Style: modern crypto branding, vector illustration, high contrast.
-No watermark. No extra text.
+Bold, chaotic, internet-native energy.
+Big expressive mascot character in the center.
+Exaggerated facial expression (crazy, euphoric, degen energy).
+Thick outlines, high contrast, vibrant colors.
+
+Large readable ticker text: {ticker}
+Make the ticker feel powerful and meme-worthy.
+
+Mood: {mood}
+
+Style:
+- Crypto Twitter culture
+- Degen energy
+- Slight absurdity
+- Bold vector illustration
+- Clean but explosive composition
+
+No watermark.
+No extra random text.
+No realistic photography.
+No blur.
 """
 
     payload = {
@@ -109,4 +125,5 @@ No watermark. No extra text.
     )
 
     return rel_path.replace("\\", "/")
+
 

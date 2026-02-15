@@ -4,7 +4,7 @@ import time
 import asyncio
 from typing import Any, Dict, Optional
 from economy import apply_flywheel
-from execution.nadfun_executor import NadFunExecutor
+from execution.nadfun_executor import NadfunExecutor
 
 # Constants
 TRAILING_FACTOR = 0.7
@@ -270,3 +270,4 @@ def manage_portfolio(memory: Dict[str, Any]) -> None:
             if pos.get("tx_pending"):
                 pos["tx_pending"] = False
                 save_mem()
+

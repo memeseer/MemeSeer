@@ -4,7 +4,6 @@ import base64
 import requests
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 OUTPUT_DIR = os.path.abspath(
@@ -82,29 +81,42 @@ No blur.
                 "role": "user",
                 "content": prompt
             }
-        ]
+        ],
+        "modalities": ["image"],
+        "size": "1024x1024"
     }
 
+    print("[IMAGE] Sending request to OpenRouter...")
     data = _post_with_retry(payload)
 
     image_bytes = None
 
-    # OpenRouter returns images inside choices
+    # Debug info (можешь убрать потом)
+    print("[IMAGE] Response keys:", list(data.keys()))
+
     if "choices" in data and len(data["choices"]) > 0:
         message = data["choices"][0]["message"]
 
-        # Some models return images array
+        # Variant 1: images array
         if "images" in message and len(message["images"]) > 0:
             image_info = message["images"][0]
 
+            # Case A: base64 directly
             if "b64_json" in image_info:
                 image_bytes = base64.b64decode(image_info["b64_json"])
 
+            # Case B: image_url
             elif "image_url" in image_info:
                 url = image_info["image_url"]["url"]
-                img_resp = requests.get(url, timeout=60)
-                img_resp.raise_for_status()
-                image_bytes = img_resp.content
+
+                # 🟢 Handle base64 data URL
+                if url.startswith("data:image"):
+                    header, encoded = url.split(",", 1)
+                    image_bytes = base64.b64decode(encoded)
+                else:
+                    img_resp = requests.get(url, timeout=60)
+                    img_resp.raise_for_status()
+                    image_bytes = img_resp.content
 
     if not image_bytes:
         raise Exception(f"No image returned from OpenRouter. Raw: {data}")
@@ -115,7 +127,7 @@ No blur.
     with open(output_path, "wb") as f:
         f.write(image_bytes)
 
-    # Safety: <5MB
+    # Safety: file size < 5MB
     if os.path.getsize(output_path) > 5 * 1024 * 1024:
         raise Exception("Generated image exceeds 5MB limit")
 
@@ -124,6 +136,9 @@ No blur.
         os.path.join(os.path.dirname(__file__), "..")
     )
 
+    print(f"[IMAGE] Saved: {rel_path}")
+
     return rel_path.replace("\\", "/")
+
 
 

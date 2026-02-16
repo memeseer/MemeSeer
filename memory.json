@@ -1,1 +1,387 @@
-{}
+{
+  "agent": "MemeSeer",
+  "created_at": "2026-02-16T02:12:45+00:00",
+  "stats": {
+    "ritual_posts_total": 1
+  },
+  "events": [
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "neutral",
+      "edge": -0.1499999999999999,
+      "ucb_score": 1000000000.0,
+      "t": 1,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771207970
+    },
+    {
+      "type": "portfolio_entry",
+      "address": "0xa00E0d17C56AcD232BDB9472393Fd87C5A5a7777",
+      "ticker": "MOON",
+      "token_address": "0xa00E0d17C56AcD232BDB9472393Fd87C5A5a7777",
+      "entry_cost_mon": 200.0,
+      "token_amount": 1179003306462890820097892,
+      "sold_pct_total": 0.0,
+      "ladder_hits": [],
+      "tx_pending": false,
+      "mode": "conservative",
+      "status": "ACTIVE",
+      "timestamp": 1771207998,
+      "iso_date": "2026-02-16T02:13:18+00:00",
+      "image_path": "assets/token_images/moon_1771207989.png",
+      "tx_hash": "62effdbb1d32b671cfe29ca6203f1412be3d3e5850f72665c041431d9f97731d",
+      "ts": 1771207998
+    },
+    {
+      "type": "ritual_post_written",
+      "launch_id": "8194f1d2c52a03f4",
+      "outbox_path": "outbox/post_20260216_021318_launch_8194f1d2c52a03f4.md",
+      "ts": 1771207998
+    },
+    {
+      "type": "run",
+      "record": {
+        "timestamp": "2026-02-16T02:13:18",
+        "timestamp_utc": "2026-02-16T02:13:18+00:00",
+        "agent": "MemeSeer",
+        "world": "The current crypto market shows mixed signals. While hype around new trading features on X suggests potential growth, the significant loss on Logan Paul's NFT purchase and the overall cautious sentiment create uncertainty. Increased liquidity in specific tokens like XMR indicates ongoing interest, while a competitive landscape emerges with new market entrants.",
+        "thought": "In the current crypto landscape, the mixed signals have given rise to several meme narratives. The hype surrounding new trading features on X has inspired memes that celebrate the potential for profits, with playful takes on \"to the moon\" and \"diamond hands.\" Meanwhile, the fallout from Logan Paul's NFT purchase serves as a cautionary tale, leading to memes that mock overhyped investments and the \"FOMO\" culture that often drives speculation. \n\nIncreased liquidity in tokens like XMR has sparked a resurgence of \"underdog\" memes, positioning these lesser-known coins as the next big thing. Simultaneously, the influx of new market entrants has bred a competitive atmosphere, giving rise to memes that humorously portray the \"crypto wars,\" with different tokens battling for supremacy. Overall, the cautious sentiment among investors fuels a narrative of uncertainty, prompting memes that reflect the rollercoaster nature of the crypto market, often balancing between excitement and skepticism.",
+        "decision": {
+          "launch": true,
+          "reason": "The current mixed signals and competitive atmosphere create a fertile ground for meme narratives, which can drive interest and investment in a new memecoin.",
+          "_raw": "{\n  \"launch\": true,\n  \"reason\": \"The current mixed signals and competitive atmosphere create a fertile ground for meme narratives, which can drive interest and investment in a new memecoin.\"\n}"
+        },
+        "token_idea": {
+          "name": "MoonBucks",
+          "ticker": "MOON",
+          "narrative": "Join the MoonBucks revolution where 'to the moon' is not just a phrase, but a lifestyle! Celebrate profits and diamond hands while poking fun at the FOMO culture.",
+          "why_now": "With mixed signals in the crypto world, the hype around new trading features and the cautionary tales of overhyped investments make MoonBucks the perfect blend of excitement and skepticism for meme-loving investors.",
+          "_raw": "{\n  \"name\": \"MoonBucks\",\n  \"ticker\": \"MOON\",\n  \"narrative\": \"Join the MoonBucks revolution where 'to the moon' is not just a phrase, but a lifestyle! Celebrate profits and diamond hands while poking fun at the FOMO culture.\",\n  \"why_now\": \"With mixed signals in the crypto world, the hype around new trading features and the cautionary tales of overhyped investments make MoonBucks the perfect blend of excitement and skepticism for meme-loving investors.\"\n}"
+        },
+        "outbox_path": "outbox/post_20260216_021318_launch_8194f1d2c52a03f4.md",
+        "economy": {
+          "balances": {
+            "seer": 1000.0,
+            "mon": 0.0,
+            "seer_burned": 0.0
+          },
+          "treasury_mon": 0.0,
+          "stats": {
+            "seer_sold_total": 0.0,
+            "buyback_mon_total": 0.0,
+            "seer_bought_total": 0.0,
+            "seer_burned_total": 0.0
+          },
+          "params": {
+            "min_seer_to_live": 1.0,
+            "mon_per_launch": 5.0,
+            "max_seer_sell_frac": 0.25,
+            "treasury_pct_of_profit": 0.3,
+            "min_operating_mon": 5.0,
+            "sell_frac_scale_bad": 0.25,
+            "sell_frac_scale_neutral": 0.6,
+            "sell_frac_scale_good": 1.0
+          },
+          "seer_price_mon": 1.0
+        },
+        "learning": {
+          "bandit": {
+            "buckets": {
+              "bad": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              },
+              "neutral": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              },
+              "good": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              }
+            }
+          },
+          "last_balances": {
+            "seer": 1000.0,
+            "mon": 0.0
+          },
+          "params": {
+            "exploration_c": 1.5
+          }
+        }
+      },
+      "ts": 1771207998
+    }
+  ],
+  "launches": {
+    "8194f1d2c52a03f4": {
+      "created_at": "2026-02-16T02:13:18+00:00",
+      "ts": 1771207998,
+      "status": "LAUNCH_COMPLETE",
+      "token_address": "0xa00E0d17C56AcD232BDB9472393Fd87C5A5a7777",
+      "token_idea": {
+        "name": "MoonBucks",
+        "ticker": "MOON",
+        "narrative": "Join the MoonBucks revolution where 'to the moon' is not just a phrase, but a lifestyle! Celebrate profits and diamond hands while poking fun at the FOMO culture.",
+        "why_now": "With mixed signals in the crypto world, the hype around new trading features and the cautionary tales of overhyped investments make MoonBucks the perfect blend of excitement and skepticism for meme-loving investors."
+      },
+      "world": "The current crypto market shows mixed signals. While hype around new trading features on X suggests potential growth, the significant loss on Logan Paul's NFT purchase and the overall cautious sentiment create uncertainty. Increased liquidity in specific tokens like XMR indicates ongoing interest, while a competitive landscape emerges with new market entrants.",
+      "thought": "In the current crypto landscape, the mixed signals have given rise to several meme narratives. The hype surrounding new trading features on X has inspired memes that celebrate the potential for profits, with playful takes on \"to the moon\" and \"diamond hands.\" Meanwhile, the fallout from Logan Paul's NFT purchase serves as a cautionary tale, leading to memes that mock overhyped investments and the \"FOMO\" culture that often drives speculation. \n\nIncreased liquidity in tokens like XMR has sparked a resurgence of \"underdog\" memes, positioning these lesser-known coins as the next big thing. Simultaneously, the influx of new market entrants has bred a competitive atmosphere, giving rise to memes that humorously portray the \"crypto wars,\" with different tokens battling for supremacy. Overall, the cautious sentiment among investors fuels a narrative of uncertainty, prompting memes that reflect the rollercoaster nature of the crypto market, often balancing between excitement and skepticism.",
+      "decision": {
+        "launch": true,
+        "reason": "The current mixed signals and competitive atmosphere create a fertile ground for meme narratives, which can drive interest and investment in a new memecoin."
+      },
+      "outbox_path": "outbox/post_20260216_021318_launch_8194f1d2c52a03f4.md",
+      "tx_hash": "62effdbb1d32b671cfe29ca6203f1412be3d3e5850f72665c041431d9f97731d"
+    }
+  },
+  "social": {
+    "outbox_dir": "outbox",
+    "last_ritual_post_ts": 1771207998
+  },
+  "portfolio": {
+    "active_positions": [
+      {
+        "address": "0xa00E0d17C56AcD232BDB9472393Fd87C5A5a7777",
+        "ticker": "MOON",
+        "token_address": "0xa00E0d17C56AcD232BDB9472393Fd87C5A5a7777",
+        "entry_cost_mon": 200.0,
+        "token_amount": 1179003306462890820097892,
+        "sold_pct_total": 0.0,
+        "ladder_hits": [],
+        "tx_pending": false,
+        "mode": "conservative",
+        "status": "ACTIVE",
+        "timestamp": 1771207998,
+        "iso_date": "2026-02-16T02:13:18+00:00",
+        "image_path": "assets/token_images/moon_1771207989.png",
+        "tx_hash": "62effdbb1d32b671cfe29ca6203f1412be3d3e5850f72665c041431d9f97731d"
+      }
+    ]
+  },
+  "launch_control": {
+    "last_launch_timestamp": 1771207998,
+    "launch_in_progress": false
+  },
+  "core_guard": {
+    "daily_core_sold": 0.0,
+    "daily_reset_ts": 0,
+    "max_daily_sell_pct_treasury": 0.05,
+    "max_single_launch_pct_treasury": 0.05,
+    "loss_streak": 0,
+    "launch_blocked_until": 0
+  },
+  "system": {
+    "kill_switch": false
+  },
+  "economy": {
+    "balances": {
+      "seer": 1000.0,
+      "mon": 0.0,
+      "seer_burned": 0.0
+    },
+    "treasury_mon": 0.0,
+    "stats": {
+      "seer_sold_total": 0.0,
+      "buyback_mon_total": 0.0,
+      "seer_bought_total": 0.0,
+      "seer_burned_total": 0.0
+    },
+    "params": {
+      "min_seer_to_live": 1.0,
+      "mon_per_launch": 5.0,
+      "max_seer_sell_frac": 0.25,
+      "treasury_pct_of_profit": 0.3,
+      "min_operating_mon": 5.0,
+      "sell_frac_scale_bad": 0.25,
+      "sell_frac_scale_neutral": 0.6,
+      "sell_frac_scale_good": 1.0
+    },
+    "seer_price_mon": 1.0
+  },
+  "learning": {
+    "bandit": {
+      "buckets": {
+        "bad": {
+          "conservative": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "balanced": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "growth": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "signal": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "aggressive": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "no_launch": {
+            "n": 0,
+            "mean_reward": 0.0
+          }
+        },
+        "neutral": {
+          "conservative": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "balanced": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "growth": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "signal": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "aggressive": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "no_launch": {
+            "n": 0,
+            "mean_reward": 0.0
+          }
+        },
+        "good": {
+          "conservative": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "balanced": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "growth": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "signal": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "aggressive": {
+            "n": 0,
+            "mean_reward": 0.0
+          },
+          "no_launch": {
+            "n": 0,
+            "mean_reward": 0.0
+          }
+        }
+      }
+    },
+    "last_balances": {
+      "seer": 1000.0,
+      "mon": 0.0
+    },
+    "params": {
+      "exploration_c": 1.5
+    }
+  },
+  "world": {
+    "signals": {
+      "trend": 0.6,
+      "sentiment": 0.4,
+      "novelty": 0.0,
+      "liquidity": 0.5,
+      "competition": 0.7
+    },
+    "edge": -0.1499999999999999,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
+    "why": [
+      "Logan Paul's NFT loss indicates a cautious sentiment around NFTs and crypto investments.",
+      "The upcoming launch of crypto trading on X could signal increased interest and competition in the market."
+    ],
+    "world_text": "The current crypto market shows mixed signals. While hype around new trading features on X suggests potential growth, the significant loss on Logan Paul's NFT purchase and the overall cautious sentiment create uncertainty. Increased liquidity in specific tokens like XMR indicates ongoing interest, while a competitive landscape emerges with new market entrants.",
+    "ts": "2026-02-16T02:12:50+00:00",
+    "feed": {
+      "source": "ingestion_v1",
+      "status": "ok",
+      "updated_at": "2026-02-16T02:12:45.814780+00:00",
+      "count": 30
+    },
+    "feed_source": "ingestion_v1",
+    "posts_used": 30
+  }
+}

@@ -161,6 +161,37 @@ class NadfunExecutor:
     
         print("CORE sell successful.")
 
+    async def get_quote(self, token_address: str, amount: float, is_buy: bool):
+        """
+        Returns quote using Lens.getAmountOut.
+    
+        amount:
+            - if is_buy=True → MON amount in ether
+            - if is_buy=False → token amount (raw units)
+        """
+    
+        token_address = Web3.to_checksum_address(token_address)
+    
+        try:
+            if is_buy:
+                amount_wei = self.w3.to_wei(amount, "ether")
+                router, amount_out = self.lens.functions.getAmountOut(
+                    token_address,
+                    amount_wei,
+                    True
+                ).call()
+            else:
+                router, amount_out = self.lens.functions.getAmountOut(
+                    token_address,
+                    int(amount),
+                    False
+                ).call()
+    
+            return {"amount": int(amount_out)}
+    
+        except Exception as e:
+            print(f"[QUOTE ERROR] {e}")
+            return {"amount": 0}
 
 
     def launch_token(self, name, symbol, description, image_path):
@@ -255,6 +286,7 @@ class NadfunExecutor:
             "tx_hash": tx_hash.hex(),
             "tokens_received_raw": int(expected_out)
         }
+
 
 
 

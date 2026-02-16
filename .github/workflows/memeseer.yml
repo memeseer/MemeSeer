@@ -41,29 +41,11 @@ jobs:
           EXECUTION_DRY_RUN: ${{ secrets.EXECUTION_DRY_RUN }}
         run: python main.py
 
-      # 🔁 Sync state to site/public so Vercel can see it
-      - name: Sync state to site
-        run: |
-          mkdir -p site/public
-
-          # Copy memory.json
-          cp memory.json site/public/memory.json
-
-          # Copy outbox
-          rm -rf site/public/outbox
-          mkdir -p site/public/outbox
-          cp -r outbox/* site/public/outbox/
-
       - name: Commit updated state
         run: |
           git config user.name "memeseer-bot"
           git config user.email "bot@memeseer.ai"
-
-          git add memory.json
-          git add outbox/*.md outbox/index.json
-          git add site/public/memory.json
-          git add site/public/outbox
-
+          git add memory.json outbox/*.md outbox/index.json
           git commit -m "hourly state update" || echo "No changes"
           git push
 

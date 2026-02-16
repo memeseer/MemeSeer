@@ -335,6 +335,22 @@
         }
       },
       "ts": 1771203296
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "neutral",
+      "edge": -0.010000000000000009,
+      "ucb_score": 1000000000.0,
+      "t": 1,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771203778
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771203786
     }
   ],
   "launches": {
@@ -379,7 +395,8 @@
         "timestamp": 1771203296,
         "iso_date": "2026-02-16T00:54:56+00:00",
         "image_path": "assets/token_images/memez_1771203287.png",
-        "tx_hash": "088a7f1f00a89c57e04e1f2cd4b05e06fdd6f37ac0f07bd2e7d6ad7b1334a8b0"
+        "tx_hash": "088a7f1f00a89c57e04e1f2cd4b05e06fdd6f37ac0f07bd2e7d6ad7b1334a8b0",
+        "_current_valuation_mon": 211.3153281677588
       }
     ]
   },
@@ -520,21 +537,21 @@
       "sentiment": 0.4,
       "novelty": 0.7,
       "liquidity": 0.5,
-      "competition": 0.5
+      "competition": 0.7
     },
-    "edge": 0.1499999999999999,
+    "edge": -0.010000000000000009,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "The introduction of crypto trading on X indicates a trend towards innovation in the market.",
-      "The drastic drop in value of a high-profile NFT contributes to cautious sentiment among investors."
+      "The potential launch of crypto trading on X is generating excitement.",
+      "The drastic drop in NFT values emphasizes caution and volatility."
     ],
-    "world_text": "The crypto market is currently marked by mixed signals. While the potential launch of crypto trading on X boosts excitement, the plummeting value of Logan Paul's NFT highlights volatility and caution. Liquidity surges in various tokens suggest ongoing engagement, yet the overall sentiment remains cautious as investors weigh risks against innovation.",
-    "ts": "2026-02-16T00:54:33+00:00",
+    "world_text": "The crypto market is currently characterized by mixed signals. Excitement around X's upcoming trading feature suggests a positive trend, while the significant decline in value of a high-profile NFT reflects underlying caution. Liquidity remains moderate, with various tokens seeing surges, and competition is high due to the number of launches being discussed.",
+    "ts": "2026-02-16T01:02:58+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-16T00:54:30.185145+00:00",
+      "updated_at": "2026-02-16T01:02:54.846553+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

@@ -303,6 +303,52 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771228815
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.15499999999999997,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771238182
+    },
+    {
+      "type": "gating_decide_no_launch",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.15499999999999997,
+      "reason": "Current market sentiment is cautious and bearish, making it an unfavorable time for launching a memecoin as investors are prioritizing risk awareness over speculative investments.",
+      "ts": 1771238188
+    },
+    {
+      "type": "learning_update",
+      "bucket": "neutral",
+      "mode": "growth",
+      "n": 1,
+      "mean_reward": 0.0,
+      "reward": 0.0,
+      "ts": 1771238188
+    },
+    {
+      "type": "run",
+      "record": {
+        "timestamp": "2026-02-16T10:36:28",
+        "timestamp_utc": "2026-02-16T10:36:28+00:00",
+        "agent": "MemeSeer",
+        "world_edge": 0.15499999999999997,
+        "decision": {
+          "launch": false,
+          "reason": "Current market sentiment is cautious and bearish, making it an unfavorable time for launching a memecoin as investors are prioritizing risk awareness over speculative investments.",
+          "_raw": "{\n  \"launch\": false,\n  \"reason\": \"Current market sentiment is cautious and bearish, making it an unfavorable time for launching a memecoin as investors are prioritizing risk awareness over speculative investments.\"\n}"
+        },
+        "mode": "growth",
+        "bucket": "neutral",
+        "reward": 0.0
+      },
+      "ts": 1771238188
     }
   ],
   "launches": {
@@ -431,7 +477,7 @@
             "mean_reward": 0.0
           },
           "growth": {
-            "n": 0,
+            "n": 1,
             "mean_reward": 0.0
           },
           "signal": {
@@ -486,25 +532,25 @@
   "world": {
     "signals": {
       "trend": 0.3,
-      "sentiment": 0.3,
+      "sentiment": 0.2,
       "novelty": 0.5,
-      "liquidity": 0.4,
+      "liquidity": 0.3,
       "competition": 0.2
     },
-    "edge": 0.2,
+    "edge": 0.15499999999999997,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "Significant losses in NFT values indicate a cautious market sentiment.",
-      "Celebrity endorsements are being scrutinized, reflecting skepticism.",
-      "New trading features from X could introduce some novelty, but overall investor confidence remains low."
+      "NFT values are plummeting, indicating a lack of confidence in digital collectibles.",
+      "Celebrity endorsements are facing skepticism, leading to cautious market sentiment.",
+      "Recent developments, like X's new trading feature, bring some novelty but are overshadowed by overall market fears."
     ],
-    "world_text": "The current crypto market is marked by cautious sentiment as NFT values plummet and skepticism about celebrity endorsements rises. While new features like X's trading option provide some novelty, the overall market remains uncertain. Investors are navigating mixed trends, leading to a generally low confidence level, reflected in liquidity conditions.",
-    "ts": "2026-02-16T08:00:05+00:00",
+    "world_text": "The current crypto market is characterized by a cautious sentiment with significant drops in NFT values and skepticism towards celebrity-backed projects. While new trading features promise innovation, the overarching mood remains bearish, reflected in low liquidity and trend signals. Investors are wary, leading to a mixed atmosphere where caution prevails over excitement.",
+    "ts": "2026-02-16T10:36:22+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-16T08:00:01.578871+00:00",
+      "updated_at": "2026-02-16T10:36:19.014027+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

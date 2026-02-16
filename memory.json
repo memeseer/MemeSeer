@@ -271,6 +271,22 @@
         }
       },
       "ts": 1771212521
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.0749999999999999,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771212726
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771212734
     }
   ],
   "launches": {
@@ -315,7 +331,8 @@
         "timestamp": 1771212521,
         "iso_date": "2026-02-16T03:28:41+00:00",
         "image_path": "assets/token_images/skpt_1771212514.png",
-        "tx_hash": "eb80e057fe7eabf140430724850134c72f1663e96598435cbadf92cbb9dd7dc5"
+        "tx_hash": "eb80e057fe7eabf140430724850134c72f1663e96598435cbadf92cbb9dd7dc5",
+        "_current_valuation_mon": 195.9984514229766
       }
     ]
   },
@@ -455,23 +472,22 @@
       "trend": 0.4,
       "sentiment": 0.3,
       "novelty": 0.5,
-      "liquidity": 0.6,
-      "competition": 0.1
+      "liquidity": 0.4,
+      "competition": 0.4
     },
-    "edge": 0.3549999999999999,
-    "bucket": "good",
-    "mood": "🟢 Bullish",
+    "edge": 0.0749999999999999,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
     "why": [
-      "Recent losses in NFT investments highlight a cautious sentiment in the market.",
-      "The upcoming crypto trading feature on X indicates potential for increased activity but is overshadowed by skepticism.",
-      "Celebrity endorsements have not generated the expected positive interest."
+      "Recent significant drop in NFT values, indicating a cautious market.",
+      "Celebrity endorsements are facing skepticism, reducing overall confidence."
     ],
-    "world_text": "The crypto market is currently experiencing a cautious sentiment, with notable losses in NFT values and skepticism towards celebrity endorsements. While there are potential developments like X's new trading feature, overall market confidence remains low, leading to a mixed trend and liquidity situation.",
-    "ts": "2026-02-16T03:28:20+00:00",
+    "world_text": "The crypto market is in a cautious state, heavily influenced by recent losses in NFT values and skepticism surrounding celebrity endorsements. While there are some potential innovations, like X's new trading feature, overall sentiment remains low. Memes reflecting this cautious optimism and skepticism are gaining traction as investors navigate the uncertainty.",
+    "ts": "2026-02-16T03:32:06+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-16T03:28:17.192602+00:00",
+      "updated_at": "2026-02-16T03:32:02.316276+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

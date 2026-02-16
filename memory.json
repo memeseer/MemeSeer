@@ -475,6 +475,22 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771278993
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "balanced",
+      "bucket": "good",
+      "edge": 0.47000000000000003,
+      "ucb_score": 1000000000.0,
+      "t": 2,
+      "buyback_pct": 0.5,
+      "burn_pct": 0.0,
+      "ts": 1771282927
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771282934
     }
   ],
   "launches": {
@@ -659,23 +675,23 @@
     "signals": {
       "trend": 0.6,
       "sentiment": 0.4,
-      "novelty": 0.5,
-      "liquidity": 0.7,
-      "competition": 0.3
+      "novelty": 0.0,
+      "liquidity": 0.8,
+      "competition": 0.0
     },
-    "edge": 0.31000000000000005,
+    "edge": 0.47000000000000003,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Bitcoin recently reclaimed significant price points, indicating potential bullish sentiment.",
-      "The stark contrast between Logan Paul's NFT loss and institutional interest signals caution in the market."
+      "Bitcoin has recently reclaimed significant price levels ($69,000 and $70,000) indicating positive market movement.",
+      "There are concerns regarding the lack of privacy in crypto payments and ongoing regulatory scrutiny, leading to cautious sentiment."
     ],
-    "world_text": "The crypto market shows mixed signals, with Bitcoin recently reclaiming prices around $69,000, suggesting a bullish trend. However, the steep decrease in the value of Logan Paul's NFT reflects caution among investors. Liquidity appears strong, especially with recent surges in token liquidity, while competition remains moderate as no major launches were reported.",
-    "ts": "2026-02-16T21:56:25+00:00",
+    "world_text": "The crypto market shows a mixed sentiment as Bitcoin has recently bounced back to notable price levels, suggesting a bullish trend. However, external pressures from regulation and high-profile NFT losses create an undercurrent of caution. Despite this, liquidity remains robust, signaling potential readiness for new investments.",
+    "ts": "2026-02-16T23:02:07+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-16T21:56:22.121376+00:00",
+      "updated_at": "2026-02-16T23:02:02.919820+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

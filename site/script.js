@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
      * Attempts to fetch memory.json from multiple candidate paths.
      */
     async function fetchMemory() {
-        const candidates = ['../memory.json', './memory.json', 'memory.json'];
+        const candidates = ['public/memory.json', './public/memory.json', '../memory.json', './memory.json', 'memory.json'];
         for (const path of candidates) {
             try {
                 const resp = await fetch(path);
@@ -126,7 +126,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 2. Outbox Fetch and Render (Decoupled from memory.json)
     try {
         async function fetchIndex() {
-            const candidates = ['../outbox/index.json', './outbox/index.json', 'outbox/index.json'];
+            const candidates = [
+                'public/outbox/index.json',
+                './public/outbox/index.json',
+                '../outbox/index.json',
+                './outbox/index.json',
+                'outbox/index.json'
+            ];
             for (const path of candidates) {
                 try {
                     const resp = await fetch(path);
@@ -146,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
             outboxList.innerHTML = '';
             // Try different base paths for posts
-            const possibleBase = ['../outbox/', './outbox/', 'outbox/'];
+            const possibleBase = ['public/outbox/', './public/outbox/', '../outbox/', './outbox/', 'outbox/'];
 
             for (let i = 0; i < posts.length; i++) {
                 const filename = posts[i];

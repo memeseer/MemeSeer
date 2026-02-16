@@ -271,7 +271,7 @@ The agent will:
 2-minute demo:
 
 ```
-https://youtube.com/your_demo_link
+[https://youtube.com/your_demo_link](https://www.youtube.com/watch?v=WdFX1LYFtmA)
 ```
 
 Video demonstrates:

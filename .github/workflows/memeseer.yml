@@ -46,6 +46,6 @@ jobs:
         run: |
           git config user.name "memeseer-bot"
           git config user.email "bot@memeseer.ai"
-          git add memory.json outbox/index.json || true
+          git add memory.json outbox/*.md outbox/index.json
           git commit -m "hourly state update" || echo "No changes"
           git push

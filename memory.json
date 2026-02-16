@@ -287,6 +287,22 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771212734
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.2,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771228805
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771228815
     }
   ],
   "launches": {
@@ -469,25 +485,26 @@
   },
   "world": {
     "signals": {
-      "trend": 0.4,
+      "trend": 0.3,
       "sentiment": 0.3,
       "novelty": 0.5,
       "liquidity": 0.4,
-      "competition": 0.4
+      "competition": 0.2
     },
-    "edge": 0.0749999999999999,
+    "edge": 0.2,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "Recent significant drop in NFT values, indicating a cautious market.",
-      "Celebrity endorsements are facing skepticism, reducing overall confidence."
+      "Significant losses in NFT values indicate a cautious market sentiment.",
+      "Celebrity endorsements are being scrutinized, reflecting skepticism.",
+      "New trading features from X could introduce some novelty, but overall investor confidence remains low."
     ],
-    "world_text": "The crypto market is in a cautious state, heavily influenced by recent losses in NFT values and skepticism surrounding celebrity endorsements. While there are some potential innovations, like X's new trading feature, overall sentiment remains low. Memes reflecting this cautious optimism and skepticism are gaining traction as investors navigate the uncertainty.",
-    "ts": "2026-02-16T03:32:06+00:00",
+    "world_text": "The current crypto market is marked by cautious sentiment as NFT values plummet and skepticism about celebrity endorsements rises. While new features like X's trading option provide some novelty, the overall market remains uncertain. Investors are navigating mixed trends, leading to a generally low confidence level, reflected in liquidity conditions.",
+    "ts": "2026-02-16T08:00:05+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-16T03:32:02.316276+00:00",
+      "updated_at": "2026-02-16T08:00:01.578871+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

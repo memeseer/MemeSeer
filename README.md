@@ -16,6 +16,7 @@ Token launched on nad.fun (Monad mainnet):
 ```
 Contract Address: 0x17De1C1346EA528B4BEBF8711d1DDAb5B9157777
 Network: Monad Mainnet
+Trade on nad.fun: https://nad.fun/tokens/0x17De1C1346EA528B4BEBF8711d1DDAb5B9157777
 ```
 
 Example transaction: 

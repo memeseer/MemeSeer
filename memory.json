@@ -179,6 +179,22 @@
         }
       },
       "ts": 1771199322
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "neutral",
+      "edge": -0.08999999999999997,
+      "ucb_score": 1000000000.0,
+      "t": 1,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771200494
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771200502
     }
   ],
   "launches": {
@@ -360,26 +376,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.7,
-      "sentiment": 0.4,
+      "trend": 0.5,
+      "sentiment": 0.3,
       "novelty": 0.6,
       "liquidity": 0.5,
       "competition": 0.7
     },
-    "edge": 0.0050000000000000044,
+    "edge": -0.08999999999999997,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "Recent NFT market crash exemplified by Logan Paul's purchase and current value.",
-      "White House official mentions substantial institutional capital waiting to enter the market.",
-      "X's upcoming crypto trading feature indicates growing interest and activity in crypto markets."
+      "The significant drop in NFT value reflects investor caution.",
+      "Institutional interest and new trading features indicate potential for growth."
     ],
-    "world_text": "The crypto market is experiencing mixed signals. While there's excitement from institutional interest and new trading features, the severe drop in NFT value shows caution among investors. With notable liquidity surges in various tokens and a competitive environment due to multiple launches, the market remains volatile but with potential for growth.",
-    "ts": "2026-02-15T23:48:18+00:00",
+    "world_text": "The crypto market is currently characterized by mixed signals. While institutional interest and new trading features generate excitement, the drastic decline in NFT values raises caution among investors. Increased liquidity in various tokens coupled with multiple launches suggests a competitive environment, leading to opportunities amidst volatility.",
+    "ts": "2026-02-16T00:08:14+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-15T23:48:14.787286+00:00",
+      "updated_at": "2026-02-16T00:08:09.891978+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

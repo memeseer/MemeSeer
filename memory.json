@@ -459,6 +459,22 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771275614
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "balanced",
+      "bucket": "good",
+      "edge": 0.31000000000000005,
+      "ucb_score": 1000000000.0,
+      "t": 2,
+      "buyback_pct": 0.5,
+      "burn_pct": 0.0,
+      "ts": 1771278985
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771278993
     }
   ],
   "launches": {
@@ -644,23 +660,22 @@
       "trend": 0.6,
       "sentiment": 0.4,
       "novelty": 0.5,
-      "liquidity": 0.5,
+      "liquidity": 0.7,
       "competition": 0.3
     },
-    "edge": 0.27,
+    "edge": 0.31000000000000005,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Recent high-profile NFT purchase by Logan Paul now worth significantly less, indicating caution in the NFT market.",
-      "Institutional capital waiting to enter the market suggests potential for future growth, but current sentiment is cautious.",
-      "Increased liquidity in certain tokens like XMR and YZY shows some active trading."
+      "Bitcoin recently reclaimed significant price points, indicating potential bullish sentiment.",
+      "The stark contrast between Logan Paul's NFT loss and institutional interest signals caution in the market."
     ],
-    "world_text": "The crypto market is currently displaying cautious sentiment, with significant losses in high-profile NFT investments causing concern among investors. However, the announcement of institutional capital on the sidelines indicates potential growth opportunities. Despite some liquidity surges, overall market engagement is mixed, and competition remains low with few new launches.",
-    "ts": "2026-02-16T21:00:06+00:00",
+    "world_text": "The crypto market shows mixed signals, with Bitcoin recently reclaiming prices around $69,000, suggesting a bullish trend. However, the steep decrease in the value of Logan Paul's NFT reflects caution among investors. Liquidity appears strong, especially with recent surges in token liquidity, while competition remains moderate as no major launches were reported.",
+    "ts": "2026-02-16T21:56:25+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-16T21:00:00.891059+00:00",
+      "updated_at": "2026-02-16T21:56:22.121376+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

@@ -395,6 +395,22 @@
         "reward": 0.0
       },
       "ts": 1771243472
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "balanced",
+      "bucket": "good",
+      "edge": 0.355,
+      "ucb_score": 1000000000.0,
+      "t": 2,
+      "buyback_pct": 0.5,
+      "burn_pct": 0.0,
+      "ts": 1771254657
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771254664
     }
   ],
   "launches": {
@@ -577,25 +593,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.3,
+      "trend": 0.4,
       "sentiment": 0.3,
-      "novelty": 0.0,
-      "liquidity": 0.4,
+      "novelty": 0.2,
+      "liquidity": 0.5,
       "competition": 0.0
     },
-    "edge": 0.26,
+    "edge": 0.355,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Logan Paul's NFT investment has significantly lost value, indicating bearish sentiment in the NFT market.",
-      "The overall market sentiment is cautious and bearish, with no significant launches or hype observed."
+      "Recent reports indicate a significant drop in the value of high-profile NFTs, suggesting a bearish outlook.",
+      "Statements from influential figures about cautious investing and the presence of institutional capital on the sidelines indicate a risk-averse sentiment."
     ],
-    "world_text": "The current crypto and meme market is experiencing a cautious and bearish sentiment, highlighted by a substantial drop in the value of an NFT purchased by Logan Paul. Despite some liquidity surges in tokens, there is a lack of new launches and market excitement, suggesting that investors are prioritizing risk awareness over speculative investments.",
-    "ts": "2026-02-16T12:04:27+00:00",
+    "world_text": "The crypto market is currently characterized by a cautious sentiment, with notable declines in NFT values and a focus on risk awareness among investors. While some institutional capital awaits entry, the lack of hype or significant new launches contributes to a bearish atmosphere.",
+    "ts": "2026-02-16T15:10:57+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-16T12:04:23.948073+00:00",
+      "updated_at": "2026-02-16T15:10:53.507415+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

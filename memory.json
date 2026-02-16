@@ -427,6 +427,22 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771264761
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "balanced",
+      "bucket": "good",
+      "edge": 0.2749999999999999,
+      "ucb_score": 1000000000.0,
+      "t": 2,
+      "buyback_pct": 0.5,
+      "burn_pct": 0.0,
+      "ts": 1771271264
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771271272
     }
   ],
   "launches": {
@@ -609,26 +625,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.3,
-      "sentiment": 0.25,
-      "novelty": 0.4,
-      "liquidity": 0.45,
-      "competition": 0.1
+      "trend": 0.4,
+      "sentiment": 0.3,
+      "novelty": 0.5,
+      "liquidity": 0.6,
+      "competition": 0.2
     },
-    "edge": 0.2575,
+    "edge": 0.2749999999999999,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Recent posts show significant price drops in NFTs, indicating a cautious market environment.",
-      "There's a lack of new launches or hype, contributing to a conservative sentiment.",
-      "Statements about institutional investment waiting on the sidelines suggest potential future interest but current caution."
+      "Logan Paul's NFT loss indicates a significant downturn in NFT value, contributing to market caution.",
+      "The upcoming features from X and institutional capital waiting to enter suggest potential market interest but are overshadowed by current price declines."
     ],
-    "world_text": "The current crypto and meme market is characterized by caution, as evidenced by the drastic drop in NFT values and the absence of hype-driven activity. While institutional interest remains, the overall sentiment is low, reflecting a preference for prudent investing amid ongoing market volatility.",
-    "ts": "2026-02-16T17:59:14+00:00",
+    "world_text": "The crypto market is currently experiencing a cautious sentiment as indicated by the significant drop in NFT values, highlighted by Logan Paul's loss. While there are indications of institutional interest and new features from X, the overall market sentiment leans towards fear with many investors remaining on the sidelines. Liquidity appears moderate, but competition is low with few new launches b",
+    "ts": "2026-02-16T19:47:44+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-16T17:59:10.577146+00:00",
+      "updated_at": "2026-02-16T19:47:38.577898+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

@@ -411,6 +411,22 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771254664
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "balanced",
+      "bucket": "good",
+      "edge": 0.2575,
+      "ucb_score": 1000000000.0,
+      "t": 2,
+      "buyback_pct": 0.5,
+      "burn_pct": 0.0,
+      "ts": 1771264754
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771264761
     }
   ],
   "launches": {
@@ -593,25 +609,26 @@
   },
   "world": {
     "signals": {
-      "trend": 0.4,
-      "sentiment": 0.3,
-      "novelty": 0.2,
-      "liquidity": 0.5,
-      "competition": 0.0
+      "trend": 0.3,
+      "sentiment": 0.25,
+      "novelty": 0.4,
+      "liquidity": 0.45,
+      "competition": 0.1
     },
-    "edge": 0.355,
+    "edge": 0.2575,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Recent reports indicate a significant drop in the value of high-profile NFTs, suggesting a bearish outlook.",
-      "Statements from influential figures about cautious investing and the presence of institutional capital on the sidelines indicate a risk-averse sentiment."
+      "Recent posts show significant price drops in NFTs, indicating a cautious market environment.",
+      "There's a lack of new launches or hype, contributing to a conservative sentiment.",
+      "Statements about institutional investment waiting on the sidelines suggest potential future interest but current caution."
     ],
-    "world_text": "The crypto market is currently characterized by a cautious sentiment, with notable declines in NFT values and a focus on risk awareness among investors. While some institutional capital awaits entry, the lack of hype or significant new launches contributes to a bearish atmosphere.",
-    "ts": "2026-02-16T15:10:57+00:00",
+    "world_text": "The current crypto and meme market is characterized by caution, as evidenced by the drastic drop in NFT values and the absence of hype-driven activity. While institutional interest remains, the overall sentiment is low, reflecting a preference for prudent investing amid ongoing market volatility.",
+    "ts": "2026-02-16T17:59:14+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-16T15:10:53.507415+00:00",
+      "updated_at": "2026-02-16T17:59:10.577146+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

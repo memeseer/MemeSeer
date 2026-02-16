@@ -1,9 +1,7 @@
 function parseMarkdown(md) {
     if (!md) return "";
 
-    // Limit to 500 chars
-    let text = md.substring(0, 500);
-    if (md.length > 500) text += "...";
+    let text = md;
 
     // Simple markdown rules
     text = text
@@ -33,100 +31,156 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Helper to safety-check memory fields
     const getVal = (obj, path, fallback = "-") => {
+        if (!obj) return fallback;
         const val = path.split('.').reduce((o, i) => (o ? o[i] : undefined), obj);
         return val !== undefined ? val : fallback;
     };
 
-    try {
-        const memoryResp = await fetch('../memory.json');
-        const memory = await memoryResp.json();
-
-        // 1. World Status
-        const world = memory.world || {};
-        edgeEl.textContent = typeof world.edge === 'number' ? world.edge.toFixed(4) : '-';
-        moodEl.textContent = world.mood || '-';
-        bucketEl.textContent = world.bucket || '-';
-        treasuryEl.textContent = typeof memory.economy?.treasury_mon === 'number'
-            ? memory.economy.treasury_mon.toFixed(2) : '0.00';
-
-        // 2. Last Decision
-        const events = memory.events || [];
-        const runEvents = events.filter(e => e.type === 'run').reverse();
-        if (runEvents.length > 0) {
-            const lastRun = runEvents[0].record || {};
-            const decision = lastRun.decision || {};
-            lastDecisionEl.textContent = decision.launch ? "🚀 LAUNCH!" : "😴 NO LAUNCH";
-
-            if (decision.launch && lastRun.token_idea) {
-                tokenIdeaContainer.classList.remove('hidden');
-                tokenNameEl.textContent = lastRun.token_idea.name || '-';
-                tokenTickerEl.textContent = lastRun.token_idea.ticker || '-';
-                tokenNarrativeEl.textContent = lastRun.token_idea.narrative || '-';
+    /**
+     * Attempts to fetch memory.json from multiple candidate paths.
+     */
+    async function fetchMemory() {
+        const candidates = ['../memory.json', './memory.json', 'memory.json'];
+        for (const path of candidates) {
+            try {
+                const resp = await fetch(path);
+                if (resp.ok) return await resp.json();
+            } catch (e) {
+                console.warn(`Failed to fetch from ${path}:`, e);
             }
         }
+        throw new Error("Could not load memory.json from any known location.");
+    }
 
-        // 3. Portfolio
-        const activePositions = memory.portfolio?.active_positions || [];
-        if (activePositions.length === 0) {
-            positionsGrid.innerHTML = '<p>No active gems... yet.</p>';
-        } else {
-            positionsGrid.innerHTML = '';
-            activePositions.forEach(pos => {
-                const roi = typeof pos.roi === 'number' ? pos.roi : 0;
-                const card = document.createElement('div');
-                card.className = 'position-card';
-                card.innerHTML = `
-                    <h3>$${pos.ticker || '???'}</h3>
-                    <p class="roi ${roi >= 0 ? 'positive-roi' : ''}">${roi >= 0 ? '+' : ''}${roi.toFixed(2)}%</p>
-                    <p><strong>Status:</strong> ${pos.status || '-'}</p>
-                    <p><strong>Entry:</strong> ${typeof pos.entry_mon === 'number' ? pos.entry_mon.toFixed(2) : '-'} MON</p>
-                    <p><strong>Alloc:</strong> ${typeof pos.allocation_pct === 'number' ? pos.allocation_pct.toFixed(1) : '-'}%</p>
-                `;
-                positionsGrid.appendChild(card);
-            });
+    // 1. Load Memory and update World/Decision/Portfolio
+    try {
+        const memory = await fetchMemory();
+
+        // 1.1 World Status
+        try {
+            const world = memory.world || {};
+            edgeEl.textContent = typeof world.edge === 'number' ? world.edge.toFixed(4) : '-';
+            moodEl.textContent = world.mood || '-';
+            bucketEl.textContent = world.bucket || '-';
+            treasuryEl.textContent = typeof memory.economy?.treasury_mon === 'number'
+                ? memory.economy.treasury_mon.toFixed(2) : '0.00';
+        } catch (e) {
+            console.error("Error rendering world status:", e);
         }
 
-        // 4. Outbox Fetch and Render
+        // 1.2 Last Decision
         try {
-            const indexResp = await fetch('../outbox/index.json');
-            if (!indexResp.ok) throw new Error("No index");
-            const index = await indexResp.json();
-            const posts = index.posts || [];
+            const events = memory.events || [];
+            const runEvents = events.filter(e => e.type === 'run').reverse();
+            if (runEvents.length > 0) {
+                const lastRun = runEvents[0].record || {};
+                const decision = lastRun.decision || {};
+                lastDecisionEl.textContent = decision.launch ? "🚀 LAUNCH!" : "😴 NO LAUNCH";
 
-            if (posts.length === 0) {
-                outboxList.innerHTML = '<p>No transmissions yet.</p>';
-            } else {
-                outboxList.innerHTML = '';
-                for (let i = 0; i < posts.length; i++) {
-                    const filename = posts[i];
-                    try {
-                        const postResp = await fetch(`../outbox/${filename}`);
-                        if (!postResp.ok) continue;
-                        const content = await postResp.text();
-
-                        const card = document.createElement('div');
-                        card.className = `paper-card ${i % 2 === 0 ? 'rotate-plus' : 'rotate-minus'}`;
-                        card.innerHTML = `
-                            <div class="post-content">${parseMarkdown(content)}</div>
-                            <div class="post-footer">${filename}</div>
-                        `;
-                        outboxList.appendChild(card);
-                    } catch (e) {
-                        console.error(`Failed to fetch post ${filename}`, e);
-                    }
+                if (decision.launch && lastRun.token_idea) {
+                    tokenIdeaContainer.classList.remove('hidden');
+                    tokenNameEl.textContent = lastRun.token_idea.name || '-';
+                    tokenTickerEl.textContent = lastRun.token_idea.ticker || '-';
+                    tokenNarrativeEl.textContent = lastRun.token_idea.narrative || '-';
                 }
             }
         } catch (e) {
-            outboxList.innerHTML = '<p>No transmissions yet.</p>';
+            console.error("Error rendering last decision:", e);
+        }
+
+        // 1.3 Portfolio
+        try {
+            const activePositions = memory.portfolio?.active_positions || [];
+            if (activePositions.length === 0) {
+                positionsGrid.innerHTML = '<p>No active gems... yet.</p>';
+            } else {
+                positionsGrid.innerHTML = '';
+                activePositions.forEach(pos => {
+                    const roi = typeof pos.roi === 'number' ? pos.roi : 0;
+                    const card = document.createElement('div');
+                    card.className = 'position-card';
+                    card.innerHTML = `
+                        <h3>$${pos.ticker || '???'}</h3>
+                        <p class="roi ${roi >= 0 ? 'positive-roi' : ''}">${roi >= 0 ? '+' : ''}${roi.toFixed(2)}%</p>
+                        <p><strong>Status:</strong> ${pos.status || '-'}</p>
+                        <p><strong>Entry:</strong> ${typeof pos.entry_mon === 'number' ? pos.entry_mon.toFixed(2) : '-'} MON</p>
+                        <p><strong>Alloc:</strong> ${typeof pos.allocation_pct === 'number' ? pos.allocation_pct.toFixed(1) : '-'}%</p>
+                    `;
+                    positionsGrid.appendChild(card);
+                });
+            }
+        } catch (e) {
+            console.error("Error rendering portfolio:", e);
+            positionsGrid.innerHTML = '<p>Error loading portfolio data.</p>';
         }
 
     } catch (err) {
-        console.error(err);
-        document.body.innerHTML = `
-            <div class="container" style="text-align:center; padding-top:100px;">
-                <h1>😵‍💫 NO DATA</h1>
-                <p>MemeSeer is offline or memory is missing.</p>
-            </div>
-        `;
+        console.error("Memory critical failure:", err);
+        // Don't show "NO DATA" globally yet, let Outbox try to load
+        const statusSection = document.querySelector('.world-status');
+        if (statusSection) {
+            statusSection.innerHTML += `<p style="color:red; font-size:0.8rem;">⚠️ Failed to load world data: ${err.message}</p>`;
+        }
+    }
+
+    // 2. Outbox Fetch and Render (Decoupled from memory.json)
+    try {
+        async function fetchIndex() {
+            const candidates = ['../outbox/index.json', './outbox/index.json', 'outbox/index.json'];
+            for (const path of candidates) {
+                try {
+                    const resp = await fetch(path);
+                    if (resp.ok) return await resp.json();
+                } catch (e) {
+                    console.warn(`Failed to fetch index from ${path}:`, e);
+                }
+            }
+            throw new Error("No index.json found.");
+        }
+
+        const index = await fetchIndex();
+        const posts = index.posts || [];
+
+        if (posts.length === 0) {
+            outboxList.innerHTML = '<p>No transmissions yet.</p>';
+        } else {
+            outboxList.innerHTML = '';
+            // Try different base paths for posts
+            const possibleBase = ['../outbox/', './outbox/', 'outbox/'];
+
+            for (let i = 0; i < posts.length; i++) {
+                const filename = posts[i];
+                let content = null;
+
+                for (const base of possibleBase) {
+                    try {
+                        const postResp = await fetch(`${base}${filename}`);
+                        if (postResp.ok) {
+                            content = await postResp.text();
+                            break;
+                        }
+                    } catch (e) { }
+                }
+
+                if (content) {
+                    const card = document.createElement('div');
+                    card.className = `paper-card ${i % 2 === 0 ? 'rotate-plus' : 'rotate-minus'}`;
+                    card.innerHTML = `
+                        <div class="post-content">${parseMarkdown(content)}</div>
+                        <div class="post-footer">${filename}</div>
+                    `;
+                    outboxList.appendChild(card);
+                } else {
+                    console.warn(`Could not load post content for ${filename}`);
+                }
+            }
+
+            if (outboxList.innerHTML === '') {
+                outboxList.innerHTML = '<p>Transmissions found but could not be loaded.</p>';
+            }
+        }
+    } catch (e) {
+        console.error("Outbox critical failure:", e);
+        outboxList.innerHTML = `<p>⚠️ No transmissions yet or index missing: ${e.message}</p>`;
     }
 });

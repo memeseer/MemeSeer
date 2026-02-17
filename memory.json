@@ -792,6 +792,22 @@
         "reward": 0.0
       },
       "ts": 1771365665
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "good",
+      "edge": 0.255,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771372683
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771372690
     }
   ],
   "launches": {
@@ -1011,26 +1027,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.4,
-      "sentiment": 0.3,
+      "trend": 0.3,
+      "sentiment": 0.2,
       "novelty": 0.5,
-      "liquidity": 0.8,
-      "competition": 0.0
+      "liquidity": 0.4,
+      "competition": 0.1
     },
-    "edge": 0.475,
+    "edge": 0.255,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Recent news highlights significant losses in NFT investments, indicating fear in the market.",
-      "Elon Musk's comments about cash holdings and various regulatory updates suggest cautious sentiment.",
-      "Increased liquidity in tokens like XMR shows some market activity, but overall sentiment remains low."
+      "Significant losses in NFT investments (Logan Paul's NFT dropped from $635,000 to $155).",
+      "Overall cautious sentiment with mentions of regulatory challenges and a high-profile figure like Michael Saylor preparing for a potential Bitcoin price drop."
     ],
-    "world_text": "The current crypto/meme market displays cautious sentiment due to significant losses in high-profile NFT investments and mixed signals from influential figures like Elon Musk. While liquidity has surged for tokens like XMR, the overall trend reflects a struggle with fear and uncertainty, dampening enthusiasm for new launches and investments.",
-    "ts": "2026-02-17T22:00:57+00:00",
+    "world_text": "The current crypto and meme market is experiencing a notable downturn, highlighted by significant devaluation of NFTs and cautious sentiments from major figures in the industry. With increasing regulatory discussions and losses in investments, liquidity appears constrained, and enthusiasm for new launches is low.",
+    "ts": "2026-02-17T23:58:03+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-17T22:00:49.937132+00:00",
+      "updated_at": "2026-02-17T23:57:58.947851+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

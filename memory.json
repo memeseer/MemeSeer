@@ -730,6 +730,22 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771351636
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "balanced",
+      "bucket": "good",
+      "edge": 0.2749999999999999,
+      "ucb_score": 1000000000.0,
+      "t": 2,
+      "buyback_pct": 0.5,
+      "burn_pct": 0.0,
+      "ts": 1771362041
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771362051
     }
   ],
   "launches": {
@@ -952,23 +968,23 @@
       "trend": 0.4,
       "sentiment": 0.3,
       "novelty": 0.5,
-      "liquidity": 0.2,
-      "competition": 0.0
+      "liquidity": 0.6,
+      "competition": 0.2
     },
-    "edge": 0.355,
+    "edge": 0.2749999999999999,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Logan Paul's NFT investment loss signals a bearish sentiment in the NFT market.",
-      "Recent comments by Michael Saylor and retail buying suggest cautious optimism but overall fear persists.",
-      "Elon Musk's financial disclosures and government debt collection add to market uncertainty."
+      "Logan Paul's NFT investment has dramatically lost value, indicating caution in the NFT space.",
+      "Elon Musk's cash holdings and recent comments introduce uncertainty about market confidence.",
+      "Michael Saylor's strategies suggest a bearish outlook on Bitcoin's price with potential drawdowns."
     ],
-    "world_text": "The crypto market is currently experiencing cautious sentiment, highlighted by significant losses in NFT values and recent bearish comments from influential figures like Logan Paul and Elon Musk. While there are signs of retail interest in Bitcoin and ETH, the overall market liquidity appears low, indicating a challenging environment for investors.",
-    "ts": "2026-02-17T18:07:07+00:00",
+    "world_text": "The crypto market currently reflects a cautious sentiment, with major figures like Logan Paul and Michael Saylor indicating significant downturns and risks. While liquidity remains relatively stable, recent comments from influential personalities suggest a general fear, particularly regarding NFTs and Bitcoin's future. Overall, the market appears to be in a state of hesitation.",
+    "ts": "2026-02-17T21:00:41+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-17T18:07:02.120125+00:00",
+      "updated_at": "2026-02-17T21:00:34.637655+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

@@ -666,6 +666,22 @@
         }
       },
       "ts": 1771305365
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "neutral",
+      "edge": 0.15500000000000003,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771315468
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771315479
     }
   ],
   "launches": {
@@ -747,7 +763,8 @@
         "timestamp": 1771305365,
         "iso_date": "2026-02-17T05:16:05+00:00",
         "image_path": "assets/token_images/shld_1771305357.png",
-        "tx_hash": "bfa129bc60407aa7dcf0f63573cc15bb189638fe68716dea595ee60056e58846"
+        "tx_hash": "bfa129bc60407aa7dcf0f63573cc15bb189638fe68716dea595ee60056e58846",
+        "_current_valuation_mon": 195.9984514229766
       }
     ]
   },
@@ -884,25 +901,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.6,
+      "trend": 0.5,
       "sentiment": 0.4,
-      "novelty": 0.5,
+      "novelty": 0.6,
       "liquidity": 0.8,
-      "competition": 0.7
+      "competition": 0.5
     },
-    "edge": 0.01000000000000012,
+    "edge": 0.15500000000000003,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "Surge in liquidity for tokens like XMR indicates market activity.",
-      "Recent news highlights significant events and controversies, creating a mixed sentiment."
+      "The current market shows a mix of cautious sentiment due to significant drops in NFT values and external political events.",
+      "However, there is a notable increase in liquidity for certain tokens, suggesting active trading and interest."
     ],
-    "world_text": "The crypto/meme market is currently experiencing a surge in liquidity, particularly for tokens like XMR, suggesting active trading. However, external news, including political controversies and economic forecasts, contribute to a cautious sentiment among investors. The competitive landscape appears robust with various developments, indicating potential growth opportunities.",
-    "ts": "2026-02-17T05:15:41+00:00",
+    "world_text": "The crypto/meme market is currently characterized by cautious investor sentiment due to notable drops in NFT values and political controversies, despite a surge in liquidity for tokens like XMR. This reflects a complex landscape where trading activity is robust, but underlying fears about market stability persist.",
+    "ts": "2026-02-17T08:04:28+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-17T05:15:36.727625+00:00",
+      "updated_at": "2026-02-17T08:04:21.732957+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

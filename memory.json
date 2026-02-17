@@ -698,6 +698,22 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771327692
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "balanced",
+      "bucket": "good",
+      "edge": 0.235,
+      "ucb_score": 1000000000.0,
+      "t": 2,
+      "buyback_pct": 0.5,
+      "burn_pct": 0.0,
+      "ts": 1771339038
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771339045
     }
   ],
   "launches": {
@@ -917,25 +933,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.5,
+      "trend": 0.4,
       "sentiment": 0.3,
-      "novelty": 0.4,
+      "novelty": 0.5,
       "liquidity": 0.8,
-      "competition": 0.6
+      "competition": 0.3
     },
-    "edge": 0.010000000000000064,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.235,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "Recent liquidity surge for tokens like XMR indicates active trading.",
-      "Cautious sentiment is driven by external news involving political controversies and market instability."
+      "Recent news indicates a significant drop in the value of Logan Paul's NFT investment, reflecting broader market caution.",
+      "The upcoming crypto trading feature on X could boost engagement, but overall sentiment appears to be cautious due to political controversies and economic instability."
     ],
-    "world_text": "The crypto/meme market is currently marked by a liquidity surge, particularly for XMR, indicating robust trading activity. However, external factors such as political controversies and economic concerns contribute to a cautious investor sentiment. The competitive landscape remains active, suggesting potential growth opportunities, albeit tempered by the current atmosphere of uncertainty.",
-    "ts": "2026-02-17T11:28:05+00:00",
+    "world_text": "The crypto/meme market is currently marked by a cautious sentiment as highlighted by the drastic decline in NFT values and ongoing political controversies. However, liquidity remains strong, especially around tokens like XMR. The market shows potential for growth opportunities, but the prevailing atmosphere suggests that investors are wary, balancing risk against the backdrop of external pressures",
+    "ts": "2026-02-17T14:37:18+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-17T11:28:00.840294+00:00",
+      "updated_at": "2026-02-17T14:37:13.684302+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

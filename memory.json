@@ -746,6 +746,52 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771362051
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "balanced",
+      "bucket": "good",
+      "edge": 0.475,
+      "ucb_score": 1000000000.0,
+      "t": 2,
+      "buyback_pct": 0.5,
+      "burn_pct": 0.0,
+      "ts": 1771365657
+    },
+    {
+      "type": "gating_decide_no_launch",
+      "mode": "balanced",
+      "bucket": "good",
+      "edge": 0.475,
+      "reason": "The current atmosphere of fear and uncertainty, coupled with significant losses in investments, suggests that launching a memecoin may not attract the necessary enthusiasm or investment needed for success.",
+      "ts": 1771365665
+    },
+    {
+      "type": "learning_update",
+      "bucket": "good",
+      "mode": "balanced",
+      "n": 1,
+      "mean_reward": 0.0,
+      "reward": 0.0,
+      "ts": 1771365665
+    },
+    {
+      "type": "run",
+      "record": {
+        "timestamp": "2026-02-17T22:01:05",
+        "timestamp_utc": "2026-02-17T22:01:05+00:00",
+        "agent": "MemeSeer",
+        "world_edge": 0.475,
+        "decision": {
+          "launch": false,
+          "reason": "The current atmosphere of fear and uncertainty, coupled with significant losses in investments, suggests that launching a memecoin may not attract the necessary enthusiasm or investment needed for success.",
+          "_raw": "{\n  \"launch\": false,\n  \"reason\": \"The current atmosphere of fear and uncertainty, coupled with significant losses in investments, suggests that launching a memecoin may not attract the necessary enthusiasm or investment needed for success.\"\n}"
+        },
+        "mode": "balanced",
+        "bucket": "good",
+        "reward": 0.0
+      },
+      "ts": 1771365665
     }
   ],
   "launches": {
@@ -933,7 +979,7 @@
             "mean_reward": 0.0
           },
           "balanced": {
-            "n": 0,
+            "n": 1,
             "mean_reward": 0.0
           },
           "growth": {
@@ -968,23 +1014,23 @@
       "trend": 0.4,
       "sentiment": 0.3,
       "novelty": 0.5,
-      "liquidity": 0.6,
-      "competition": 0.2
+      "liquidity": 0.8,
+      "competition": 0.0
     },
-    "edge": 0.2749999999999999,
+    "edge": 0.475,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Logan Paul's NFT investment has dramatically lost value, indicating caution in the NFT space.",
-      "Elon Musk's cash holdings and recent comments introduce uncertainty about market confidence.",
-      "Michael Saylor's strategies suggest a bearish outlook on Bitcoin's price with potential drawdowns."
+      "Recent news highlights significant losses in NFT investments, indicating fear in the market.",
+      "Elon Musk's comments about cash holdings and various regulatory updates suggest cautious sentiment.",
+      "Increased liquidity in tokens like XMR shows some market activity, but overall sentiment remains low."
     ],
-    "world_text": "The crypto market currently reflects a cautious sentiment, with major figures like Logan Paul and Michael Saylor indicating significant downturns and risks. While liquidity remains relatively stable, recent comments from influential personalities suggest a general fear, particularly regarding NFTs and Bitcoin's future. Overall, the market appears to be in a state of hesitation.",
-    "ts": "2026-02-17T21:00:41+00:00",
+    "world_text": "The current crypto/meme market displays cautious sentiment due to significant losses in high-profile NFT investments and mixed signals from influential figures like Elon Musk. While liquidity has surged for tokens like XMR, the overall trend reflects a struggle with fear and uncertainty, dampening enthusiasm for new launches and investments.",
+    "ts": "2026-02-17T22:00:57+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-17T21:00:34.637655+00:00",
+      "updated_at": "2026-02-17T22:00:49.937132+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

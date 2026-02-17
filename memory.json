@@ -682,6 +682,22 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771315479
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "neutral",
+      "edge": 0.010000000000000064,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771327685
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771327692
     }
   ],
   "launches": {
@@ -902,24 +918,24 @@
   "world": {
     "signals": {
       "trend": 0.5,
-      "sentiment": 0.4,
-      "novelty": 0.6,
+      "sentiment": 0.3,
+      "novelty": 0.4,
       "liquidity": 0.8,
-      "competition": 0.5
+      "competition": 0.6
     },
-    "edge": 0.15500000000000003,
+    "edge": 0.010000000000000064,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "The current market shows a mix of cautious sentiment due to significant drops in NFT values and external political events.",
-      "However, there is a notable increase in liquidity for certain tokens, suggesting active trading and interest."
+      "Recent liquidity surge for tokens like XMR indicates active trading.",
+      "Cautious sentiment is driven by external news involving political controversies and market instability."
     ],
-    "world_text": "The crypto/meme market is currently characterized by cautious investor sentiment due to notable drops in NFT values and political controversies, despite a surge in liquidity for tokens like XMR. This reflects a complex landscape where trading activity is robust, but underlying fears about market stability persist.",
-    "ts": "2026-02-17T08:04:28+00:00",
+    "world_text": "The crypto/meme market is currently marked by a liquidity surge, particularly for XMR, indicating robust trading activity. However, external factors such as political controversies and economic concerns contribute to a cautious investor sentiment. The competitive landscape remains active, suggesting potential growth opportunities, albeit tempered by the current atmosphere of uncertainty.",
+    "ts": "2026-02-17T11:28:05+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-17T08:04:21.732957+00:00",
+      "updated_at": "2026-02-17T11:28:00.840294+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

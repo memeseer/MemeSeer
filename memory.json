@@ -854,6 +854,52 @@
         "reward": 0.0
       },
       "ts": 1771391826
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.23500000000000001,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771401786
+    },
+    {
+      "type": "gating_decide_no_launch",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.23500000000000001,
+      "reason": "The current market sentiment is characterized by skepticism towards celebrity endorsements and a cautious approach from retail investors, making it a risky time to launch a memecoin.",
+      "ts": 1771401793
+    },
+    {
+      "type": "learning_update",
+      "bucket": "good",
+      "mode": "signal",
+      "n": 1,
+      "mean_reward": 0.0,
+      "reward": 0.0,
+      "ts": 1771401793
+    },
+    {
+      "type": "run",
+      "record": {
+        "timestamp": "2026-02-18T08:03:13",
+        "timestamp_utc": "2026-02-18T08:03:13+00:00",
+        "agent": "MemeSeer",
+        "world_edge": 0.23500000000000001,
+        "decision": {
+          "launch": false,
+          "reason": "The current market sentiment is characterized by skepticism towards celebrity endorsements and a cautious approach from retail investors, making it a risky time to launch a memecoin.",
+          "_raw": "{\n  \"launch\": false,\n  \"reason\": \"The current market sentiment is characterized by skepticism towards celebrity endorsements and a cautious approach from retail investors, making it a risky time to launch a memecoin.\" \n}"
+        },
+        "mode": "signal",
+        "bucket": "good",
+        "reward": 0.0
+      },
+      "ts": 1771401793
     }
   ],
   "launches": {
@@ -1049,7 +1095,7 @@
             "mean_reward": 0.0
           },
           "signal": {
-            "n": 0,
+            "n": 1,
             "mean_reward": 0.0
           },
           "aggressive": {
@@ -1075,23 +1121,23 @@
     "signals": {
       "trend": 0.3,
       "sentiment": 0.2,
-      "novelty": 0.5,
+      "novelty": 0.0,
       "liquidity": 0.4,
-      "competition": 0.1
+      "competition": 0.0
     },
-    "edge": 0.255,
+    "edge": 0.23500000000000001,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Significant losses in NFTs and overall investment sentiment are low.",
-      "The atmosphere is marked by fear and uncertainty, leading to cautious behavior in the market."
+      "Logan Paul's significant NFT loss reflects a downturn in speculative investments.",
+      "The market is showing cautious behavior with no new launches and skepticism towards celebrity endorsements."
     ],
-    "world_text": "The current crypto and meme market is experiencing a downturn with notable losses, such as Logan Paul's NFT plummeting in value. With Elon Musk's cash status and the U.S. government seeking donations to manage its debt, the sentiment remains low. Increased retail buying during dips and regulatory discussions hint at potential recovery, but overall caution prevails.",
-    "ts": "2026-02-18T05:17:00+00:00",
+    "world_text": "The current crypto and meme market is experiencing a downturn, highlighted by Logan Paul's drastic NFT devaluation. A cautious sentiment prevails as retail users are buying dips, yet skepticism around celebrity-endorsed tokens and regulatory developments creates a low-trend environment. Liquidity appears stagnant with no recent launches, indicating a lack of competitive activity.",
+    "ts": "2026-02-18T08:03:06+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-18T05:16:57.447732+00:00",
+      "updated_at": "2026-02-18T08:03:00.862100+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

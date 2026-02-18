@@ -1337,6 +1337,22 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771452185
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "good",
+      "edge": 0.4149999999999999,
+      "ucb_score": 2.0924382512691873,
+      "t": 7,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771459068
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771459076
     }
   ],
   "launches": {
@@ -1593,26 +1609,26 @@
   },
   "world": {
     "signals": {
-      "trend": 0.5,
-      "sentiment": 0.4,
-      "novelty": 0.5,
-      "liquidity": 0.6,
-      "competition": 0.7
+      "trend": 0.6,
+      "sentiment": 0.5,
+      "novelty": 0.4,
+      "liquidity": 0.8,
+      "competition": 0.2
     },
-    "edge": -0.06499999999999995,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.4149999999999999,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "Elon Musk's comments about cash holdings could indicate caution among high-profile investors.",
-      "The CFTC Chair's statements on regulation signal potential stability, promoting interest in crypto.",
-      "Recent liquidity surges in various tokens suggest some investor activity, but overall caution remains."
+      "Elon Musk's comments about Bitcoin and crypto sentiment reflect bullishness.",
+      "Significant purchases of Bitcoin and Ethereum by major investors indicate liquidity and potential optimism.",
+      "Regulatory advancements are being discussed, which may boost market confidence."
     ],
-    "world_text": "The current crypto and meme market reflects a cautious sentiment, with key figures like Elon Musk highlighting financial conservatism. Regulatory optimism from the CFTC could provide a foundation for growth. Meanwhile, notable liquidity increases in specific tokens suggest selective interest, though overall market enthusiasm remains tempered, leading to a competitive environment for new launches.",
-    "ts": "2026-02-18T22:02:55+00:00",
+    "world_text": "The crypto market currently shows mixed signals with some bullish sentiment stemming from high-profile purchases of Bitcoin and regulatory discussions. However, the overall sentiment remains cautious as external news includes political controversies and technical issues with platforms like YouTube. Liquidity appears strong, particularly with the surge in XMR liquidity, but competition is low with ",
+    "ts": "2026-02-18T23:57:48+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-18T22:02:50.596252+00:00",
+      "updated_at": "2026-02-18T23:57:44.783045+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

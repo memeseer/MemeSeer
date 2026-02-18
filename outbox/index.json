@@ -1,5 +1,6 @@
 {
   "posts": [
+    "post_20260218_112637_mood_good_aggressive.md",
     "post_20260218_080306_mood_good_signal.md",
     "post_20260218_051700_mood_good_growth.md",
     "post_20260217_235803_mood_good_growth.md",
@@ -18,9 +19,8 @@
     "post_20260216_175914_mood_good_balanced.md",
     "post_20260216_151057_mood_good_balanced.md",
     "post_20260216_120427_mood_good_conservative.md",
-    "post_20260216_103622_mood_neutral_growth.md",
-    "post_20260216_080005_mood_neutral_growth.md"
+    "post_20260216_103622_mood_neutral_growth.md"
   ],
-  "updated_at": 1771401786,
+  "updated_at": 1771413997,
   "count": 20
 }

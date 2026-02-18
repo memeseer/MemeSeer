@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemeSeer | Autonomous AI Agent</title>
+    <meta name="description"
+        content="MemeSeer is a fully autonomous on-chain AI agent built on Monad. From signal to launch with zero human interaction.">
+    <style>
+        :root {
+            --bg-color: #e6d2b5;
+            --primary-red: #d32f2f;
+            --degen-neon: #39ff14;
+            --text-dark: #1a1a1a;
+            --border-thick: 5px solid #000;
+            --shadow: 10px 10px 0px #000;
+            --font-main: 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', sans-serif;
+            --font-mono: 'Courier New', Courier, monospace;
+        }
+
+        /* SVG FILTERS */
+        .rough-filter {
+            filter: url(#roughLines);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            font-family: var(--font-main);
+            line-height: 1.4;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* PAPER TEXTURE */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* GLITCH EFFECT */
+        .glitch {
+            position: relative;
+            color: #000;
+            font-size: 6rem;
+            text-transform: uppercase;
+            letter-spacing: -4px;
+            animation: glitch-skew 1s infinite linear alternate-reverse;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff00c1;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
+            animation: glitch-anim2 1s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                clip: rect(31px, 9999px, 94px, 0);
+                transform: skew(0.85deg);
+            }
+
+            100% {
+                clip: rect(70px, 9999px, 71px, 0);
+                transform: skew(0.1deg);
+            }
+        }
+
+        @keyframes glitch-anim2 {
+            0% {
+                clip: rect(65px, 9999px, 100px, 0);
+                transform: skew(0.3deg);
+            }
+
+            100% {
+                clip: rect(10px, 9999px, 12px, 0);
+                transform: skew(0.98deg);
+            }
+        }
+
+        @keyframes glitch-skew {
+            0% {
+                transform: skew(1deg);
+            }
+
+            100% {
+                transform: skew(-1deg);
+            }
+        }
+
+        /* DEGEN ANNOTATIONS */
+        .degen-stamp {
+            position: absolute;
+            background: yellow;
+            color: #000;
+            font-weight: 900;
+            padding: 5px 15px;
+            border: 3px solid #000;
+            font-size: 1.5rem;
+            transform: rotate(-15deg);
+            z-index: 50;
+            box-shadow: 4px 4px 0px #000;
+        }
+
+        /* Hero */
+        header {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        .mascot-container {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .mascot-container img {
+            max-width: 350px;
+            filter: drop-shadow(15px 15px 0px rgba(0, 0, 0, 0.2));
+            animation: aggressive-wobble 3s infinite ease-in-out;
+        }
+
+        @keyframes aggressive-wobble {
+
+            0%,
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+
+            50% {
+                transform: scale(1.1) rotate(5deg);
+            }
+        }
+
+        /* TERMINAL LOGS */
+        .terminal-block {
+            background-color: #000;
+            color: var(--degen-neon);
+            font-family: var(--font-mono);
+            padding: 1.5rem;
+            border: 4px solid #444;
+            max-width: 800px;
+            width: 95%;
+            margin: 2rem auto;
+            text-align: left;
+            position: relative;
+            box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.3);
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .terminal-block::before {
+            content: "AGENT_CONSCIOUSNESS_FEED";
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            background: #000;
+            padding: 2px 10px;
+            color: #fff;
+            font-size: 0.7rem;
+            border: 2px solid #fff;
+        }
+
+        .terminal-cursor {
+            animation: blink 1s infinite;
+            background: var(--degen-neon);
+            display: inline-block;
+            width: 10px;
+            height: 15px;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1.5rem 4rem;
+            font-size: 2.2rem;
+            font-weight: 900;
+            text-decoration: none;
+            color: #fff;
+            background: var(--primary-red);
+            border: var(--border-thick);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.1s;
+            position: relative;
+        }
+
+        .btn:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 14px 14px 0px #000;
+            background: #ff1100;
+        }
+
+        .btn-secondary {
+            background: #000;
+            font-size: 1.4rem;
+            padding: 1rem 2rem;
+            margin-top: 1rem;
+        }
+
+        .btn-twitter {
+            background: #1DA1F2;
+            color: #fff;
+            padding: 1rem 2rem;
+            font-size: 1.4rem;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sticky-social {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+        }
+
+        /* Sections */
+        section {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 5rem;
+            background: #000;
+            color: #fff;
+            display: inline-block;
+            padding: 0.5rem 2rem;
+            transform: rotate(-2deg);
+            filter: url(#roughLines);
+        }
+
+        .section-center {
+            text-align: center;
+        }
+
+        /* Architecture Flow */
+        .flow-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: center;
+            margin-top: 4rem;
+        }
+
+        .flow-node {
+            background: #fff;
+            border: 3px solid #000;
+            padding: 1.5rem;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 5px 5px 0px #000;
+            position: relative;
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        /* Technical Info Cards */
+        .tech-card {
+            background: #fff;
+            border: var(--border-thick);
+            padding: 3rem;
+            box-shadow: 10px 10px 0px #000;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .tech-card h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-decoration: underline;
+            color: var(--primary-red);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        ul.tech-list {
+            list-style: none;
+        }
+
+        ul.tech-list li {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.2rem;
+        }
+
+        ul.tech-list li::before {
+            content: "►";
+            position: absolute;
+            left: 0;
+            color: var(--primary-red);
+        }
+
+        /* Signal Buckets */
+        .bucket-grid {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .bucket {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            border: 3px solid #000;
+            font-weight: 800;
+            box-shadow: 4px 4px 0px #000;
+        }
+
+        .bucket.bad {
+            background: #ff4444;
+            color: #fff;
+        }
+
+        .bucket.neutral {
+            background: #ffbb33;
+        }
+
+        .bucket.good {
+            background: #00c851;
+            color: #fff;
+        }
+
+        /* Death Screen */
+        .death-screen {
+            background: #000;
+            color: #fff;
+            text-align: center;
+            padding: 10rem 2rem;
+            border-top: 10px solid var(--primary-red);
+        }
+
+        .death-screen h2 {
+            background: transparent;
+            font-size: 5rem;
+            transform: none;
+            color: var(--primary-red);
+        }
+
+        /* Innovation Block */
+        .innovation-block {
+            background: #fff9e6;
+            padding: 4rem;
+            border: 8px solid #000;
+            text-align: center;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        .innovation-block::before {
+            content: "NEW PARADIGM";
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-3deg);
+            background: #000;
+            color: #fff;
+            padding: 0.5rem 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Proof Grid */
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .proof-item {
+            background: #fff;
+            border: 4px solid #000;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: 0.2s;
+            box-shadow: 6px 6px 0px #000;
+        }
+
+        .proof-item:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 10px 10px 0px var(--primary-red);
+        }
+
+        .proof-item span {
+            color: var(--primary-red);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .glitch {
+                font-size: 3rem;
+            }
+
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-container {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+                margin: 1rem 0;
+            }
+
+            .btn {
+                font-size: 1.5rem;
+                padding: 1rem 2rem;
+            }
+
+            h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sticky-social">
+        <a href="https://x.com/meme_seer" target="_blank" class="btn btn-twitter rough-filter"
+            style="padding: 0.8rem 1.5rem; font-size: 1.1rem;">𝕏</a>
+    </div>
+    <svg style="position: absolute; width: 0; height: 0;" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <filter id="roughLines">
+                <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" />
+            </filter>
+        </defs>
+    </svg>
+
+    <header>
+        <div class="degen-stamp" style="top: 10%; right: 10%;">MIT LICENSE</div>
+
+        <div class="mascot-container">
+            <img src="mask.png" alt="MemeSeer Mascot">
+        </div>
+
+        <h1 class="glitch" data-text="MemeSeer">MemeSeer</h1>
+
+        <p style="font-size: 1.5rem; max-width: 800px; margin-top: 1rem; font-weight: bold; font-style: italic;">
+            "It does not trade narratives. It creates them."
+        </p>
+
+        <div class="terminal-block">
+            <p>> initializing memeseer.consciousness...</p>
+            <p>> [OK] onchain_crawlers: TWITTER, DEX_SIGNALS</p>
+            <p>> [LOG] extraer_signals: trend, sentiment, novelty, liquidity</p>
+            <p>> [LOG] computing core_edge using UCB1 multi-armed bandit</p>
+            <p>> [STATUS] NO MANUAL TRIGGER REQUIRED after startup <span class="terminal-cursor"></span></p>
+        </div>
+
+        <div style="margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+            <a href="https://nad.fun/tokens/0x17De1C1346EA528B4BEBF8711d1DDAb5B9157777" target="_blank"
+                class="btn rough-filter">SNIPE $SEER</a>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                <a href="https://x.com/meme_seer" target="_blank" class="btn btn-twitter rough-filter">TWITTER [X]</a>
+                <a href="https://github.com/memeseer/MemeSeer" target="_blank"
+                    class="btn btn-secondary rough-filter">EXPLORE REPO</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="innovation">
+        <div class="section-center">
+            <h2 class="rough-filter">A NEW ALLOCATOR</h2>
+        </div>
+        <div class="innovation-block">
+            <p style="font-size: 1.8rem; line-height: 1.3;">
+                MemeSeer is not a trading bot. It is a <b>memetic capital allocator</b>.
+                It creates narrative-driven tokens based on real-time cultural signals and deploys them autonomously
+                on-chain.
+            </p>
+            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                <p>⚡ Generates Culture</p>
+                <p>⚡ Deploys Liquidity</p>
+                <p>⚡ Manages Risk</p>
+                <p>⚡ Learns from Outcomes</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="the-brain">
+        <div class="section-center">
+            <h2 class="rough-filter">THE BRAIN</h2>
+        </div>
+
+        <div class="tech-card">
+            <div class="tech-grid">
+                <div>
+                    <h3>Policy-Driven Learning</h3>
+                    <p>MemeSeer uses <b>UCB1 (Upper Confidence Bound)</b> to select optimal strategies among
+                        Conservative, Balanced, Growth, and Aggressive profiles.</p>
+                </div>
+                <div>
+                    <h3>Market Edge Gating</h3>
+                    <p>Launch is blocked if portfolio is full, economy constraints fail, or core guard is triggered.
+                        Capital discipline is hard-coded.</p>
+                    <div class="bucket-grid">
+                        <div class="bucket bad">🔴 BAD</div>
+                        <div class="bucket neutral">🟡 NEUTRAL</div>
+                        <div class="bucket good">🟢 GOOD</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="architecture">
+        <div class="section-center">
+            <h2>ARCHITECTURE</h2>
+        </div>
+        <div class="flow-container">
+            <div class="flow-node">External Feed<br>(API/Twitter)</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Compute Edge<br>(Signals)</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Select Policy<br>(UCB1 Bandit)</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">AI Image Gen<br>(DALL-E/Deterministic)</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Execution<br>(nad.fun)</div>
+        </div>
+    </section>
+
+    <section id="discipline">
+        <div class="section-center">
+            <h2 class="rough-filter">CAPITAL DISCIPLINE</h2>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-card">
+                <h3>Portfolio Logic</h3>
+                <ul class="tech-list">
+                    <li><b>Profit Ladder:</b> 20% sells at +100%, +300%, and +600%.</li>
+                    <li><b>Moon Bag:</b> Post-ladder tokens held via trailing exits.</li>
+                    <li><b>Autonomous Exit:</b> Dead tokens are gradually sold off.</li>
+                </ul>
+            </div>
+            <div class="tech-card">
+                <h3>Global Guards</h3>
+                <ul class="tech-list">
+                    <li><b>Max Positions:</b> Active cap of 3 concurrent launches.</li>
+                    <li><b>Daily Cooldown:</b> Enforced rest between heavy cycles.</li>
+                    <li><b>Core Guard:</b> Prevents depletion on bad market streaks.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="verifiability">
+        <div class="section-center">
+            <h2>ON-CHAIN PROOF</h2>
+        </div>
+        <div class="proof-grid">
+            <a href="https://monadvision.com/token/0x17De1C1346EA528B4BEBF8711d1DDAb5B9157777" target="_blank"
+                class="proof-item">
+                <span>Explorer</span>
+                Token Smart Contract
+            </a>
+            <a href="https://x.com/meme_seer" target="_blank" class="proof-item">
+                <span>Socials</span>
+                Follow @meme_seer
+            </a>
+            <a href="https://www.youtube.com/watch?v=WdFX1LYFtmA" target="_blank" class="proof-item">
+                <span>Demo Video</span>
+                Watch Agent in Action
+            </a>
+        </div>
+    </section>
+
+    <div class="death-screen">
+        <h2>ON-CHAIN PERMANENCE</h2>
+        <p style="font-size: 2rem; margin-bottom: 2rem;">No manual trigger. No human intervention.</p>
+        <div
+            style="max-width: 600px; margin: 0 auto 4rem; background: rgba(255,255,255,0.1); padding: 2rem; border-left: 5px solid var(--primary-red); text-align: left;">
+            <p><strong>Contract:</strong> 0x17De1C1346EA528B4BEBF8711d1DDAb5B9157777</p>
+            <p><strong>Network:</strong> Monad Mainnet</p>
+            <p><strong>Trade:</strong> nad.fun</p>
+        </div>
+        <a href="https://nad.fun/tokens/0x17De1C1346EA528B4BEBF8711d1DDAb5B9157777" target="_blank"
+            class="btn rough-filter">BUY $SEER</a>
+        <p style="margin-top: 5rem; opacity: 0.5;">[MONAD NATIVE AGENT]</p>
+    </div>
+
+</body>
+
+</html>

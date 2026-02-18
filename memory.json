@@ -1277,6 +1277,50 @@
         }
       },
       "ts": 1771437575
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "no_launch",
+      "bucket": "good",
+      "edge": 0.24,
+      "ucb_score": 1000000000.0,
+      "t": 6,
+      "buyback_pct": 0.0,
+      "burn_pct": 0.0,
+      "ts": 1771444889
+    },
+    {
+      "type": "gating_no_launch",
+      "mode": "no_launch",
+      "bucket": "good",
+      "edge": 0.24,
+      "ts": 1771444889
+    },
+    {
+      "type": "learning_update",
+      "bucket": "good",
+      "mode": "no_launch",
+      "n": 1,
+      "mean_reward": 0.0,
+      "reward": 0.0,
+      "ts": 1771444889
+    },
+    {
+      "type": "run",
+      "record": {
+        "timestamp": "2026-02-18T20:01:29",
+        "timestamp_utc": "2026-02-18T20:01:29+00:00",
+        "agent": "MemeSeer",
+        "world_edge": 0.24,
+        "decision": {
+          "launch": false,
+          "reason": "Policy gate: NO_LAUNCH"
+        },
+        "mode": "no_launch",
+        "bucket": "good",
+        "reward": 0.0
+      },
+      "ts": 1771444889
     }
   ],
   "launches": {
@@ -1395,7 +1439,8 @@
         "timestamp": 1771437575,
         "iso_date": "2026-02-18T17:59:35+00:00",
         "image_path": "assets/token_images/hodlpe_1771437565.png",
-        "tx_hash": "86e3a843e5b881c3158fd3ff860bf21dcc648f22cc6f0f0f83d8dec02fc9d45e"
+        "tx_hash": "86e3a843e5b881c3158fd3ff860bf21dcc648f22cc6f0f0f83d8dec02fc9d45e",
+        "_current_valuation_mon": 196.22238039842603
       }
     ]
   },
@@ -1516,7 +1561,7 @@
             "mean_reward": 0.0
           },
           "no_launch": {
-            "n": 0,
+            "n": 1,
             "mean_reward": 0.0
           }
         }
@@ -1534,23 +1579,23 @@
     "signals": {
       "trend": 0.3,
       "sentiment": 0.3,
-      "novelty": 0.2,
-      "liquidity": 0.5,
-      "competition": 0.2
+      "novelty": 0.3,
+      "liquidity": 0.4,
+      "competition": 0.1
     },
-    "edge": 0.15999999999999998,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.24,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "High-profile NFT investments have drastically lost value, contributing to a bearish sentiment.",
-      "Overall market liquidity is moderate, with little competition or novelty in new launches."
+      "Recent news indicates caution among high-profile investors, such as Peter Thiel exiting Ethereum.",
+      "Market sentiment is reflected in the liquidity surges but remains moderate, indicating a lack of enthusiasm."
     ],
-    "world_text": "The current crypto and meme market is characterized by skepticism and caution. Notable NFT devaluations and cautious investor behavior reflect a bearish sentiment, while moderate liquidity indicates a lack of enthusiasm for new projects. Memes are serving both as a coping mechanism and a source of humor amid market challenges.",
-    "ts": "2026-02-18T17:59:11+00:00",
+    "world_text": "The current crypto and meme market is marked by skepticism and caution. High-profile exits from investments and cautious behavior among investors contribute to a bearish sentiment. Moderate liquidity indicates reluctance to engage in new projects, and overall competition is low with few new launches. Memes continue to serve as a coping mechanism for investors amid market challenges.",
+    "ts": "2026-02-18T20:01:29+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-18T17:59:07.644175+00:00",
+      "updated_at": "2026-02-18T20:01:20.633961+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

@@ -1321,6 +1321,22 @@
         "reward": 0.0
       },
       "ts": 1771444889
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "neutral",
+      "edge": -0.06499999999999995,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771452175
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771452185
     }
   ],
   "launches": {
@@ -1577,25 +1593,26 @@
   },
   "world": {
     "signals": {
-      "trend": 0.3,
-      "sentiment": 0.3,
-      "novelty": 0.3,
-      "liquidity": 0.4,
-      "competition": 0.1
+      "trend": 0.5,
+      "sentiment": 0.4,
+      "novelty": 0.5,
+      "liquidity": 0.6,
+      "competition": 0.7
     },
-    "edge": 0.24,
-    "bucket": "good",
-    "mood": "🟢 Bullish",
+    "edge": -0.06499999999999995,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
     "why": [
-      "Recent news indicates caution among high-profile investors, such as Peter Thiel exiting Ethereum.",
-      "Market sentiment is reflected in the liquidity surges but remains moderate, indicating a lack of enthusiasm."
+      "Elon Musk's comments about cash holdings could indicate caution among high-profile investors.",
+      "The CFTC Chair's statements on regulation signal potential stability, promoting interest in crypto.",
+      "Recent liquidity surges in various tokens suggest some investor activity, but overall caution remains."
     ],
-    "world_text": "The current crypto and meme market is marked by skepticism and caution. High-profile exits from investments and cautious behavior among investors contribute to a bearish sentiment. Moderate liquidity indicates reluctance to engage in new projects, and overall competition is low with few new launches. Memes continue to serve as a coping mechanism for investors amid market challenges.",
-    "ts": "2026-02-18T20:01:29+00:00",
+    "world_text": "The current crypto and meme market reflects a cautious sentiment, with key figures like Elon Musk highlighting financial conservatism. Regulatory optimism from the CFTC could provide a foundation for growth. Meanwhile, notable liquidity increases in specific tokens suggest selective interest, though overall market enthusiasm remains tempered, leading to a competitive environment for new launches.",
+    "ts": "2026-02-18T22:02:55+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-18T20:01:20.633961+00:00",
+      "updated_at": "2026-02-18T22:02:50.596252+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

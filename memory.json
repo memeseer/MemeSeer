@@ -1369,6 +1369,51 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771478129
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "good",
+      "edge": 0.3949999999999999,
+      "ucb_score": 2.0924382512691873,
+      "t": 7,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771488108
+    },
+    {
+      "type": "gating_llm_error",
+      "mode": "conservative",
+      "bucket": "good",
+      "edge": 0.3949999999999999,
+      "error": "OpenRouter HTTP 401: {\"error\":{\"message\":\"User not found.\",\"code\":401}}",
+      "ts": 1771488113
+    },
+    {
+      "type": "learning_update",
+      "bucket": "good",
+      "mode": "conservative",
+      "n": 2,
+      "mean_reward": 0.0,
+      "reward": 0.0,
+      "ts": 1771488113
+    },
+    {
+      "type": "run",
+      "record": {
+        "timestamp": "2026-02-19T08:01:53",
+        "timestamp_utc": "2026-02-19T08:01:53+00:00",
+        "agent": "MemeSeer",
+        "world_edge": 0.3949999999999999,
+        "decision": {
+          "launch": false,
+          "reason": "LLM error: OpenRouter HTTP 401: {\"error\":{\"message\":\"User not found.\",\"code\":401}}"
+        },
+        "mode": "conservative",
+        "bucket": "good",
+        "reward": 0.0
+      },
+      "ts": 1771488113
     }
   ],
   "launches": {
@@ -1589,7 +1634,7 @@
         },
         "good": {
           "conservative": {
-            "n": 1,
+            "n": 2,
             "mean_reward": 0.0
           },
           "balanced": {
@@ -1635,16 +1680,14 @@
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Positive sentiment from Eric Trump stating Bitcoin will reach $1 million and Michael Saylor's significant Bitcoin purchase.",
-      "Liquidity surges in XMR and other tokens suggest active trading and interest.",
-      "However, cautious actions like Peter Thiel exiting Ethereum and regulatory discussions indicate uncertainty."
+      "fallback: no external feed"
     ],
-    "world_text": "The crypto market shows a mixed sentiment with some bullish signals from influential figures like Eric Trump and significant purchases by Michael Saylor. Liquidity in certain tokens is rising, hinting at active trading. However, exits from Ethereum by Peter Thiel and talks of upcoming regulations suggest caution, leading to a balanced trend overall.",
-    "ts": "2026-02-19T05:15:21+00:00",
+    "world_text": "Market is uncertain. No external data available.",
+    "ts": "2026-02-19T08:01:48+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-19T05:15:17.086125+00:00",
+      "updated_at": "2026-02-19T08:01:42.474514+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

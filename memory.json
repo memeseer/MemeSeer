@@ -1446,6 +1446,22 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771511960
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "neutral",
+      "edge": -0.04500000000000004,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771522849
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771522865
     }
   ],
   "launches": {
@@ -1703,24 +1719,25 @@
   "world": {
     "signals": {
       "trend": 0.6,
-      "sentiment": 0.6,
-      "novelty": 0.5,
-      "liquidity": 0.7,
-      "competition": 0.5
+      "sentiment": 0.5,
+      "novelty": 0.3,
+      "liquidity": 0.6,
+      "competition": 0.7
     },
-    "edge": 0.19999999999999996,
+    "edge": -0.04500000000000004,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "Eric Trump's bullish statement on Bitcoin suggests positive sentiment.",
-      "CFTC Chair's remarks about crypto regulation indicate a more favorable environment for the market."
+      "Recent posts indicate bullish sentiments towards Bitcoin, especially from notable figures like Eric Trump.",
+      "Increased liquidity in various tokens, especially XMR, suggests growing market interest.",
+      "CFTC Chair's comments about crypto regulations signal a more favorable environment for the crypto market."
     ],
-    "world_text": "The crypto market is experiencing a cautious optimism, driven by bullish statements from influential figures like Eric Trump and positive regulatory hints from the CFTC Chair. Notable liquidity surges in various tokens, especially XMR, indicate growing interest. However, external geopolitical tensions and recent events may temper overall enthusiasm.",
-    "ts": "2026-02-19T14:39:13+00:00",
+    "world_text": "The crypto market is currently experiencing a mix of cautious optimism and bullish sentiments, particularly around Bitcoin, bolstered by significant liquidity surges in tokens like XMR. Regulatory discussions, especially those indicating a shift towards more favorable policies, add to the market's potential upside, while the competitive landscape appears heightened with multiple liquidity increase",
+    "ts": "2026-02-19T17:40:49+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-19T14:39:09.490115+00:00",
+      "updated_at": "2026-02-19T17:40:44.471605+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

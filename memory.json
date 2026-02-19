@@ -1414,6 +1414,22 @@
         "reward": 0.0
       },
       "ts": 1771488113
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "balanced",
+      "bucket": "good",
+      "edge": 0.495,
+      "ucb_score": 2.1630403299013246,
+      "t": 8,
+      "buyback_pct": 0.5,
+      "burn_pct": 0.0,
+      "ts": 1771500395
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771500403
     }
   ],
   "launches": {
@@ -1533,7 +1549,7 @@
         "iso_date": "2026-02-18T17:59:35+00:00",
         "image_path": "assets/token_images/hodlpe_1771437565.png",
         "tx_hash": "86e3a843e5b881c3158fd3ff860bf21dcc648f22cc6f0f0f83d8dec02fc9d45e",
-        "_current_valuation_mon": 196.22238039842603
+        "_current_valuation_mon": 196.0070522605956
       }
     ]
   },
@@ -1670,24 +1686,26 @@
   },
   "world": {
     "signals": {
-      "trend": 0.6,
-      "sentiment": 0.5,
-      "novelty": 0.4,
-      "liquidity": 0.7,
+      "trend": 0.7,
+      "sentiment": 0.6,
+      "novelty": 0.5,
+      "liquidity": 0.8,
       "competition": 0.2
     },
-    "edge": 0.3949999999999999,
+    "edge": 0.495,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "fallback: no external feed"
+      "Eric Trump and Michael Saylor's bullish statements on Bitcoin suggest positive sentiment.",
+      "Increased liquidity for various tokens indicates active market engagement.",
+      "Recent regulatory comments from the CFTC indicate a more favorable environment for crypto."
     ],
-    "world_text": "Market is uncertain. No external data available.",
-    "ts": "2026-02-19T08:01:48+00:00",
+    "world_text": "The crypto market is experiencing a positive trend, with bullish statements from notable figures like Eric Trump and Michael Saylor fueling sentiment. Liquidity is strong across various tokens, signaling active trading, while regulatory developments from the CFTC suggest a more favorable environment for cryptocurrencies. However, the competition remains low, with few new launches reported.",
+    "ts": "2026-02-19T11:26:35+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-19T08:01:42.474514+00:00",
+      "updated_at": "2026-02-19T11:26:31.548015+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

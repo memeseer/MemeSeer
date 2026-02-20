@@ -1859,6 +1859,34 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771565892
+    },
+    {
+      "type": "onchain_sell_sent",
+      "ticker": "SKPT",
+      "tx_hash": "e3efc0b086578a4afb308869fdce288ee25357d3df89c139c8153cd5920c4b3a",
+      "ts": 1771566489
+    },
+    {
+      "type": "sell_failed",
+      "ticker": "SKPT",
+      "reason": "a coroutine was expected, got AttributeDict({'type': 0, 'status': 1, 'cumulativeGasUsed': 1920030, 'logs': [AttributeDict({'address': '0xcE416728bcEb9227881c22E1f04DF92655087777', 'topics': [HexBytes('0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925'), HexBytes('0x000000000000000000000000ac1878e0e6ac39f85677214d28ba1e67bce5b4e4'), HexBytes('0x0000000000000000000000006f6b8f1a20703309951a5127c45b49b1cd981a22')], 'data': HexBytes('0x0000000000000000000000000000000000000000000000000000000000000000'), 'blockHash': HexBytes('0x4b10dfa762caa344227dfa718668b1d8b619fa0ed2b8593155bdf902f2a425a8'), 'blockNumber': 56558159, 'blockTimestamp': '0x6997f598', 'transactionHash': HexBytes('0xe3efc0b086578a4afb308869fdce288ee25357d3df89c139c8153cd5920c4b3a'), 'transactionIndex': 7, 'logIndex': 1, 'removed': False}), AttributeDict({'address': '0xcE416728bcEb9227881c22E1f04DF92655087777', 'topics': [HexBytes('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'), HexBytes('0x000000000000000000000000ac1878e0e6ac39f85677214d28ba1e67bce5b4e4'), HexBytes('0x000000000000000000000000a7283d07812a02afb7c09b60f8896bcea3f90ace')], 'data': HexBytes('0x00000000000000000000000000000000000000000000257315a8221d4e000000'), 'blockHash': HexBytes('0x4b10dfa762caa344227dfa718668b1d8b619fa0ed2b8593155bdf902f2a425a8'), 'blockNumber': 56558159, 'blockTimestamp': '0x6997f598', 'transactionHash': HexBytes('0xe3efc0b086578a4afb308869fdce288ee25357d3df89c139c8153cd5920c4b3a'), 'transactionIndex': 7, 'logIndex': 2, 'removed': False}), AttributeDict({'address': '0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A', 'topics': [HexBytes('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'), HexBytes('0x000000000000000000000000a7283d07812a02afb7c09b60f8896bcea3f90ace'), HexBytes('0x0000000000000000000000004ac5fd82b91a10de7f91343ddcca7a2541d3f509')], 'data': HexBytes('0x000000000000000000000000000000000000000000000000041fad8835a003b7'), 'blockHash': HexBytes('0x4b10dfa762caa344227dfa718668b1d8b619fa0ed2b8593155bdf902f2a425a8'), 'blockNumber': 56558159, 'blockTimestamp': '0x6997f598', 'transactionHash': HexBytes('0xe3efc0b086578a4afb308869fdce288ee25357d3df89c139c8153cd5920c4b3a'), 'transactionIndex': 7, 'logIndex': 3, 'removed': False}), AttributeDict({'address': '0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A', 'topics': [HexBytes('0x7fcf532c15f0a6db0bd6d0e038bea71d30d808c7d98cb3bf7268a95bf5081b65'), HexBytes('0x000000000000000000000000a7283d07812a02afb7c09b60f8896bcea3f90ace')], 'data': HexBytes('0x00000000000000000000000000000000000000000000000198401bacbce16f8a'), 'blockHash': HexBytes('0x4b10dfa762caa344227dfa718668b1d8b619fa0ed2b8593155bdf902f2a425a8'), 'blockNumber': 56558159, 'blockTimestamp': '0x6997f598', 'transactionHash': HexBytes('0xe3efc0b086578a4afb308869fdce288ee25357d3df89c139c8153cd5920c4b3a'), 'transactionIndex': 7, 'logIndex': 4, 'removed': False}), AttributeDict({'address': '0xA7283d07812a02AFB7C09B60f8896bCEA3F90aCE', 'topics': [HexBytes('0xfd4bb47bd45abdbdb2ecd61052c9571773f9cde876e2a7745f488c20b30ab10a'), HexBytes('0x000000000000000000000000ce416728bceb9227881c22e1f04df92655087777')], 'data': HexBytes('0x000000000000000000000000000000000000000000000006f96248742c4ffa4f0000000000000000000000000000000000000000033a8bf4974d41bde7a48491000000000000000000000000000000000000000000002624cb307794b4cffa4f00000000000000000000000000000000000000000376ee58dfee018ab4408491'), 'blockHash': HexBytes('0x4b10dfa762caa344227dfa718668b1d8b619fa0ed2b8593155bdf902f2a425a8'), 'blockNumber': 56558159, 'blockTimestamp': '0x6997f598', 'transactionHash': HexBytes('0xe3efc0b086578a4afb308869fdce288ee25357d3df89c139c8153cd5920c4b3a'), 'transactionIndex': 7, 'logIndex': 5, 'removed': False}), AttributeDict({'address': '0xA7283d07812a02AFB7C09B60f8896bCEA3F90aCE', 'topics': [HexBytes('0x0eb25df0e2137de8ce042eeaf39080d25f0c8d451372c99db69a4c0a298d0fa1'), HexBytes('0x000000000000000000000000ac1878e0e6ac39f85677214d28ba1e67bce5b4e4'), HexBytes('0x000000000000000000000000ce416728bceb9227881c22e1f04df92655087777')], 'data': HexBytes('0x00000000000000000000000000000000000000000000257315a8221d4e00000000000000000000000000000000000000000000000000000198401bacbce16f8a'), 'blockHash': HexBytes('0x4b10dfa762caa344227dfa718668b1d8b619fa0ed2b8593155bdf902f2a425a8'), 'blockNumber': 56558159, 'blockTimestamp': '0x6997f598', 'transactionHash': HexBytes('0xe3efc0b086578a4afb308869fdce288ee25357d3df89c139c8153cd5920c4b3a'), 'transactionIndex': 7, 'logIndex': 6, 'removed': False})], 'logsBloom': HexBytes('0x04008040000000000000000000100000000000000000000000040000100000000000000000000000000000000100084000000000000000000000000000200008000000000000000000000008000000000000000000400000000000000100000400000000000000000000002000000000000000000000040000002110000000000000000000000000000000100000000000000000080000000080000000000000020000000000000000000000001000000000000008000000000000000010080000004006000000000000000000000000000400000000000000000002000000000010000000000000080000000000000000040000000000010000000400000200'), 'transactionHash': HexBytes('0xe3efc0b086578a4afb308869fdce288ee25357d3df89c139c8153cd5920c4b3a'), 'transactionIndex': 7, 'blockHash': HexBytes('0x4b10dfa762caa344227dfa718668b1d8b619fa0ed2b8593155bdf902f2a425a8'), 'blockNumber': 56558159, 'gasUsed': 350433, 'effectiveGasPrice': 102000000000, 'from': '0xaC1878e0e6ac39f85677214D28bA1e67bCe5b4E4', 'to': '0x6F6B8F1a20703309951a5127c45B49b1CD981A22', 'contractAddress': None})",
+      "ts": 1771566489
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "neutral",
+      "edge": -0.04999999999999993,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771566496
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771566504
     }
   ],
   "launches": {
@@ -1964,7 +1992,7 @@
         "iso_date": "2026-02-16T03:28:41+00:00",
         "image_path": "assets/token_images/skpt_1771212514.png",
         "tx_hash": "eb80e057fe7eabf140430724850134c72f1663e96598435cbadf92cbb9dd7dc5",
-        "_current_valuation_mon": 195.9984514229766
+        "_current_valuation_mon": 195.9338270072255
       },
       {
         "address": "0x33092427DAFEaD112539502B4349035FB1E37777",
@@ -2162,15 +2190,17 @@
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "The mention of significant crypto market structure legislation and potential stablecoin rewards indicates a positive trend.",
-      "However, the exit of Peter Thiel from Ethereum and the political tensions regarding military actions introduce a cautious sentiment."
+      "Eric Trump is bullish on Bitcoin, suggesting potential price increases.",
+      "Recent news about the U.S. government pushing for stablecoin rewards may create positive momentum.",
+      "Several tokens, especially XMR, show significant liquidity surges, indicating market activity.",
+      "Multiple external posts regarding potential legislation and military tensions may create uncertainty, impacting sentiment."
     ],
-    "world_text": "The crypto market is experiencing a mix of optimism and caution. While potential legislative advancements and stablecoin rewards create a favorable trend, notable exits by key investors and geopolitical tensions weigh on sentiment. The recent liquidity surges in various tokens and the upcoming competition from the CME Group's 24/7 trading launch add further complexity to the market landscape.",
-    "ts": "2026-02-20T05:38:05+00:00",
+    "world_text": "The crypto market is showing mixed signals with some bullish comments on Bitcoin by notable figures like Eric Trump. However, a backdrop of geopolitical tensions and major legislative maneuvers creates caution among investors. The liquidity in certain tokens suggests active trading, while the mention of multiple launches indicates heightened competition in the market.",
+    "ts": "2026-02-20T05:48:16+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-20T05:37:58.762464+00:00",
+      "updated_at": "2026-02-20T05:48:07.192190+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

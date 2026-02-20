@@ -57,92 +57,131 @@ class NadfunExecutor:
 
     def ensure_mon_balance(self):
         current = self.get_mon_balance()
-        print(f"Current MON balance: {current:.2f}")
+        print(f"Current MON balance: {current:.4f}")
+    
         if current >= REQUIRED_FUNDING_MON:
-            print("Balance sufficient.")
             return True
+    
         shortfall = REQUIRED_FUNDING_MON - current
-        print(f"Shortfall detected: {shortfall:.2f} MON. Funding via CORE...")
-        return self.sell_core_for_mon(shortfall)
+        print(f"Shortfall: {shortfall:.4f} MON → trying CORE sell")
+    
+        success = self.sell_core_for_mon(shortfall)
+    
+        if not success:
+            print("[WARN] Funding failed")
+            return False
+    
+        new_balance = self.get_mon_balance()
+        print(f"Balance after sell: {new_balance:.4f}")
+    
+        return new_balance >= REQUIRED_FUNDING_MON
 
+    
     def sell_core_for_mon(self, amount_mon_needed):
-        print(f"Executing sell for {amount_mon_needed:.2f} MON shortfall...")
-
+        print(f"Selling CORE for {amount_mon_needed:.4f} MON")
+    
         ERC20_ABI = [
-            {"constant": True, "inputs": [{"name":"_owner","type":"address"}], "name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"type":"function"},
-            {"constant": True, "inputs": [], "name":"decimals","outputs":[{"name":"","type":"uint8"}],"type":"function"},
-            {"constant": False, "inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}], "name":"approve","outputs":[{"name":"success","type":"bool"}],"type":"function"}
+            {
+                "name": "balanceOf",
+                "type": "function",
+                "inputs": [{"name": "_owner", "type": "address"}],
+                "outputs": [{"name": "balance", "type": "uint256"}],
+                "stateMutability": "view",
+            },
+            {
+                "name": "decimals",
+                "type": "function",
+                "inputs": [],
+                "outputs": [{"name": "", "type": "uint8"}],
+                "stateMutability": "view",
+            },
+            {
+                "name": "approve",
+                "type": "function",
+                "inputs": [
+                    {"name": "spender", "type": "address"},
+                    {"name": "amount", "type": "uint256"},
+                ],
+                "outputs": [{"name": "success", "type": "bool"}],
+                "stateMutability": "nonpayable",
+            }
         ]
-
+    
         try:
-            token_contract = self.w3.eth.contract(address=self.SEER_TOKEN, abi=ERC20_ABI)
-            decimals = token_contract.functions.decimals().call()
-            balance_seer = token_contract.functions.balanceOf(self.address).call()
+            token = self.w3.eth.contract(address=self.SEER_TOKEN, abi=ERC20_ABI)
+            decimals = token.functions.decimals().call()
+            balance = token.functions.balanceOf(self.address).call()
         except Exception as e:
-            print(f"[WARN] Cannot access SEER ERC20 contract: {e}, skipping sell")
+            print(f"[WARN] ERC20 error: {e}")
             return False
-
-        if balance_seer <= 0:
-            print("[WARN] No SEER balance available for sale, skipping")
+    
+        if balance == 0:
+            print("[WARN] No CORE balance")
             return False
-
+    
         try:
             reserves = self.curve.functions.curves(self.SEER_TOKEN).call()
             virt_mon = reserves[2]
             virt_token = reserves[3]
+    
             dy = self.w3.to_wei(amount_mon_needed, "ether")
             dy_with_fee = int(dy * 1.01)
+    
             needed_raw = (virt_token * dy_with_fee) // (virt_mon - dy_with_fee)
         except Exception as e:
-            print(f"[WARN] Cannot read curve reserves: {e}, skipping sell")
+            print(f"[WARN] Curve error: {e}")
             return False
-
-        if needed_raw > balance_seer:
-            print(f"[WARN] Not enough SEER ({balance_seer/10**decimals:.6f}) for required {needed_raw/10**decimals:.6f}, skipping")
+    
+        if needed_raw > balance:
+            print("[WARN] Not enough CORE to cover shortfall")
             return False
-
-        print(f"  Selling {needed_raw / 10**decimals:.6f} SEER for ~{amount_mon_needed:.2f} MON")
-
+    
+        if self.dry_run:
+            print("[DRY RUN] CORE sell skipped")
+            return True
+    
         try:
-            erc20 = self.w3.eth.contract(address=self.SEER_TOKEN, abi=ERC20_ABI)
             nonce = self.w3.eth.get_transaction_count(self.address)
-            approve_tx = erc20.functions.approve(self.ROUTER_ADDR, needed_raw).build_transaction({
+    
+            approve_tx = token.functions.approve(
+                self.ROUTER_ADDR,
+                needed_raw
+            ).build_transaction({
                 "from": self.address,
                 "nonce": nonce,
                 "gasPrice": self.w3.eth.gas_price,
                 "chainId": self.w3.eth.chain_id,
             })
+    
             approve_tx["gas"] = int(self.w3.eth.estimate_gas(approve_tx) * 1.2)
-            signed_approve = self.w3.eth.account.sign_transaction(approve_tx, self.private_key)
-            approve_hash = self.w3.eth.send_raw_transaction(signed_approve.raw_transaction)
-            self.w3.eth.wait_for_transaction_receipt(approve_hash)
-            print("Approve successful.")
-        except Exception as e:
-            print(f"[WARN] Approve failed: {e}, skipping sell")
-            return False
-
-        try:
+            signed = self.w3.eth.account.sign_transaction(approve_tx, self.private_key)
+            tx_hash = self.w3.eth.send_raw_transaction(signed.raw_transaction)
+            self.w3.eth.wait_for_transaction_receipt(tx_hash)
+    
+            # SELL
             amount_out_min = int(dy * 0.95)
             deadline = int(time.time() + 1200)
             params = (needed_raw, amount_out_min, self.SEER_TOKEN, self.address, deadline)
+    
             nonce += 1
+    
             sell_tx = self.router.functions.sell(params).build_transaction({
                 "from": self.address,
                 "nonce": nonce,
                 "gasPrice": self.w3.eth.gas_price,
                 "chainId": self.w3.eth.chain_id,
             })
+    
             sell_tx["gas"] = int(self.w3.eth.estimate_gas(sell_tx) * 1.2)
             signed_sell = self.w3.eth.account.sign_transaction(sell_tx, self.private_key)
             sell_hash = self.w3.eth.send_raw_transaction(signed_sell.raw_transaction)
+    
             receipt = self.w3.eth.wait_for_transaction_receipt(sell_hash)
-            if receipt.status != 1:
-                print("[WARN] Sell failed on-chain")
-                return False
-            print("CORE sell successful.")
-            return True
+    
+            return receipt.status == 1
+    
         except Exception as e:
-            print(f"[WARN] Sell execution failed: {e}, skipping")
+            print(f"[WARN] Sell failed: {e}")
             return False
 
     async def get_quote(self, token_address: str, amount: float, is_buy: bool):
@@ -215,73 +254,99 @@ class NadfunExecutor:
         return self.w3.eth.wait_for_transaction_receipt(tx_hash)
 
     def launch_token(self, name, symbol, description, image_path):
-        # Check 24h skip
-        if symbol in self.skip_until and utc_now_ts() < self.skip_until[symbol]:
-            print(f"[SKPT] Skipping launch for {symbol}, wait until {self.skip_until[symbol]}")
+        now = utc_now_ts()
+    
+        # 24h skip check
+        if symbol in self.skip_until and now < self.skip_until[symbol]:
+            print(f"[SKPT] {symbol} cooldown active")
             return None
-
-        # Ensure MON balance
+    
+        # Ensure balance
         if not self.ensure_mon_balance():
-            print(f"[SKPT] Not enough MON to launch {symbol}, skipping 24h")
-            self.skip_until[symbol] = utc_now_ts() + 24*3600
+            print(f"[SKPT] Not enough MON → 24h cooldown for {symbol}")
+            self.skip_until[symbol] = now + 24 * 3600
             return None
-
-        print(f"Launching token {name} ({symbol})...")
-
-        with open(image_path, "rb") as f:
-            img_resp = requests.post(
-                "https://api.nad.fun/metadata/image",
-                headers={"Content-Type": "image/png"},
-                data=f.read()
+    
+        print(f"Launching {name} ({symbol})")
+    
+        try:
+            with open(image_path, "rb") as f:
+                img = requests.post(
+                    "https://api.nad.fun/metadata/image",
+                    headers={"Content-Type": "image/png"},
+                    data=f.read()
+                )
+            img.raise_for_status()
+            image_uri = img.json()["image_uri"]
+    
+            meta = requests.post(
+                "https://api.nad.fun/metadata/metadata",
+                json={
+                    "image_uri": image_uri,
+                    "name": name,
+                    "symbol": symbol,
+                    "description": description
+                }
             )
-            img_resp.raise_for_status()
-            image_uri = img_resp.json()["image_uri"]
-
-        meta_resp = requests.post(
-            "https://api.nad.fun/metadata/metadata",
-            json={"image_uri": image_uri, "name": name, "symbol": symbol, "description": description}
-        )
-        meta_resp.raise_for_status()
-        metadata_uri = meta_resp.json()["metadata_uri"]
-
-        salt_resp = requests.post(
-            "https://api.nad.fun/token/salt",
-            json={"creator": self.address, "name": name, "symbol": symbol, "metadata_uri": metadata_uri}
-        )
-        salt_resp.raise_for_status()
-        salt_data = salt_resp.json()
-        salt = salt_data["salt"]
-        predicted_address = salt_data["address"]
-
-        deploy_fee = self.curve.functions.feeConfig().call()[0]
-        amount_in_wei = self.w3.to_wei(LAUNCH_BUDGET_MON, "ether")
-        expected_out = self.lens.functions.getInitialBuyAmountOut(amount_in_wei).call()
-        amount_out_min = expected_out * SLIPPAGE_BPS // 10000
-        buffer_wei = self.w3.to_wei(BUFFER_MON, "ether")
-        total_value = deploy_fee + amount_in_wei + buffer_wei
-
-        params = (name, symbol, metadata_uri, amount_out_min, salt, 1)
-        nonce = self.w3.eth.get_transaction_count(self.address)
-        tx = self.router.functions.create(params).build_transaction({
-            "from": self.address,
-            "value": total_value,
-            "nonce": nonce,
-            "gasPrice": self.w3.eth.gas_price,
-            "chainId": self.w3.eth.chain_id
-        })
-        tx["gas"] = int(self.w3.eth.estimate_gas(tx) * 1.2)
-        signed = self.w3.eth.account.sign_transaction(tx, self.private_key)
-        tx_hash = self.w3.eth.send_raw_transaction(signed.raw_transaction)
-        print(f"Launch TX sent: {tx_hash.hex()}")
-
-        receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
-        if receipt.status != 1:
-            raise Exception(f"Launch failed. Status: {receipt.status}")
-
-        print(f"Launch successful! Token: {predicted_address}")
-        return {"token_address": predicted_address, "tx_hash": tx_hash.hex(), "tokens_received_raw": int(expected_out)}
-
-
-
+            meta.raise_for_status()
+            metadata_uri = meta.json()["metadata_uri"]
+    
+            salt_resp = requests.post(
+                "https://api.nad.fun/token/salt",
+                json={
+                    "creator": self.address,
+                    "name": name,
+                    "symbol": symbol,
+                    "metadata_uri": metadata_uri
+                }
+            )
+            salt_resp.raise_for_status()
+            salt_data = salt_resp.json()
+    
+            salt = salt_data["salt"]
+            predicted = salt_data["address"]
+    
+            deploy_fee = self.curve.functions.feeConfig().call()[0]
+            amount_in = self.w3.to_wei(LAUNCH_BUDGET_MON, "ether")
+    
+            expected_out = self.lens.functions.getInitialBuyAmountOut(amount_in).call()
+            min_out = expected_out * SLIPPAGE_BPS // 10000
+    
+            total_value = deploy_fee + amount_in + self.w3.to_wei(BUFFER_MON, "ether")
+    
+            params = (name, symbol, metadata_uri, min_out, salt, 1)
+    
+            nonce = self.w3.eth.get_transaction_count(self.address)
+    
+            tx = self.router.functions.create(params).build_transaction({
+                "from": self.address,
+                "value": total_value,
+                "nonce": nonce,
+                "gasPrice": self.w3.eth.gas_price,
+                "chainId": self.w3.eth.chain_id
+            })
+    
+            tx["gas"] = int(self.w3.eth.estimate_gas(tx) * 1.2)
+    
+            signed = self.w3.eth.account.sign_transaction(tx, self.private_key)
+            tx_hash = self.w3.eth.send_raw_transaction(signed.raw_transaction)
+    
+            receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
+    
+            if receipt.status != 1:
+                raise Exception("Launch failed")
+    
+            print(f"Launch success: {predicted}")
+    
+            return {
+                "token_address": predicted,
+                "tx_hash": tx_hash.hex(),
+                "tokens_received_raw": int(expected_out)
+            }
+    
+        except Exception as e:
+            print(f"[ERROR] Launch failed: {e}")
+            self.skip_until[symbol] = now + 24 * 3600
+            return None
 
 

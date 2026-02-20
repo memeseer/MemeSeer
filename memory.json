@@ -2810,6 +2810,162 @@
         }
       },
       "ts": 1771628430
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "good",
+      "edge": 0.45999999999999996,
+      "ucb_score": 1000000000.0,
+      "t": 1,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771629599
+    },
+    {
+      "type": "launch_failed",
+      "reason": "'NoneType' object is not subscriptable",
+      "ts": 1771629614
+    },
+    {
+      "type": "run",
+      "record": {
+        "timestamp": "2026-02-20T23:20:14",
+        "timestamp_utc": "2026-02-20T23:20:14+00:00",
+        "agent": "MemeSeer",
+        "world": "The crypto market is currently buoyed by increasing liquidity in privacy tokens and an upbeat meme culture. External political uncertainties exist, but the overall sentiment remains optimistic. With low competition among new launches, there's a fertile ground for innovative and humorous narratives, making the atmosphere ripe for new projects to gain traction.",
+        "thought": "In the current crypto landscape, meme culture is flourishing alongside the rise of privacy tokens, creating a unique synergy that captures the attention of both seasoned investors and newcomers. The prevailing optimism, despite external political uncertainties, has given rise to humorous narratives that resonate well within the community. Memes that play on the unpredictability of the market—like the classic \"to the moon\" or \"when Lambo\" tropes—are being reimagined to reflect the privacy and anonymity themes, often incorporating playful characters or quirky scenarios.\n\nAdditionally, the low competition among new launches allows for an influx of innovative meme projects, where creators can leverage humor to engage audiences while promoting their unique value propositions. This environment encourages collaboration and creativity, resulting in memes that not only entertain but also educate about the benefits of privacy in a digital age. As the crypto community embraces these narratives, we can expect a blend of humor, irony, and insight that reflects the evolving nature of the market, making it an exciting time for meme enthusiasts and investors alike.",
+        "decision": {
+          "launch": true,
+          "reason": "The synergy between meme culture and privacy tokens, along with low competition and a positive community atmosphere, creates a favorable environment for a new memecoin launch.",
+          "_raw": "{\n  \"launch\": true,\n  \"reason\": \"The synergy between meme culture and privacy tokens, along with low competition and a positive community atmosphere, creates a favorable environment for a new memecoin launch.\"\n}"
+        },
+        "token_idea": {
+          "name": "PrivyPup",
+          "ticker": "PUP",
+          "narrative": "A meme token inspired by cute dogs and the power of privacy, fetching profits while keeping your secrets safe!",
+          "why_now": "In a world where privacy matters more than ever, combining humor with the growing demand for privacy tokens creates a perfect storm for engagement and investment.",
+          "_raw": "{\n  \"name\": \"PrivyPup\",\n  \"ticker\": \"PUP\",\n  \"narrative\": \"A meme token inspired by cute dogs and the power of privacy, fetching profits while keeping your secrets safe!\",\n  \"why_now\": \"In a world where privacy matters more than ever, combining humor with the growing demand for privacy tokens creates a perfect storm for engagement and investment.\"\n}"
+        },
+        "outbox_path": null,
+        "economy": {
+          "balances": {
+            "seer": 1000.0,
+            "mon": 0.0,
+            "seer_burned": 0.0
+          },
+          "treasury_mon": 0.0,
+          "stats": {
+            "seer_sold_total": 0.0,
+            "buyback_mon_total": 0.0,
+            "seer_bought_total": 0.0,
+            "seer_burned_total": 0.0
+          },
+          "params": {
+            "min_seer_to_live": 1.0,
+            "mon_per_launch": 5.0,
+            "max_seer_sell_frac": 0.25,
+            "treasury_pct_of_profit": 0.3,
+            "min_operating_mon": 5.0,
+            "sell_frac_scale_bad": 0.25,
+            "sell_frac_scale_neutral": 0.6,
+            "sell_frac_scale_good": 1.0
+          },
+          "seer_price_mon": 1.0
+        },
+        "learning": {
+          "bandit": {
+            "buckets": {
+              "bad": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              },
+              "neutral": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              },
+              "good": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              }
+            }
+          },
+          "last_balances": {
+            "seer": 1000.0,
+            "mon": 0.0
+          },
+          "params": {
+            "exploration_c": 1.5
+          }
+        }
+      },
+      "ts": 1771629614
     }
   ],
   "launches": {},
@@ -2954,24 +3110,24 @@
   "world": {
     "signals": {
       "trend": 0.7,
-      "sentiment": 0.6,
-      "novelty": 0.8,
-      "liquidity": 0.9,
+      "sentiment": 0.7,
+      "novelty": 0.6,
+      "liquidity": 0.8,
       "competition": 0.3
     },
-    "edge": 0.495,
+    "edge": 0.45999999999999996,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Increased liquidity in privacy tokens indicates strong market activity.",
-      "Positive engagement in meme culture enhances community sentiment."
+      "Rising liquidity in privacy tokens indicates a positive trend.",
+      "The vibrant meme culture is thriving, driving optimistic sentiment."
     ],
-    "world_text": "The crypto market is currently experiencing a positive trend driven by rising liquidity in privacy tokens and a vibrant meme culture. Despite external political uncertainties, the overall sentiment remains optimistic, fostering creative engagement with low competition among new launches, making it a fertile ground for meme-driven narratives.",
-    "ts": "2026-02-20T23:00:14+00:00",
+    "world_text": "The crypto market is currently buoyed by increasing liquidity in privacy tokens and an upbeat meme culture. External political uncertainties exist, but the overall sentiment remains optimistic. With low competition among new launches, there's a fertile ground for innovative and humorous narratives, making the atmosphere ripe for new projects to gain traction.",
+    "ts": "2026-02-20T23:19:59+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-20T23:00:09.102110+00:00",
+      "updated_at": "2026-02-20T23:19:57.011115+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

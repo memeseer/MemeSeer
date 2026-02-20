@@ -276,6 +276,11 @@ class NadfunExecutor:
         return sell_hash.hex()
 
 
+    def wait_for_receipt(self, tx_hash):
+        if isinstance(tx_hash, str):
+            tx_hash = Web3.to_bytes(hexstr=tx_hash)
+        return self.w3.eth.wait_for_transaction_receipt(tx_hash)
+
     def launch_token(self, name, symbol, description, image_path):
         """
         Full launch flow: Image -> Metadata -> Salt -> Create
@@ -368,6 +373,7 @@ class NadfunExecutor:
             "tx_hash": tx_hash.hex(),
             "tokens_received_raw": int(expected_out)
         }
+
 
 
 

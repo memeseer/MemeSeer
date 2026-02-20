@@ -470,6 +470,162 @@
         }
       },
       "ts": 1771572443
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "good",
+      "edge": 0.485,
+      "ucb_score": 1000000000.0,
+      "t": 1,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771572878
+    },
+    {
+      "type": "launch_failed",
+      "reason": "(\"The function 'balanceOf' was not found in this \", \"contract's abi.\")",
+      "ts": 1771572894
+    },
+    {
+      "type": "run",
+      "record": {
+        "timestamp": "2026-02-20T07:34:54",
+        "timestamp_utc": "2026-02-20T07:34:54+00:00",
+        "agent": "MemeSeer",
+        "world": "The crypto market is experiencing a surge in positive sentiment, driven by bullish remarks from influential figures and potential regulatory advancements. Liquidity is high, especially in privacy tokens like XMR, showcasing strong trading activity. However, competition from new launches remains moderate, providing an exciting atmosphere for investors.",
+        "thought": "In the current crypto landscape, the narrative is heavily leaning towards optimism, driven by influential endorsements and the potential for regulatory clarity. Memes reflecting the \"to the moon\" sentiment are gaining traction, often featuring rockets or astronauts symbolizing the bullish outlook. Privacy tokens like XMR are becoming the darlings of meme culture, with humorous takes on their ability to offer anonymity in an increasingly transparent world. \n\nAt the same time, the competition from new launches is being met with playful skepticism, leading to memes that poke fun at overhyped projects. The contrast between established tokens and newcomers is ripe for satire, with memes portraying \"veteran\" coins as wise sages guiding naive investors. Overall, the atmosphere is vibrant, with memes serving as both a reflection of sentiment and a way to engage the community in this exciting phase of the market.",
+        "decision": {
+          "launch": true,
+          "reason": "The positive sentiment and vibrant meme culture create an ideal environment for a new memecoin launch, leveraging humor and community engagement.",
+          "_raw": "{\n  \"launch\": true,\n  \"reason\": \"The positive sentiment and vibrant meme culture create an ideal environment for a new memecoin launch, leveraging humor and community engagement.\"\n}"
+        },
+        "token_idea": {
+          "name": "MoonSage",
+          "ticker": "MSG",
+          "narrative": "The wise coin guiding you to the moon amidst the crypto chaos!",
+          "why_now": "With optimism soaring and memes ruling the market, MoonSage symbolizes the blend of experience and hype, perfect for today's crypto landscape.",
+          "_raw": "{\n  \"name\": \"MoonSage\",\n  \"ticker\": \"MSG\",\n  \"narrative\": \"The wise coin guiding you to the moon amidst the crypto chaos!\",\n  \"why_now\": \"With optimism soaring and memes ruling the market, MoonSage symbolizes the blend of experience and hype, perfect for today's crypto landscape.\"\n}"
+        },
+        "outbox_path": null,
+        "economy": {
+          "balances": {
+            "seer": 1000.0,
+            "mon": 0.0,
+            "seer_burned": 0.0
+          },
+          "treasury_mon": 0.0,
+          "stats": {
+            "seer_sold_total": 0.0,
+            "buyback_mon_total": 0.0,
+            "seer_bought_total": 0.0,
+            "seer_burned_total": 0.0
+          },
+          "params": {
+            "min_seer_to_live": 1.0,
+            "mon_per_launch": 5.0,
+            "max_seer_sell_frac": 0.25,
+            "treasury_pct_of_profit": 0.3,
+            "min_operating_mon": 5.0,
+            "sell_frac_scale_bad": 0.25,
+            "sell_frac_scale_neutral": 0.6,
+            "sell_frac_scale_good": 1.0
+          },
+          "seer_price_mon": 1.0
+        },
+        "learning": {
+          "bandit": {
+            "buckets": {
+              "bad": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              },
+              "neutral": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              },
+              "good": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              }
+            }
+          },
+          "last_balances": {
+            "seer": 1000.0,
+            "mon": 0.0
+          },
+          "params": {
+            "exploration_c": 1.5
+          }
+        }
+      },
+      "ts": 1771572894
     }
   ],
   "launches": {},
@@ -613,26 +769,26 @@
   },
   "world": {
     "signals": {
-      "trend": 0.8,
-      "sentiment": 0.7,
+      "trend": 0.7,
+      "sentiment": 0.8,
       "novelty": 0.5,
       "liquidity": 0.9,
-      "competition": 0.6
+      "competition": 0.3
     },
-    "edge": 0.255,
+    "edge": 0.485,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Bullish statements from figures like Eric Trump and Ripple CEO Brad Garlinghouse indicate positive sentiment.",
-      "Legislative moves to enhance the crypto market structure and stablecoin rewards are fostering optimism.",
-      "Rising liquidity in tokens, especially XMR, suggests robust trading activity."
+      "Bullish statements from influential figures like Eric Trump about Bitcoin reaching $1 million are fueling optimism.",
+      "The potential passing of crypto market structure legislation indicates favorable regulatory developments.",
+      "Liquidity is notably high, particularly in tokens like XMR, indicating robust trading activity."
     ],
-    "world_text": "The crypto market is currently experiencing a surge in positive sentiment, driven by bullish remarks from influential figures and potential regulatory advancements. Liquidity is notably high, particularly in privacy-focused tokens like XMR, indicating vigorous trading activity. However, competition remains moderate as new launches are on the horizon, creating an exciting atmosphere for investors.",
-    "ts": "2026-02-20T07:27:08+00:00",
+    "world_text": "The crypto market is experiencing a surge in positive sentiment, driven by bullish remarks from influential figures and potential regulatory advancements. Liquidity is high, especially in privacy tokens like XMR, showcasing strong trading activity. However, competition from new launches remains moderate, providing an exciting atmosphere for investors.",
+    "ts": "2026-02-20T07:34:38+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-20T07:27:04.290493+00:00",
+      "updated_at": "2026-02-20T07:34:31.931114+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

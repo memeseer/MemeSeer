@@ -1250,6 +1250,162 @@
         }
       },
       "ts": 1771582630
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "good",
+      "edge": 0.43999999999999995,
+      "ucb_score": 1000000000.0,
+      "t": 1,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771583556
+    },
+    {
+      "type": "launch_failed",
+      "reason": "'NoneType' object is not subscriptable",
+      "ts": 1771583574
+    },
+    {
+      "type": "run",
+      "record": {
+        "timestamp": "2026-02-20T10:32:54",
+        "timestamp_utc": "2026-02-20T10:32:54+00:00",
+        "agent": "MemeSeer",
+        "world": "The crypto market is currently bullish, driven by optimism around Bitcoin and potential regulatory clarity. Liquidity remains high, particularly in privacy tokens, while notable figures express confidence in the sector. The competition among new launches is low, allowing the meme culture to thrive, focused on themes of camaraderie and excitement.",
+        "thought": "In the current bullish crypto market, meme narratives are thriving, drawing on themes of camaraderie and optimism among investors. The excitement surrounding Bitcoin's potential regulatory clarity has sparked a wave of memes celebrating the \"HODL\" spirit, encouraging community members to hold onto their assets with a sense of shared purpose. Privacy tokens are also becoming popular subjects, with playful memes emphasizing the importance of anonymity in a world increasingly focused on surveillance. \n\nThe low competition among new launches allows creative and humorous content to flourish, with memes poking fun at past market trends, such as \"to the moon\" and \"Lambo\" culture, while embracing a more community-oriented approach. Influencers and notable figures in the crypto space are often depicted as meme characters, reinforcing their roles as champions of the movement. Overall, the current meme culture encapsulates the thrill of the market while fostering a sense of unity among participants, encouraging them to celebrate both the highs and lows of the crypto journey.",
+        "decision": {
+          "launch": true,
+          "reason": "The current bullish crypto market and thriving meme narratives create a favorable environment for a memecoin launch, capitalizing on community spirit and optimism.",
+          "_raw": "{\n  \"launch\": true,\n  \"reason\": \"The current bullish crypto market and thriving meme narratives create a favorable environment for a memecoin launch, capitalizing on community spirit and optimism.\"\n}"
+        },
+        "token_idea": {
+          "name": "HODL Troupe",
+          "ticker": "HODL",
+          "narrative": "Join the HODL Troupe—where we hold together and laugh together! Embrace the journey with memes and camaraderie.",
+          "why_now": "In a bullish market with growing regulatory clarity, community spirit is at an all-time high, making a fun, meme-driven token perfect for uniting HODLers.",
+          "_raw": "{\n  \"name\": \"HODL Troupe\",\n  \"ticker\": \"HODL\",\n  \"narrative\": \"Join the HODL Troupe—where we hold together and laugh together! Embrace the journey with memes and camaraderie.\",\n  \"why_now\": \"In a bullish market with growing regulatory clarity, community spirit is at an all-time high, making a fun, meme-driven token perfect for uniting HODLers.\"\n}"
+        },
+        "outbox_path": null,
+        "economy": {
+          "balances": {
+            "seer": 1000.0,
+            "mon": 0.0,
+            "seer_burned": 0.0
+          },
+          "treasury_mon": 0.0,
+          "stats": {
+            "seer_sold_total": 0.0,
+            "buyback_mon_total": 0.0,
+            "seer_bought_total": 0.0,
+            "seer_burned_total": 0.0
+          },
+          "params": {
+            "min_seer_to_live": 1.0,
+            "mon_per_launch": 5.0,
+            "max_seer_sell_frac": 0.25,
+            "treasury_pct_of_profit": 0.3,
+            "min_operating_mon": 5.0,
+            "sell_frac_scale_bad": 0.25,
+            "sell_frac_scale_neutral": 0.6,
+            "sell_frac_scale_good": 1.0
+          },
+          "seer_price_mon": 1.0
+        },
+        "learning": {
+          "bandit": {
+            "buckets": {
+              "bad": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              },
+              "neutral": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              },
+              "good": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              }
+            }
+          },
+          "last_balances": {
+            "seer": 1000.0,
+            "mon": 0.0
+          },
+          "params": {
+            "exploration_c": 1.5
+          }
+        }
+      },
+      "ts": 1771583574
     }
   ],
   "launches": {},
@@ -1394,24 +1550,25 @@
   "world": {
     "signals": {
       "trend": 0.7,
-      "sentiment": 0.6,
+      "sentiment": 0.7,
       "novelty": 0.5,
       "liquidity": 0.8,
       "competition": 0.3
     },
-    "edge": 0.41500000000000004,
+    "edge": 0.43999999999999995,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Positive sentiment from influential figures like Eric Trump bullish on Bitcoin.",
-      "High liquidity in privacy tokens and ongoing regulatory developments."
+      "There's significant optimism surrounding Bitcoin and potential regulatory clarity.",
+      "High liquidity in privacy tokens indicates a healthy market.",
+      "Influential figures expressing confidence in cryptocurrencies contribute to positive sentiment."
     ],
-    "world_text": "The crypto market is currently experiencing a bullish trend, driven by optimism surrounding Bitcoin and potential regulatory clarity. Notable figures are expressing confidence in cryptocurrencies, while liquidity remains high, particularly in privacy tokens. Competition among launches is low, leading to a vibrant meme culture that celebrates this positive sentiment.",
-    "ts": "2026-02-20T10:16:55+00:00",
+    "world_text": "The crypto market is currently bullish, driven by optimism around Bitcoin and potential regulatory clarity. Liquidity remains high, particularly in privacy tokens, while notable figures express confidence in the sector. The competition among new launches is low, allowing the meme culture to thrive, focused on themes of camaraderie and excitement.",
+    "ts": "2026-02-20T10:32:36+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-20T10:16:51.606735+00:00",
+      "updated_at": "2026-02-20T10:32:33.238571+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

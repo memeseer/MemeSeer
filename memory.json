@@ -1887,6 +1887,36 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771566504
+    },
+    {
+      "type": "onchain_sell_sent",
+      "ticker": "SKPT",
+      "tx_hash": "57c786a577d9dcc4e1a70cf92ff293c6ed007c3f785f8ada2621f3dd9be5fc8f",
+      "ts": 1771568149
+    },
+    {
+      "type": "dead_exit_step",
+      "ticker": "SKPT",
+      "tx_hash": "57c786a577d9dcc4e1a70cf92ff293c6ed007c3f785f8ada2621f3dd9be5fc8f",
+      "payout": 29.380385182208553,
+      "sell_pct": 15.0,
+      "ts": 1771568149
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "balanced",
+      "bucket": "good",
+      "edge": 0.455,
+      "ucb_score": 2.1630403299013246,
+      "t": 8,
+      "buyback_pct": 0.5,
+      "burn_pct": 0.0,
+      "ts": 1771568154
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771568162
     }
   ],
   "launches": {
@@ -1982,8 +2012,8 @@
         "ticker": "SKPT",
         "token_address": "0xcE416728bcEb9227881c22E1f04DF92655087777",
         "entry_cost_mon": 200.0,
-        "token_amount": 1179003306462890820097892,
-        "sold_pct_total": 0.0,
+        "token_amount": 1002152810493457206859620,
+        "sold_pct_total": 15.0,
         "ladder_hits": [],
         "tx_pending": false,
         "mode": "conservative",
@@ -1992,7 +2022,7 @@
         "iso_date": "2026-02-16T03:28:41+00:00",
         "image_path": "assets/token_images/skpt_1771212514.png",
         "tx_hash": "eb80e057fe7eabf140430724850134c72f1663e96598435cbadf92cbb9dd7dc5",
-        "_current_valuation_mon": 195.9338270072255
+        "_current_valuation_mon": 195.86923454805702
       },
       {
         "address": "0x33092427DAFEaD112539502B4349035FB1E37777",
@@ -2064,15 +2094,15 @@
   },
   "economy": {
     "balances": {
-      "seer": 1000.0,
-      "mon": 0.0,
+      "seer": 1010.28313481,
+      "mon": 19.09725037,
       "seer_burned": 0.0
     },
-    "treasury_mon": 0.0,
+    "treasury_mon": 8.814115554662566,
     "stats": {
       "seer_sold_total": 0.0,
-      "buyback_mon_total": 0.0,
-      "seer_bought_total": 0.0,
+      "buyback_mon_total": 10.283134813772993,
+      "seer_bought_total": 10.283134813772993,
       "seer_burned_total": 0.0
     },
     "params": {
@@ -2180,27 +2210,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.6,
+      "trend": 0.5,
       "sentiment": 0.4,
       "novelty": 0.5,
-      "liquidity": 0.5,
-      "competition": 0.7
+      "liquidity": 0.4,
+      "competition": 0.0
     },
-    "edge": -0.04999999999999993,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.455,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "Eric Trump is bullish on Bitcoin, suggesting potential price increases.",
-      "Recent news about the U.S. government pushing for stablecoin rewards may create positive momentum.",
-      "Several tokens, especially XMR, show significant liquidity surges, indicating market activity.",
-      "Multiple external posts regarding potential legislation and military tensions may create uncertainty, impacting sentiment."
+      "There are mixed signals with a focus on potential legislative developments in crypto and military tensions, indicating uncertainty.",
+      "Recent posts about significant figures exiting investments in crypto suggest cautious sentiment in the market."
     ],
-    "world_text": "The crypto market is showing mixed signals with some bullish comments on Bitcoin by notable figures like Eric Trump. However, a backdrop of geopolitical tensions and major legislative maneuvers creates caution among investors. The liquidity in certain tokens suggests active trading, while the mention of multiple launches indicates heightened competition in the market.",
-    "ts": "2026-02-20T05:48:16+00:00",
+    "world_text": "The current crypto and meme market reflects cautious sentiment due to political tensions and high-profile exits from investments like Ethereum. Legislative talks around crypto could influence future market structure, but overall uncertainty prevails, particularly with liquidity concerns stemming from recent fluctuations in trading activity.",
+    "ts": "2026-02-20T06:15:54+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-20T05:48:07.192190+00:00",
+      "updated_at": "2026-02-20T06:15:46.796449+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

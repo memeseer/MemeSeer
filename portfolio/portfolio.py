@@ -197,8 +197,16 @@ def manage_portfolio(memory: Dict[str, Any]) -> None:
 
                 # --- DEAD TOKEN RULE ---
                 days_passed = (current_ts - pos.get("timestamp", 0)) / (24 * 3600)
+                # DEPRECATED:
+                # if days_passed >= 4 and not pos.get("ladder_hits"):
+                #     pos["status"] = "EXITING"
+                #     execute_position_sell(pos, 0.15, "dead_exit_step")
+                
+                # NEW: 
                 if days_passed >= 4 and not pos.get("ladder_hits"):
+                    # Ставим статус EXITING один раз
                     pos["status"] = "EXITING"
+                    # Каждый запуск продаём 15% от текущей позиции
                     execute_position_sell(pos, 0.15, "dead_exit_step")
 
                 # --- MOON_BAG TRANSITION CHECK ---

@@ -193,6 +193,88 @@ class NadfunExecutor:
             print(f"[QUOTE ERROR] {e}")
             return {"amount": 0}
 
+    async def sell(self, token_address: str, amount_raw: int):
+        token_address = Web3.to_checksum_address(token_address)
+    
+        nonce = self.w3.eth.get_transaction_count(self.address)
+    
+        # --- approve ---
+        erc20 = self.w3.eth.contract(
+            address=token_address,
+            abi=[{
+                "name": "approve",
+                "type": "function",
+                "stateMutability": "nonpayable",
+                "inputs": [
+                    {"name": "spender", "type": "address"},
+                    {"name": "amount", "type": "uint256"},
+                ],
+                "outputs": [{"name": "", "type": "bool"}],
+            }]
+        )
+    
+        approve_tx = erc20.functions.approve(
+            self.ROUTER_ADDR,
+            amount_raw
+        ).build_transaction({
+            "from": self.address,
+            "nonce": nonce,
+            "gasPrice": self.w3.eth.gas_price,
+            "chainId": self.w3.eth.chain_id,
+        })
+    
+        approve_tx["gas"] = int(self.w3.eth.estimate_gas(approve_tx) * 1.2)
+    
+        signed_approve = self.w3.eth.account.sign_transaction(approve_tx, self.private_key)
+        approve_hash = self.w3.eth.send_raw_transaction(signed_approve.raw_transaction)
+        self.w3.eth.wait_for_transaction_receipt(approve_hash)
+    
+        # --- quote ---
+        router_addr, amount_out = self.lens.functions.getAmountOut(
+            token_address,
+            amount_raw,
+            False
+        ).call()
+    
+        router_addr = Web3.to_checksum_address(router_addr)
+    
+        router = self.w3.eth.contract(
+            address=router_addr,
+            abi=self.router_abi
+        )
+    
+        amount_out_min = int(amount_out * 0.95)
+        deadline = int(time.time() + 1200)
+    
+        params = (
+            amount_raw,
+            amount_out_min,
+            token_address,
+            self.address,
+            deadline
+        )
+    
+        nonce += 1
+    
+        sell_tx = router.functions.sell(params).build_transaction({
+            "from": self.address,
+            "nonce": nonce,
+            "gasPrice": self.w3.eth.gas_price,
+            "chainId": self.w3.eth.chain_id,
+        })
+    
+        sell_tx["gas"] = int(self.w3.eth.estimate_gas(sell_tx) * 1.2)
+    
+        signed_sell = self.w3.eth.account.sign_transaction(sell_tx, self.private_key)
+        sell_hash = self.w3.eth.send_raw_transaction(signed_sell.raw_transaction)
+    
+        receipt = self.w3.eth.wait_for_transaction_receipt(sell_hash)
+    
+        if receipt.status != 1:
+            raise Exception("Sell failed")
+    
+        return sell_hash.hex()
+
 
     def launch_token(self, name, symbol, description, image_path):
         """
@@ -286,6 +368,7 @@ class NadfunExecutor:
             "tx_hash": tx_hash.hex(),
             "tokens_received_raw": int(expected_out)
         }
+
 
 
 

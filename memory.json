@@ -1809,6 +1809,28 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771542282
+    },
+    {
+      "type": "sell_failed",
+      "ticker": "SKPT",
+      "reason": "'NadfunExecutor' object has no attribute 'sell'",
+      "ts": 1771564075
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "neutral",
+      "edge": 0.2,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771564082
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771564092
     }
   ],
   "launches": {
@@ -1909,7 +1931,7 @@
         "ladder_hits": [],
         "tx_pending": false,
         "mode": "conservative",
-        "status": "ACTIVE",
+        "status": "EXITING",
         "timestamp": 1771212521,
         "iso_date": "2026-02-16T03:28:41+00:00",
         "image_path": "assets/token_images/skpt_1771212514.png",
@@ -2112,15 +2134,16 @@
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "Bitcoin has fallen below $66,000, indicating cautious sentiment.",
-      "External geopolitical tensions and significant exits from firms like ETHZilla contribute to uncertainty."
+      "Bitcoin has dipped below $66,000, indicating a bearish sentiment.",
+      "Peter Thiel's exit from Ethereum adds to the cautious atmosphere in the crypto market.",
+      "Geopolitical tensions and regulatory discussions create uncertainty, impacting trader confidence."
     ],
-    "world_text": "The crypto market is currently in a cautious state as Bitcoin dips below $66,000 amid geopolitical tensions and notable exits from firms, notably ETHZilla. This has led to a mixed sentiment with moderate liquidity levels, while regulatory discussions hint at potential future support. Overall, the market feels uncertain, reflecting in a lack of competitive launches.",
-    "ts": "2026-02-19T23:04:35+00:00",
+    "world_text": "The current crypto market is experiencing a cautious sentiment with Bitcoin's recent drop below $66,000. External factors such as geopolitical tensions and notable exits from firms like ETHZilla contribute to a bearish outlook. Despite hints of potential legislative support, the mood remains hesitant, reflected in moderate liquidity levels.",
+    "ts": "2026-02-20T05:08:02+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-19T23:04:25.574352+00:00",
+      "updated_at": "2026-02-20T05:07:55.071195+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

@@ -2982,6 +2982,23 @@
       "type": "launch_skipped_insufficient_funding",
       "ticker": "PUNNY",
       "ts": 1771629874
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "good",
+      "edge": 0.495,
+      "ucb_score": 1000000000.0,
+      "t": 1,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771630236
+    },
+    {
+      "type": "launch_skipped_insufficient_funding",
+      "ticker": "HODLN",
+      "blocked_until": 1771651853,
+      "ts": 1771630253
     }
   ],
   "launches": {},
@@ -3002,7 +3019,7 @@
     "max_daily_sell_pct_treasury": 0.05,
     "max_single_launch_pct_treasury": 0.05,
     "loss_streak": 0,
-    "launch_blocked_until": 0
+    "launch_blocked_until": 1771651853
   },
   "system": {
     "kill_switch": false
@@ -3135,15 +3152,15 @@
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Rising liquidity in privacy tokens indicates a healthy market.",
-      "Current political discourse and meme culture are fueling optimism."
+      "Increased liquidity in privacy tokens indicates strong interest and investment.",
+      "The upbeat meme culture and low competition among new projects foster an innovative environment."
     ],
-    "world_text": "The crypto market is buoyed by increasing liquidity, particularly in privacy tokens, and a vibrant meme culture. Despite external political uncertainties, sentiment remains optimistic. The low competition among new launches fosters an environment ripe for innovation and humor, making it a promising time for new projects to engage audiences.",
-    "ts": "2026-02-20T23:24:16+00:00",
+    "world_text": "The crypto market is currently experiencing a surge in liquidity, particularly in privacy tokens, suggesting robust investor interest. Meanwhile, the meme culture is thriving, with humorous narratives gaining traction despite political uncertainties. The market remains optimistic, allowing for creative new projects to emerge in a less competitive landscape.",
+    "ts": "2026-02-20T23:30:36+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-20T23:24:13.674120+00:00",
+      "updated_at": "2026-02-20T23:30:33.266817+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

@@ -1831,6 +1831,34 @@
       "type": "launch_blocked",
       "reason": "daily cooldown active",
       "ts": 1771564092
+    },
+    {
+      "type": "onchain_sell_sent",
+      "ticker": "SKPT",
+      "tx_hash": "98e9ce86f9b1292b9c4c27e15067960299c8f2e575ce5bfe87a46112be79ad07",
+      "ts": 1771565881
+    },
+    {
+      "type": "sell_failed",
+      "ticker": "SKPT",
+      "reason": "'NadfunExecutor' object has no attribute 'wait_for_receipt'",
+      "ts": 1771565881
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "neutral",
+      "edge": -0.04999999999999993,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771565885
+    },
+    {
+      "type": "launch_blocked",
+      "reason": "daily cooldown active",
+      "ts": 1771565892
     }
   ],
   "launches": {
@@ -2124,26 +2152,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.3,
-      "sentiment": 0.3,
+      "trend": 0.6,
+      "sentiment": 0.4,
       "novelty": 0.5,
-      "liquidity": 0.4,
-      "competition": 0.2
+      "liquidity": 0.5,
+      "competition": 0.7
     },
-    "edge": 0.2,
+    "edge": -0.04999999999999993,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "Bitcoin has dipped below $66,000, indicating a bearish sentiment.",
-      "Peter Thiel's exit from Ethereum adds to the cautious atmosphere in the crypto market.",
-      "Geopolitical tensions and regulatory discussions create uncertainty, impacting trader confidence."
+      "The mention of significant crypto market structure legislation and potential stablecoin rewards indicates a positive trend.",
+      "However, the exit of Peter Thiel from Ethereum and the political tensions regarding military actions introduce a cautious sentiment."
     ],
-    "world_text": "The current crypto market is experiencing a cautious sentiment with Bitcoin's recent drop below $66,000. External factors such as geopolitical tensions and notable exits from firms like ETHZilla contribute to a bearish outlook. Despite hints of potential legislative support, the mood remains hesitant, reflected in moderate liquidity levels.",
-    "ts": "2026-02-20T05:08:02+00:00",
+    "world_text": "The crypto market is experiencing a mix of optimism and caution. While potential legislative advancements and stablecoin rewards create a favorable trend, notable exits by key investors and geopolitical tensions weigh on sentiment. The recent liquidity surges in various tokens and the upcoming competition from the CME Group's 24/7 trading launch add further complexity to the market landscape.",
+    "ts": "2026-02-20T05:38:05+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-20T05:07:55.071195+00:00",
+      "updated_at": "2026-02-20T05:37:58.762464+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

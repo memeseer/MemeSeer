@@ -1004,6 +1004,16 @@ def main() -> None:
 
     if decision.get("launch"):
         token_idea = generate_token_idea(thought)
+            #funding failure cooldown check
+        blocked_until = memory.get("core_guard", {}).get("launch_blocked_until", 0)
+        if utc_now_ts() < blocked_until:
+            print("[LAUNCH] Blocked due to recent funding failure")
+            append_event(memory, {
+                "type": "launch_blocked_cooldown",
+                "blocked_until": blocked_until
+            })
+            save_memory(memory, MEMORY_PATH)
+            return
         
         if not isinstance(token_idea, dict) or not token_idea.get("ticker"):
             print("Invalid token idea generated, skipping.")
@@ -1057,11 +1067,19 @@ def main() -> None:
             # --- SAFE CHECK ---
             if not launch_result:
                 print("[LAUNCH] Aborted: insufficient funding")
+            
                 memory["launch_control"]["launch_in_progress"] = False
+            
+                # --- NEW: launch cooldown after funding failure ---
+                memory.setdefault("core_guard", {})
+                memory["core_guard"]["launch_blocked_until"] = utc_now_ts() + 6 * 3600
+            
                 append_event(memory, {
                     "type": "launch_skipped_insufficient_funding",
-                    "ticker": token_idea.get("ticker")
+                    "ticker": token_idea.get("ticker"),
+                    "blocked_until": memory["core_guard"]["launch_blocked_until"]
                 })
+            
                 save_memory(memory, MEMORY_PATH)
                 return
             

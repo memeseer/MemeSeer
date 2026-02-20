@@ -61,7 +61,8 @@ class NadfunExecutor:
 
     def sell_core_for_mon(self, amount_mon_needed):
         """
-        Sells SEER (CORE) for MON using router.sell(struct SellParams).
+        Sells SEER (CORE) for MON using router.sell(struct SellParams),
+        skips action if not enough SEER balance.
         """
     
         print(f"Executing sell for {amount_mon_needed:.2f} MON shortfall...")
@@ -79,7 +80,13 @@ class NadfunExecutor:
         )
         decimals = token_contract.functions.decimals().call()
     
-        # --- 2. Estimate needed SEER via bonding curve ---
+        # --- 2. Get current SEER balance ---
+        balance_seer = token_contract.functions.balanceOf(self.address).call()
+        if balance_seer <= 0:
+            print("[WARN] No SEER balance available for sale, skipping")
+            return False
+    
+        # --- 3. Estimate needed SEER via bonding curve ---
         reserves = self.curve.functions.curves(self.SEER_TOKEN).call()
         virt_mon = reserves[2]
         virt_token = reserves[3]
@@ -89,9 +96,14 @@ class NadfunExecutor:
     
         needed_raw = (virt_token * dy_with_fee) // (virt_mon - dy_with_fee)
     
-        print(f"  Quoted {needed_raw / (10**decimals):.6f} SEER for {amount_mon_needed:.2f} MON")
+        # --- SKIP if not enough SEER ---
+        if needed_raw > balance_seer:
+            print(f"[WARN] Not enough SEER ({balance_seer/10**decimals:.6f}) for required {needed_raw/10**decimals:.6f}, skipping")
+            return False
     
-        # --- 3. Approve ---
+        print(f"  Selling {needed_raw / 10**decimals:.6f} SEER for ~{amount_mon_needed:.2f} MON")
+    
+        # --- 4. Approve ---
         erc20 = self.w3.eth.contract(
             address=self.SEER_TOKEN,
             abi=[{
@@ -126,7 +138,7 @@ class NadfunExecutor:
     
         print("Approve successful.")
     
-        # --- 4. Build SellParams struct ---
+        # --- 5. Build SellParams struct ---
         amount_out_min = int(dy * 0.95)
         deadline = int(time.time() + 1200)
     
@@ -160,38 +172,38 @@ class NadfunExecutor:
             raise Exception("CORE sell failed")
     
         print("CORE sell successful.")
-
-    async def get_quote(self, token_address: str, amount: float, is_buy: bool):
-        """
-        Returns quote using Lens.getAmountOut.
-    
-        amount:
-            - if is_buy=True → MON amount in ether
-            - if is_buy=False → token amount (raw units)
-        """
-    
-        token_address = Web3.to_checksum_address(token_address)
-    
-        try:
-            if is_buy:
-                amount_wei = self.w3.to_wei(amount, "ether")
-                router, amount_out = self.lens.functions.getAmountOut(
-                    token_address,
-                    amount_wei,
-                    True
-                ).call()
-            else:
-                router, amount_out = self.lens.functions.getAmountOut(
-                    token_address,
-                    int(amount),
-                    False
-                ).call()
-    
-            return {"amount": int(amount_out)}
-    
-        except Exception as e:
-            print(f"[QUOTE ERROR] {e}")
-            return {"amount": 0}
+        return True
+        async def get_quote(self, token_address: str, amount: float, is_buy: bool):
+            """
+            Returns quote using Lens.getAmountOut.
+        
+            amount:
+                - if is_buy=True → MON amount in ether
+                - if is_buy=False → token amount (raw units)
+            """
+        
+            token_address = Web3.to_checksum_address(token_address)
+        
+            try:
+                if is_buy:
+                    amount_wei = self.w3.to_wei(amount, "ether")
+                    router, amount_out = self.lens.functions.getAmountOut(
+                        token_address,
+                        amount_wei,
+                        True
+                    ).call()
+                else:
+                    router, amount_out = self.lens.functions.getAmountOut(
+                        token_address,
+                        int(amount),
+                        False
+                    ).call()
+        
+                return {"amount": int(amount_out)}
+        
+            except Exception as e:
+                print(f"[QUOTE ERROR] {e}")
+                return {"amount": 0}
 
     async def sell(self, token_address: str, amount_raw: int):
         token_address = Web3.to_checksum_address(token_address)
@@ -373,6 +385,7 @@ class NadfunExecutor:
             "tx_hash": tx_hash.hex(),
             "tokens_received_raw": int(expected_out)
         }
+
 
 
 

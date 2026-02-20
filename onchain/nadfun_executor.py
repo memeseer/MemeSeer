@@ -61,100 +61,92 @@ class NadfunExecutor:
 
     def sell_core_for_mon(self, amount_mon_needed):
         """
-        Sells SEER (CORE) for MON using router.sell.
-        Skips if not enough SEER balance.
+        Sells SEER (CORE) for MON using router.sell(struct SellParams),
+        skips action if not enough SEER balance or token contract not found.
         """
         print(f"Executing sell for {amount_mon_needed:.2f} MON shortfall...")
-
-        # --- 1. Get SEER decimals ---
-        token_contract = self.w3.eth.contract(
-            address=self.SEER_TOKEN,
-            abi=[{
-                "inputs": [],
-                "name": "decimals",
-                "outputs": [{"internalType": "uint8", "name": "", "type": "uint8"}],
-                "stateMutability": "view",
-                "type": "function",
-            }]
-        )
-        decimals = token_contract.functions.decimals().call()
-
-        # --- 2. Get current SEER balance ---
-        balance_seer = token_contract.functions.balanceOf(self.address).call()
-        if balance_seer <= 0:
-            print("[WARN] No SEER balance available, skipping")
+    
+        # --- 1. Minimal ERC20 ABI ---
+        ERC20_ABI = [
+            {"constant": True, "inputs": [{"name":"_owner","type":"address"}], "name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"type":"function"},
+            {"constant": True, "inputs": [], "name":"decimals","outputs":[{"name":"","type":"uint8"}],"type":"function"},
+            {"constant": False, "inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}], "name":"approve","outputs":[{"name":"success","type":"bool"}],"type":"function"}
+        ]
+    
+        try:
+            token_contract = self.w3.eth.contract(address=self.SEER_TOKEN, abi=ERC20_ABI)
+            decimals = token_contract.functions.decimals().call()
+            balance_seer = token_contract.functions.balanceOf(self.address).call()
+        except Exception as e:
+            print(f"[WARN] Cannot access SEER ERC20 contract: {e}, skipping sell")
             return False
-
-        # --- 3. Estimate needed SEER via bonding curve ---
-        reserves = self.curve.functions.curves(self.SEER_TOKEN).call()
-        virt_mon = reserves[2]
-        virt_token = reserves[3]
-
-        dy = self.w3.to_wei(amount_mon_needed, "ether")
-        dy_with_fee = int(dy * 1.01)
-
-        needed_raw = (virt_token * dy_with_fee) // (virt_mon - dy_with_fee)
-
+    
+        if balance_seer <= 0:
+            print("[WARN] No SEER balance available for sale, skipping")
+            return False
+    
+        # --- 2. Estimate needed SEER via bonding curve ---
+        try:
+            reserves = self.curve.functions.curves(self.SEER_TOKEN).call()
+            virt_mon = reserves[2]
+            virt_token = reserves[3]
+            dy = self.w3.to_wei(amount_mon_needed, "ether")
+            dy_with_fee = int(dy * 1.01)
+            needed_raw = (virt_token * dy_with_fee) // (virt_mon - dy_with_fee)
+        except Exception as e:
+            print(f"[WARN] Cannot read curve reserves: {e}, skipping sell")
+            return False
+    
+        # --- 3. Skip if not enough SEER ---
         if needed_raw > balance_seer:
             print(f"[WARN] Not enough SEER ({balance_seer/10**decimals:.6f}) for required {needed_raw/10**decimals:.6f}, skipping")
             return False
-
-        print(f"  Selling {needed_raw/10**decimals:.6f} SEER for ~{amount_mon_needed:.2f} MON")
-
-        if self.dry_run:
-            print("[DRY RUN] Sell skipped")
+    
+        print(f"  Selling {needed_raw / 10**decimals:.6f} SEER for ~{amount_mon_needed:.2f} MON")
+    
+        # --- 4. Approve SEER ---
+        try:
+            erc20 = self.w3.eth.contract(address=self.SEER_TOKEN, abi=ERC20_ABI)
+            nonce = self.w3.eth.get_transaction_count(self.address)
+            approve_tx = erc20.functions.approve(self.ROUTER_ADDR, needed_raw).build_transaction({
+                "from": self.address,
+                "nonce": nonce,
+                "gasPrice": self.w3.eth.gas_price,
+                "chainId": self.w3.eth.chain_id,
+            })
+            approve_tx["gas"] = int(self.w3.eth.estimate_gas(approve_tx) * 1.2)
+            signed_approve = self.w3.eth.account.sign_transaction(approve_tx, self.private_key)
+            approve_hash = self.w3.eth.send_raw_transaction(signed_approve.raw_transaction)
+            self.w3.eth.wait_for_transaction_receipt(approve_hash)
+            print("Approve successful.")
+        except Exception as e:
+            print(f"[WARN] Approve failed: {e}, skipping sell")
+            return False
+    
+        # --- 5. Build SellParams and execute ---
+        try:
+            amount_out_min = int(dy * 0.95)
+            deadline = int(time.time() + 1200)
+            params = (needed_raw, amount_out_min, self.SEER_TOKEN, self.address, deadline)
+            nonce += 1
+            sell_tx = self.router.functions.sell(params).build_transaction({
+                "from": self.address,
+                "nonce": nonce,
+                "gasPrice": self.w3.eth.gas_price,
+                "chainId": self.w3.eth.chain_id,
+            })
+            sell_tx["gas"] = int(self.w3.eth.estimate_gas(sell_tx) * 1.2)
+            signed_sell = self.w3.eth.account.sign_transaction(sell_tx, self.private_key)
+            sell_hash = self.w3.eth.send_raw_transaction(signed_sell.raw_transaction)
+            receipt = self.w3.eth.wait_for_transaction_receipt(sell_hash)
+            if receipt.status != 1:
+                print("[WARN] Sell failed on-chain")
+                return False
+            print("CORE sell successful.")
             return True
-
-        # --- 4. Approve ---
-        erc20 = self.w3.eth.contract(
-            address=self.SEER_TOKEN,
-            abi=[{
-                "name": "approve",
-                "type": "function",
-                "stateMutability": "nonpayable",
-                "inputs": [
-                    {"name": "spender", "type": "address"},
-                    {"name": "amount", "type": "uint256"},
-                ],
-                "outputs": [{"name": "", "type": "bool"}],
-            }]
-        )
-
-        nonce = self.w3.eth.get_transaction_count(self.address)
-
-        approve_tx = erc20.functions.approve(self.ROUTER_ADDR, needed_raw).build_transaction({
-            "from": self.address,
-            "nonce": nonce,
-            "gasPrice": self.w3.eth.gas_price,
-            "chainId": self.w3.eth.chain_id,
-        })
-        approve_tx["gas"] = int(self.w3.eth.estimate_gas(approve_tx) * 1.2)
-        signed_approve = self.w3.eth.account.sign_transaction(approve_tx, self.private_key)
-        approve_hash = self.w3.eth.send_raw_transaction(signed_approve.raw_transaction)
-        self.w3.eth.wait_for_transaction_receipt(approve_hash)
-        print("Approve successful.")
-
-        # --- 5. Sell ---
-        amount_out_min = int(dy * 0.95)
-        deadline = int(time.time() + 1200)
-        params = (needed_raw, amount_out_min, self.SEER_TOKEN, self.address, deadline)
-
-        nonce += 1
-        sell_tx = self.router.functions.sell(params).build_transaction({
-            "from": self.address,
-            "nonce": nonce,
-            "gasPrice": self.w3.eth.gas_price,
-            "chainId": self.w3.eth.chain_id,
-        })
-        sell_tx["gas"] = int(self.w3.eth.estimate_gas(sell_tx) * 1.2)
-        signed_sell = self.w3.eth.account.sign_transaction(sell_tx, self.private_key)
-        sell_hash = self.w3.eth.send_raw_transaction(signed_sell.raw_transaction)
-        print(f"Sell TX sent: {sell_hash.hex()}")
-        receipt = self.w3.eth.wait_for_transaction_receipt(sell_hash)
-        if receipt.status != 1:
-            raise Exception("CORE sell failed")
-        print("CORE sell successful.")
-        return True
+        except Exception as e:
+            print(f"[WARN] Sell execution failed: {e}, skipping")
+            return False
 
     async def get_quote(self, token_address: str, amount: float, is_buy: bool):
         """Returns quote using Lens.getAmountOut. amount in ether if buy, raw if sell"""
@@ -307,6 +299,7 @@ class NadfunExecutor:
             "tx_hash": tx_hash.hex(),
             "tokens_received_raw": int(expected_out)
         }
+
 
 
 

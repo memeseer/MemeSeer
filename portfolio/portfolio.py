@@ -61,32 +61,18 @@ def manage_portfolio(memory: Dict[str, Any]) -> None:
         token_address = pos.get("address")
         token_amount = pos.get("token_amount", 0)
         
-        # 🔍 ДОБАВИТЬ ЛОГИРОВАНИЕ
-        print(f"\n🔍 [DEBUG SELL] Checking {ticker} for {event_type}")
-        print(f"  - sell_frac: {sell_frac}")
-        print(f"  - token_amount: {token_amount}")
-        print(f"  - tx_pending: {pos.get('tx_pending', False)}")
-        print(f"  - status: {pos.get('status')}")
-        print(f"  - sold_pct_total: {pos.get('sold_pct_total')}")
-        
         if pos.get("tx_pending", False):
-            print(f"  ❌ [DEBUG] Sell skipped: TX already pending")
+            print(f"[{ticker}] Sell skipped: TX already pending")
             return False
-    
+
         sell_amount = int(token_amount * sell_frac)
-        print(f"  - calculated sell_amount: {sell_amount}")
-        
         if sell_amount <= 0:
-            print(f"  ❌ [DEBUG] Sell skipped: sell_amount <= 0")
             return False
-    
-        print(f"  ✅ [DEBUG] Proceeding with sell")
-        
+
         # Mark as pending and save immediately
         pos["tx_pending"] = True
         save_mem()
-        print(f"  ✅ [DEBUG] tx_pending set to True, memory saved")
-    
+
         try:
             print(f"[{ticker}] Executing {event_type} sell: {sell_amount} tokens")
             tx_hash = ""
@@ -94,48 +80,43 @@ def manage_portfolio(memory: Dict[str, Any]) -> None:
                 tx_hash = "0x" + "d" * 64
                 receipt = {"status": 1, "transactionHash": tx_hash}
             else:
-                print(f"  🔄 [DEBUG] Calling executor.sell...")
                 tx_hash = asyncio.run(executor.sell(token_address, sell_amount))
-                print(f"  ✅ [DEBUG] executor.sell returned: {tx_hash[:10]}...")
-                
                 append_event(memory, {"type": "onchain_sell_sent", "ticker": ticker, "tx_hash": tx_hash})
-                print(f"  ✅ [DEBUG] Event appended")
-                
-                print(f"  🔄 [DEBUG] Calling executor.wait_for_receipt...")
                 receipt = executor.wait_for_receipt(tx_hash)
-                print(f"  ✅ [DEBUG] Receipt received, status: {receipt.get('status')}")
-    
+
             if not receipt or receipt.get("status") != 1:
-                print(f"  ❌ [DEBUG] Sell failed: Receipt status != 1")
+                print(f"[{ticker}] Sell failed: Receipt status != 1")
                 pos["tx_pending"] = False
                 append_event(memory, {"type": "sell_failed", "ticker": ticker, "tx_hash": tx_hash, "reason": "receipt_failed"})
                 save_mem()
                 return False
-    
-            print(f"  ✅ [DEBUG] Transaction successful!")
-            
+
             # SUCCESS - Commit changes
+            # We need the current MON value for flywheel. 
+            # We'll use a conservative estimate: (sell_amount / total_amount) * current_total_value
+            # For simplicity, we'll pass the payout if we have it or calculate it.
+            # (Note: In a real bot, we'd get payout from the receipt/logs)
+            
+            # For now, we'll use the valuation from the start of the loop
+            # payout = current_value_mon * sell_frac
+            # But wait, execute_position_sell needs access to current_value_mon
+            # Let's assume we pass it in.
+            
             payout_estimated = pos.get("_current_valuation_mon", 0) * sell_frac
-            print(f"  - estimated payout: {payout_estimated}")
             
             # Apply flywheel ONLY on success
             apply_flywheel(memory, payout_estimated, stake_mon=0.0, buyback_pct=0.5, burn_pct=0.0)
-            print(f"  ✅ [DEBUG] Flywheel applied")
             
             # Update state
-            old_amount = token_amount
             pos["token_amount"] = token_amount - sell_amount
-            print(f"  - token_amount: {old_amount} -> {pos['token_amount']}")
             
             # Update sold_pct_total correctly relative to total
             current_sold_pct = pos.get("sold_pct_total", 0.0)
             remaining_pct = 100.0 - current_sold_pct
             added_pct = remaining_pct * sell_frac
             pos["sold_pct_total"] = current_sold_pct + added_pct
-            print(f"  - sold_pct_total: {current_sold_pct} -> {pos['sold_pct_total']} (added {added_pct})")
             
             pos["tx_pending"] = False
-            print(f"  ✅ [DEBUG] tx_pending reset to False")
             
             event_data = {
                 "type": event_type, 
@@ -149,11 +130,9 @@ def manage_portfolio(memory: Dict[str, Any]) -> None:
             append_event(memory, event_data)
             
             save_mem()
-            print(f"  ✅ [DEBUG] Memory saved, sell complete!")
             return True
-    
+
         except Exception as e:
-            print(f"  ❌ [DEBUG] Exception caught: {type(e).__name__}: {e}")
             print(f"[{ticker}] Sell exception: {e}")
             pos["tx_pending"] = False
             append_event(memory, {"type": "sell_failed", "ticker": ticker, "reason": str(e)})
@@ -218,43 +197,9 @@ def manage_portfolio(memory: Dict[str, Any]) -> None:
 
                 # --- DEAD TOKEN RULE ---
                 days_passed = (current_ts - pos.get("timestamp", 0)) / (24 * 3600)
-                
-                # 🔍 ДЕТАЛЬНОЕ ЛОГИРОВАНИЕ DEAD TOKEN
-                print(f"\n💀 [DEAD CHECK] {ticker}:")
-                print(f"  - current_ts: {current_ts} ({time.ctime(current_ts)})")
-                print(f"  - timestamp: {pos.get('timestamp')} ({time.ctime(pos.get('timestamp', 0))})")
-                print(f"  - days_passed: {days_passed:.4f} дней")
-                print(f"  - ladder_hits: {pos.get('ladder_hits')}")
-                print(f"  - status: {pos.get('status')}")
-                print(f"  - sold_pct_total: {pos.get('sold_pct_total')}%")
-                
-                if days_passed >= 4:
-                    print(f"  ✅ Условие days_passed >= 4 выполнено")
-                else:
-                    print(f"  ❌ Условие days_passed >= 4 НЕ выполнено (нужно еще {4 - days_passed:.2f} дней)")
-                
-                if not pos.get("ladder_hits"):
-                    print(f"  ✅ Условие нет ladder_hits выполнено")
-                else:
-                    print(f"  ❌ Условие нет ladder_hits НЕ выполнено (есть hits: {pos.get('ladder_hits')})")
-                
-                # Само условие
                 if days_passed >= 4 and not pos.get("ladder_hits"):
-                    print(f"  🎯 ВСЕ УСЛОВИЯ ВЫПОЛНЕНЫ! Переводим в EXITING и продаем 15%")
-                    old_status = pos.get("status")
                     pos["status"] = "EXITING"
-                    print(f"  - статус изменен: {old_status} -> EXITING")
-                    
-                    # Пытаемся продать и логируем результат
-                    result = execute_position_sell(pos, 0.15, "dead_exit_step")
-                    print(f"  - результат продажи: {result} (True=успешно, False=не удалось)")
-                    
-                    if result:
-                        print(f"  ✅ Продажа dead токена {ticker} выполнена успешно!")
-                    else:
-                        print(f"  ❌ Продажа dead токена {ticker} НЕ удалась!")
-                else:
-                    print(f"  ⏭️ Пропускаем dead exit для {ticker}")
+                    execute_position_sell(pos, 0.15, "dead_exit_step")
 
                 # --- MOON_BAG TRANSITION CHECK ---
                 if pos.get("status") == "ACTIVE":
@@ -325,7 +270,6 @@ def manage_portfolio(memory: Dict[str, Any]) -> None:
             if pos.get("tx_pending"):
                 pos["tx_pending"] = False
                 save_mem()
-
 
 
 

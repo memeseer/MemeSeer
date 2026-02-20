@@ -13,6 +13,9 @@ LAUNCH_BUDGET_MON = 200.0     # Final budget for launch
 SLIPPAGE_BPS = 9500           # 95% for min amount out
 BUFFER_MON = 0.01
 
+def utc_now_ts():
+    return int(time.time())
+
 class NadfunExecutor:
     def __init__(self, rpc_url=None, private_key=None):
         self.rpc_url = rpc_url or os.getenv("RPC_URL")
@@ -41,6 +44,9 @@ class NadfunExecutor:
 
         self.dry_run = os.getenv("EXECUTION_DRY_RUN", "0") == "1"
 
+        # Track skipped launches
+        self.skip_until = {}
+
     def _load_abi(self, path):
         with open(path, "r") as f:
             return json.load(f)
@@ -60,19 +66,14 @@ class NadfunExecutor:
         return self.sell_core_for_mon(shortfall)
 
     def sell_core_for_mon(self, amount_mon_needed):
-        """
-        Sells SEER (CORE) for MON using router.sell(struct SellParams),
-        skips action if not enough SEER balance or token contract not found.
-        """
         print(f"Executing sell for {amount_mon_needed:.2f} MON shortfall...")
-    
-        # --- 1. Minimal ERC20 ABI ---
+
         ERC20_ABI = [
             {"constant": True, "inputs": [{"name":"_owner","type":"address"}], "name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"type":"function"},
             {"constant": True, "inputs": [], "name":"decimals","outputs":[{"name":"","type":"uint8"}],"type":"function"},
             {"constant": False, "inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}], "name":"approve","outputs":[{"name":"success","type":"bool"}],"type":"function"}
         ]
-    
+
         try:
             token_contract = self.w3.eth.contract(address=self.SEER_TOKEN, abi=ERC20_ABI)
             decimals = token_contract.functions.decimals().call()
@@ -80,12 +81,11 @@ class NadfunExecutor:
         except Exception as e:
             print(f"[WARN] Cannot access SEER ERC20 contract: {e}, skipping sell")
             return False
-    
+
         if balance_seer <= 0:
             print("[WARN] No SEER balance available for sale, skipping")
             return False
-    
-        # --- 2. Estimate needed SEER via bonding curve ---
+
         try:
             reserves = self.curve.functions.curves(self.SEER_TOKEN).call()
             virt_mon = reserves[2]
@@ -96,15 +96,13 @@ class NadfunExecutor:
         except Exception as e:
             print(f"[WARN] Cannot read curve reserves: {e}, skipping sell")
             return False
-    
-        # --- 3. Skip if not enough SEER ---
+
         if needed_raw > balance_seer:
             print(f"[WARN] Not enough SEER ({balance_seer/10**decimals:.6f}) for required {needed_raw/10**decimals:.6f}, skipping")
             return False
-    
+
         print(f"  Selling {needed_raw / 10**decimals:.6f} SEER for ~{amount_mon_needed:.2f} MON")
-    
-        # --- 4. Approve SEER ---
+
         try:
             erc20 = self.w3.eth.contract(address=self.SEER_TOKEN, abi=ERC20_ABI)
             nonce = self.w3.eth.get_transaction_count(self.address)
@@ -122,8 +120,7 @@ class NadfunExecutor:
         except Exception as e:
             print(f"[WARN] Approve failed: {e}, skipping sell")
             return False
-    
-        # --- 5. Build SellParams and execute ---
+
         try:
             amount_out_min = int(dy * 0.95)
             deadline = int(time.time() + 1200)
@@ -149,7 +146,6 @@ class NadfunExecutor:
             return False
 
     async def get_quote(self, token_address: str, amount: float, is_buy: bool):
-        """Returns quote using Lens.getAmountOut. amount in ether if buy, raw if sell"""
         token_address = Web3.to_checksum_address(token_address)
         try:
             if is_buy:
@@ -169,17 +165,13 @@ class NadfunExecutor:
             return "0x" + "d"*64
 
         nonce = self.w3.eth.get_transaction_count(self.address)
-        # approve
         erc20 = self.w3.eth.contract(
             address=token_address,
             abi=[{
                 "name": "approve",
                 "type": "function",
                 "stateMutability": "nonpayable",
-                "inputs": [
-                    {"name": "spender", "type": "address"},
-                    {"name": "amount", "type": "uint256"},
-                ],
+                "inputs": [{"name": "spender", "type": "address"}, {"name": "amount", "type": "uint256"}],
                 "outputs": [{"name": "", "type": "bool"}],
             }]
         )
@@ -194,7 +186,6 @@ class NadfunExecutor:
         approve_hash = self.w3.eth.send_raw_transaction(signed_approve.raw_transaction)
         self.w3.eth.wait_for_transaction_receipt(approve_hash)
 
-        # get amount_out
         router_addr, amount_out = self.lens.functions.getAmountOut(token_address, amount_raw, False).call()
         router_addr = Web3.to_checksum_address(router_addr)
         router = self.w3.eth.contract(address=router_addr, abi=self.router_abi)
@@ -224,13 +215,19 @@ class NadfunExecutor:
         return self.w3.eth.wait_for_transaction_receipt(tx_hash)
 
     def launch_token(self, name, symbol, description, image_path):
-        """
-        Full launch flow: Image -> Metadata -> Salt -> Create
-        """
-        self.ensure_mon_balance()
+        # Check 24h skip
+        if symbol in self.skip_until and utc_now_ts() < self.skip_until[symbol]:
+            print(f"[SKPT] Skipping launch for {symbol}, wait until {self.skip_until[symbol]}")
+            return None
+
+        # Ensure MON balance
+        if not self.ensure_mon_balance():
+            print(f"[SKPT] Not enough MON to launch {symbol}, skipping 24h")
+            self.skip_until[symbol] = utc_now_ts() + 24*3600
+            return None
+
         print(f"Launching token {name} ({symbol})...")
 
-        # Upload image
         with open(image_path, "rb") as f:
             img_resp = requests.post(
                 "https://api.nad.fun/metadata/image",
@@ -240,35 +237,22 @@ class NadfunExecutor:
             img_resp.raise_for_status()
             image_uri = img_resp.json()["image_uri"]
 
-        # Upload metadata
         meta_resp = requests.post(
             "https://api.nad.fun/metadata/metadata",
-            json={
-                "image_uri": image_uri,
-                "name": name,
-                "symbol": symbol,
-                "description": description
-            }
+            json={"image_uri": image_uri, "name": name, "symbol": symbol, "description": description}
         )
         meta_resp.raise_for_status()
         metadata_uri = meta_resp.json()["metadata_uri"]
 
-        # Mine salt
         salt_resp = requests.post(
             "https://api.nad.fun/token/salt",
-            json={
-                "creator": self.address,
-                "name": name,
-                "symbol": symbol,
-                "metadata_uri": metadata_uri
-            }
+            json={"creator": self.address, "name": name, "symbol": symbol, "metadata_uri": metadata_uri}
         )
         salt_resp.raise_for_status()
         salt_data = salt_resp.json()
         salt = salt_data["salt"]
         predicted_address = salt_data["address"]
 
-        # Contract logic
         deploy_fee = self.curve.functions.feeConfig().call()[0]
         amount_in_wei = self.w3.to_wei(LAUNCH_BUDGET_MON, "ether")
         expected_out = self.lens.functions.getInitialBuyAmountOut(amount_in_wei).call()
@@ -276,7 +260,7 @@ class NadfunExecutor:
         buffer_wei = self.w3.to_wei(BUFFER_MON, "ether")
         total_value = deploy_fee + amount_in_wei + buffer_wei
 
-        params = (name, symbol, metadata_uri, amount_out_min, salt, 1)  # actionId=1
+        params = (name, symbol, metadata_uri, amount_out_min, salt, 1)
         nonce = self.w3.eth.get_transaction_count(self.address)
         tx = self.router.functions.create(params).build_transaction({
             "from": self.address,
@@ -289,19 +273,13 @@ class NadfunExecutor:
         signed = self.w3.eth.account.sign_transaction(tx, self.private_key)
         tx_hash = self.w3.eth.send_raw_transaction(signed.raw_transaction)
         print(f"Launch TX sent: {tx_hash.hex()}")
+
         receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
         if receipt.status != 1:
             raise Exception(f"Launch failed. Status: {receipt.status}")
+
         print(f"Launch successful! Token: {predicted_address}")
-
-        return {
-            "token_address": predicted_address,
-            "tx_hash": tx_hash.hex(),
-            "tokens_received_raw": int(expected_out)
-        }
-
-
-
+        return {"token_address": predicted_address, "tx_hash": tx_hash.hex(), "tokens_received_raw": int(expected_out)}
 
 
 

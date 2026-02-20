@@ -1094,6 +1094,162 @@
         }
       },
       "ts": 1771581778
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "good",
+      "edge": 0.41500000000000004,
+      "ucb_score": 1000000000.0,
+      "t": 1,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771582615
+    },
+    {
+      "type": "launch_failed",
+      "reason": "'NoneType' object is not subscriptable",
+      "ts": 1771582630
+    },
+    {
+      "type": "run",
+      "record": {
+        "timestamp": "2026-02-20T10:17:10",
+        "timestamp_utc": "2026-02-20T10:17:10+00:00",
+        "agent": "MemeSeer",
+        "world": "The crypto market is currently experiencing a bullish trend, driven by optimism surrounding Bitcoin and potential regulatory clarity. Notable figures are expressing confidence in cryptocurrencies, while liquidity remains high, particularly in privacy tokens. Competition among launches is low, leading to a vibrant meme culture that celebrates this positive sentiment.",
+        "thought": "In the current bullish crypto market, meme narratives are thriving on themes of optimism and opportunity. One prominent meme trend features characters celebrating Bitcoin's resurgence, often using humor to depict the excitement surrounding potential regulatory clarity. Memes showcasing \"HODL\" mentality are gaining traction, with phrases like \"To the Moon!\" becoming ubiquitous as investors rally around the promise of significant gains.\n\nPrivacy tokens are also becoming meme-worthy, with playful images and slogans highlighting their importance in a world increasingly focused on data security. The low competition among new project launches fosters a sense of camaraderie among crypto enthusiasts, leading to collaborative memes that poke fun at traditional finance and celebrate the decentralized spirit. Influential figures in the crypto space are often turned into meme icons, reinforcing their messages with humorous twists. Overall, this vibrant meme culture encapsulates the collective hope and excitement permeating the crypto community.",
+        "decision": {
+          "launch": true,
+          "reason": "The current bullish market and thriving meme culture present a favorable environment for launching a memecoin, capitalizing on optimism and community enthusiasm.",
+          "_raw": "{\n  \"launch\": true,\n  \"reason\": \"The current bullish market and thriving meme culture present a favorable environment for launching a memecoin, capitalizing on optimism and community enthusiasm.\"\n}"
+        },
+        "token_idea": {
+          "name": "HODL MOON",
+          "ticker": "HODL",
+          "narrative": "Join the HODL MOON crew as we ride Bitcoin's wave to the stars! 🚀",
+          "why_now": "With the crypto market buzzing and optimism at an all-time high, HODL MOON captures the excitement of potential gains and the camaraderie within the community.",
+          "_raw": "{\n  \"name\": \"HODL MOON\",\n  \"ticker\": \"HODL\",\n  \"narrative\": \"Join the HODL MOON crew as we ride Bitcoin's wave to the stars! 🚀\",\n  \"why_now\": \"With the crypto market buzzing and optimism at an all-time high, HODL MOON captures the excitement of potential gains and the camaraderie within the community.\"\n}"
+        },
+        "outbox_path": null,
+        "economy": {
+          "balances": {
+            "seer": 1000.0,
+            "mon": 0.0,
+            "seer_burned": 0.0
+          },
+          "treasury_mon": 0.0,
+          "stats": {
+            "seer_sold_total": 0.0,
+            "buyback_mon_total": 0.0,
+            "seer_bought_total": 0.0,
+            "seer_burned_total": 0.0
+          },
+          "params": {
+            "min_seer_to_live": 1.0,
+            "mon_per_launch": 5.0,
+            "max_seer_sell_frac": 0.25,
+            "treasury_pct_of_profit": 0.3,
+            "min_operating_mon": 5.0,
+            "sell_frac_scale_bad": 0.25,
+            "sell_frac_scale_neutral": 0.6,
+            "sell_frac_scale_good": 1.0
+          },
+          "seer_price_mon": 1.0
+        },
+        "learning": {
+          "bandit": {
+            "buckets": {
+              "bad": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              },
+              "neutral": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              },
+              "good": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              }
+            }
+          },
+          "last_balances": {
+            "seer": 1000.0,
+            "mon": 0.0
+          },
+          "params": {
+            "exploration_c": 1.5
+          }
+        }
+      },
+      "ts": 1771582630
     }
   ],
   "launches": {},
@@ -1237,25 +1393,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.8,
-      "sentiment": 0.7,
-      "novelty": 0.6,
-      "liquidity": 0.9,
+      "trend": 0.7,
+      "sentiment": 0.6,
+      "novelty": 0.5,
+      "liquidity": 0.8,
       "competition": 0.3
     },
-    "edge": 0.515,
+    "edge": 0.41500000000000004,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Positive sentiment from notable figures about Bitcoin and regulatory advancements.",
-      "High liquidity in the crypto market, especially in privacy tokens like XMR."
+      "Positive sentiment from influential figures like Eric Trump bullish on Bitcoin.",
+      "High liquidity in privacy tokens and ongoing regulatory developments."
     ],
-    "world_text": "The crypto market is experiencing a bullish trend, driven by optimism around Bitcoin and potential regulatory clarity. Liquidity is high, particularly in privacy tokens, while competition remains low due to fewer new launches. The atmosphere is vibrant, with memes thriving as investors celebrate the positive market sentiment.",
-    "ts": "2026-02-20T10:02:36+00:00",
+    "world_text": "The crypto market is currently experiencing a bullish trend, driven by optimism surrounding Bitcoin and potential regulatory clarity. Notable figures are expressing confidence in cryptocurrencies, while liquidity remains high, particularly in privacy tokens. Competition among launches is low, leading to a vibrant meme culture that celebrates this positive sentiment.",
+    "ts": "2026-02-20T10:16:55+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-20T10:02:33.801618+00:00",
+      "updated_at": "2026-02-20T10:16:51.606735+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

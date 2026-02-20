@@ -2186,6 +2186,162 @@
         }
       },
       "ts": 1771617009
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "good",
+      "edge": 0.33499999999999996,
+      "ucb_score": 1000000000.0,
+      "t": 1,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771621085
+    },
+    {
+      "type": "launch_failed",
+      "reason": "('execution reverted', '0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000002645524332303a207472616e7366657220616d6f756e7420657863656564732062616c616e63650000000000000000000000000000000000000000000000000000')",
+      "ts": 1771621101
+    },
+    {
+      "type": "run",
+      "record": {
+        "timestamp": "2026-02-20T20:58:21",
+        "timestamp_utc": "2026-02-20T20:58:21+00:00",
+        "agent": "MemeSeer",
+        "world": "The crypto market is currently experiencing a positive trend with increasing liquidity in privacy tokens and a vibrant meme culture. Despite some political uncertainties reflected in external posts, the sentiment remains optimistic, allowing for creative meme engagement. However, competition among new launches appears low, creating a unique space for innovation and humor in the community.",
+        "thought": "In the current crypto landscape, the resurgence of privacy tokens has sparked a wave of memes celebrating anonymity and the idea of \"financial freedom.\" Memes that playfully depict users donning digital masks or capes to protect their identities are gaining traction, reflecting the community's enthusiasm for privacy-centric innovations. Additionally, the vibrant meme culture is thriving on humorous takes about the volatility of the market, with classic formats reimagined to highlight the absurdity of price fluctuations.\n\nThe positive sentiment allows for the creation of lighthearted content that pokes fun at both the political uncertainties and the hype surrounding new token launches. Memes that juxtapose the seriousness of political news with the carefree nature of meme culture are particularly resonant, as they highlight the community's ability to find joy amidst chaos. With low competition among new launches, there's a golden opportunity for creators to innovate and leverage humor, creating a unique space for memes that not only entertain but also educate about the nuances of the crypto world. Overall, the blend of optimism, privacy narratives, and humor is shaping a rich tapestry of meme engagement in the crypto community.",
+        "decision": {
+          "launch": true,
+          "reason": "The current positive sentiment and low competition in the crypto space, combined with the popularity of privacy tokens and meme culture, create a favorable environment for launching a memecoin.",
+          "_raw": "{\n  \"launch\": true,\n  \"reason\": \"The current positive sentiment and low competition in the crypto space, combined with the popularity of privacy tokens and meme culture, create a favorable environment for launching a memecoin.\"\n}"
+        },
+        "token_idea": {
+          "name": "MemeMask",
+          "ticker": "MMK",
+          "narrative": "Hide your gains behind a mask! Embrace the anonymity of crypto while laughing at the chaos.",
+          "why_now": "With rising interest in privacy tokens and a humorous take on market volatility, MemeMask taps into the community's desire for financial freedom and lightheartedness amidst uncertainty.",
+          "_raw": "{\n  \"name\": \"MemeMask\",\n  \"ticker\": \"MMK\",\n  \"narrative\": \"Hide your gains behind a mask! Embrace the anonymity of crypto while laughing at the chaos.\",\n  \"why_now\": \"With rising interest in privacy tokens and a humorous take on market volatility, MemeMask taps into the community's desire for financial freedom and lightheartedness amidst uncertainty.\"\n}"
+        },
+        "outbox_path": null,
+        "economy": {
+          "balances": {
+            "seer": 1000.0,
+            "mon": 0.0,
+            "seer_burned": 0.0
+          },
+          "treasury_mon": 0.0,
+          "stats": {
+            "seer_sold_total": 0.0,
+            "buyback_mon_total": 0.0,
+            "seer_bought_total": 0.0,
+            "seer_burned_total": 0.0
+          },
+          "params": {
+            "min_seer_to_live": 1.0,
+            "mon_per_launch": 5.0,
+            "max_seer_sell_frac": 0.25,
+            "treasury_pct_of_profit": 0.3,
+            "min_operating_mon": 5.0,
+            "sell_frac_scale_bad": 0.25,
+            "sell_frac_scale_neutral": 0.6,
+            "sell_frac_scale_good": 1.0
+          },
+          "seer_price_mon": 1.0
+        },
+        "learning": {
+          "bandit": {
+            "buckets": {
+              "bad": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              },
+              "neutral": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              },
+              "good": {
+                "conservative": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "balanced": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "growth": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "signal": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "aggressive": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                },
+                "no_launch": {
+                  "n": 0,
+                  "mean_reward": 0.0
+                }
+              }
+            }
+          },
+          "last_balances": {
+            "seer": 1000.0,
+            "mon": 0.0
+          },
+          "params": {
+            "exploration_c": 1.5
+          }
+        }
+      },
+      "ts": 1771621101
     }
   ],
   "launches": {},
@@ -2333,20 +2489,21 @@
       "sentiment": 0.6,
       "novelty": 0.5,
       "liquidity": 0.8,
-      "competition": 0.3
+      "competition": 0.4
     },
-    "edge": 0.41500000000000004,
+    "edge": 0.33499999999999996,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "fallback: no external feed"
+      "Recent liquidity surges in various tokens indicate a bullish trend.",
+      "Meme culture is thriving with community engagement and humor around crypto."
     ],
-    "world_text": "Market is uncertain. No external data available.",
-    "ts": "2026-02-20T19:49:46+00:00",
+    "world_text": "The crypto market is currently experiencing a positive trend with increasing liquidity in privacy tokens and a vibrant meme culture. Despite some political uncertainties reflected in external posts, the sentiment remains optimistic, allowing for creative meme engagement. However, competition among new launches appears low, creating a unique space for innovation and humor in the community.",
+    "ts": "2026-02-20T20:58:05+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-20T19:49:16.241519+00:00",
+      "updated_at": "2026-02-20T20:58:02.652554+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

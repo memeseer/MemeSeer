@@ -1054,6 +1054,17 @@ def main() -> None:
                 image_path=img_path
             )
             
+            # --- SAFE CHECK ---
+            if not launch_result:
+                print("[LAUNCH] Aborted: insufficient funding")
+                memory["launch_control"]["launch_in_progress"] = False
+                append_event(memory, {
+                    "type": "launch_skipped_insufficient_funding",
+                    "ticker": token_idea.get("ticker")
+                })
+                save_memory(memory, MEMORY_PATH)
+                return
+            
             # 3.4 Success: Update memory and positions
             token_address = launch_result["token_address"]
             tx_hash = launch_result["tx_hash"]

@@ -2966,6 +2966,22 @@
         }
       },
       "ts": 1771629614
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "conservative",
+      "bucket": "good",
+      "edge": 0.495,
+      "ucb_score": 1000000000.0,
+      "t": 1,
+      "buyback_pct": 0.8,
+      "burn_pct": 0.0,
+      "ts": 1771629856
+    },
+    {
+      "type": "launch_skipped_insufficient_funding",
+      "ticker": "PUNNY",
+      "ts": 1771629874
     }
   ],
   "launches": {},
@@ -3110,24 +3126,24 @@
   "world": {
     "signals": {
       "trend": 0.7,
-      "sentiment": 0.7,
-      "novelty": 0.6,
-      "liquidity": 0.8,
+      "sentiment": 0.6,
+      "novelty": 0.8,
+      "liquidity": 0.9,
       "competition": 0.3
     },
-    "edge": 0.45999999999999996,
+    "edge": 0.495,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Rising liquidity in privacy tokens indicates a positive trend.",
-      "The vibrant meme culture is thriving, driving optimistic sentiment."
+      "Rising liquidity in privacy tokens indicates a healthy market.",
+      "Current political discourse and meme culture are fueling optimism."
     ],
-    "world_text": "The crypto market is currently buoyed by increasing liquidity in privacy tokens and an upbeat meme culture. External political uncertainties exist, but the overall sentiment remains optimistic. With low competition among new launches, there's a fertile ground for innovative and humorous narratives, making the atmosphere ripe for new projects to gain traction.",
-    "ts": "2026-02-20T23:19:59+00:00",
+    "world_text": "The crypto market is buoyed by increasing liquidity, particularly in privacy tokens, and a vibrant meme culture. Despite external political uncertainties, sentiment remains optimistic. The low competition among new launches fosters an environment ripe for innovation and humor, making it a promising time for new projects to engage audiences.",
+    "ts": "2026-02-20T23:24:16+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-20T23:19:57.011115+00:00",
+      "updated_at": "2026-02-20T23:24:13.674120+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

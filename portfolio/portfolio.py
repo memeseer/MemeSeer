@@ -82,7 +82,7 @@ def manage_portfolio(memory: Dict[str, Any]) -> None:
             else:
                 tx_hash = asyncio.run(executor.sell(token_address, sell_amount))
                 append_event(memory, {"type": "onchain_sell_sent", "ticker": ticker, "tx_hash": tx_hash})
-                receipt = asyncio.run(executor.wait_for_receipt(tx_hash))
+                receipt = executor.wait_for_receipt(tx_hash)
 
             if not receipt or receipt.get("status") != 1:
                 print(f"[{ticker}] Sell failed: Receipt status != 1")
@@ -270,6 +270,7 @@ def manage_portfolio(memory: Dict[str, Any]) -> None:
             if pos.get("tx_pending"):
                 pos["tx_pending"] = False
                 save_mem()
+
 
 
 

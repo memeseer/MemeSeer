@@ -3326,6 +3326,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771692986,
       "ts": 1771676317
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": -0.09000000000000008,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771676552
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771692986,
+      "ts": 1771676559
     }
   ],
   "launches": {},
@@ -3469,25 +3485,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.4,
-      "sentiment": 0.3,
+      "trend": 0.6,
+      "sentiment": 0.4,
       "novelty": 0.5,
       "liquidity": 0.7,
-      "competition": 0.0
+      "competition": 0.8
     },
-    "edge": 0.45499999999999996,
-    "bucket": "good",
-    "mood": "🟢 Bullish",
+    "edge": -0.09000000000000008,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
     "why": [
-      "External posts indicate uncertainty and concern around political and economic decisions, particularly regarding tariffs and alien-related distractions.",
-      "The liquidity surge in tokens indicates some market activity, but the overall sentiment is cautious due to external political factors."
+      "Recent external posts indicate a mix of political turmoil and economic uncertainty, which generally fosters a cautious sentiment in the market.",
+      "However, the liquidity surges in various tokens suggest a level of active trading and interest, indicating potential for growth."
     ],
-    "world_text": "The current crypto/meme market shows a cautious sentiment fueled by political turmoil, particularly regarding tariffs and alien disclosures, leading to mixed market signals. While liquidity in certain tokens has surged, the overall trend remains subdued as external events create uncertainty.",
-    "ts": "2026-02-21T12:18:29+00:00",
+    "world_text": "The crypto/meme market is experiencing mixed signals amid political developments, particularly surrounding tariffs and alien disclosures, leading to a cautious sentiment. Nonetheless, a notable liquidity surge in tokens suggests that traders are actively engaging, hinting at potential growth amidst the uncertainty.",
+    "ts": "2026-02-21T12:22:32+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T12:18:25.927289+00:00",
+      "updated_at": "2026-02-21T12:22:29.139897+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

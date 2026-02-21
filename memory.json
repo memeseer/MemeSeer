@@ -3438,6 +3438,23 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771692986,
       "ts": 1771689062
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.495,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771693179
+    },
+    {
+      "type": "launch_skipped_insufficient_funding",
+      "ticker": "SURV",
+      "blocked_until": 1771714797,
+      "ts": 1771693197
     }
   ],
   "launches": {},
@@ -3458,7 +3475,7 @@
     "max_daily_sell_pct_treasury": 0.05,
     "max_single_launch_pct_treasury": 0.05,
     "loss_streak": 0,
-    "launch_blocked_until": 1771692986
+    "launch_blocked_until": 1771714797
   },
   "system": {
     "kill_switch": false
@@ -3581,25 +3598,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.4,
+      "trend": 0.5,
       "sentiment": 0.4,
       "novelty": 0.5,
-      "liquidity": 0.7,
-      "competition": 0.7
+      "liquidity": 0.6,
+      "competition": 0.0
     },
-    "edge": -0.07999999999999996,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.495,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "Recent posts indicate political turbulence and economic uncertainty due to tariff disputes.",
-      "Token liquidity surges show an active market, particularly with XMR and other tokens."
+      "Recent external posts indicate a mix of political turmoil and economic uncertainty, which often leads to cautious sentiment in the market.",
+      "Liquidity for tokens like XMR and BANANA has surged, suggesting some investor interest, but overall sentiment remains low due to political narratives."
     ],
-    "world_text": "The crypto market appears to be facing cautious sentiment due to ongoing political and economic instability, particularly surrounding tariffs imposed by President Trump. Although there are significant liquidity surges in various tokens, the overall trend remains cautious as external factors may be influencing investor confidence.",
-    "ts": "2026-02-21T15:50:52+00:00",
+    "world_text": "The crypto and meme markets are currently experiencing a cautious sentiment driven by political instability and economic uncertainty. The recent surge in liquidity for certain tokens suggests some investor activity, but the overall market trend remains neutral. With no significant launches mentioned, competition levels are low.",
+    "ts": "2026-02-21T16:59:39+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T15:50:49.417541+00:00",
+      "updated_at": "2026-02-21T16:59:34.157143+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

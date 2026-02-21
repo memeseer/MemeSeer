@@ -3278,6 +3278,22 @@
       "ticker": "SKEPT",
       "blocked_until": 1771692986,
       "ts": 1771671386
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.255,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771674183
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771692986,
+      "ts": 1771674192
     }
   ],
   "launches": {},
@@ -3423,23 +3439,23 @@
     "signals": {
       "trend": 0.3,
       "sentiment": 0.2,
-      "novelty": 0.1,
-      "liquidity": 0.4,
-      "competition": 0.1
+      "novelty": 0.0,
+      "liquidity": 0.5,
+      "competition": 0.0
     },
-    "edge": 0.175,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.255,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "Current market sentiment is cautious due to political and economic uncertainties.",
-      "There is a lack of excitement or new launches in the meme/crypto space."
+      "The current market sentiment is cautious due to political and economic uncertainties.",
+      "There is no significant hype or new launches to drive excitement in the memecoin space."
     ],
-    "world_text": "The crypto and meme market is experiencing significant caution as external political events, including tariffs and calls for transparency on UFOs, dominate discussions. Investors are hesitant, reflected in low sentiment and liquidity levels. There are no notable new launches or hype, indicating a lack of competition and novelty in the space.",
-    "ts": "2026-02-21T10:56:10+00:00",
+    "world_text": "The crypto and meme market is currently experiencing a cautious sentiment marked by political turmoil, particularly surrounding tariffs and alien disclosures. Investors are hesitant, leading to a low trend and sentiment score. Liquidity appears moderate, but with no notable new entries or excitement, competition remains non-existent.",
+    "ts": "2026-02-21T11:43:03+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T10:56:07.383567+00:00",
+      "updated_at": "2026-02-21T11:43:00.259013+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

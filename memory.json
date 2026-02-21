@@ -3107,6 +3107,22 @@
         "reward": 0.0
       },
       "ts": 1771633995
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "balanced",
+      "bucket": "good",
+      "edge": 0.21999999999999997,
+      "ucb_score": 1000000000.0,
+      "t": 2,
+      "buyback_pct": 0.5,
+      "burn_pct": 0.0,
+      "ts": 1771634414
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771651853,
+      "ts": 1771634422
     }
   ],
   "launches": {},
@@ -3250,25 +3266,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.4,
+      "trend": 0.3,
       "sentiment": 0.3,
       "novelty": 0.5,
-      "liquidity": 0.6,
-      "competition": 0.1
+      "liquidity": 0.5,
+      "competition": 0.2
     },
-    "edge": 0.3549999999999999,
+    "edge": 0.21999999999999997,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Current external posts show a mix of political turmoil and alien-related distractions, which may detract from crypto focus.",
-      "The crypto market is experiencing skepticism and caution, indicated by the decision against launching a memecoin amidst volatility."
+      "External posts indicate a cautious sentiment with references to tariffs and political decisions, which may impact market stability.",
+      "The absence of significant memecoin launches or excitement suggests low competition and engagement in the memecoin space."
     ],
-    "world_text": "The crypto market is facing a cautious sentiment as external events, particularly political distractions and legal battles around tariffs, create uncertainty. While liquidity in certain tokens is rising, overall sentiment remains low due to skepticism about market stability.",
-    "ts": "2026-02-21T00:33:09+00:00",
+    "world_text": "The current crypto and meme market is experiencing cautious sentiment driven by political developments and mixed signals regarding economic policies. With limited excitement around new launches and a prevailing sense of uncertainty, liquidity remains moderate. Overall, the market is in a cautious state, making it less favorable for new memecoin engagements.",
+    "ts": "2026-02-21T00:40:14+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T00:33:05.364630+00:00",
+      "updated_at": "2026-02-21T00:40:10.971181+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

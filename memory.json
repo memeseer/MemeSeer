@@ -3455,6 +3455,22 @@
       "ticker": "SURV",
       "blocked_until": 1771714797,
       "ts": 1771693197
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.17000000000000004,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771696477
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771714797,
+      "ts": 1771696484
     }
   ],
   "launches": {},
@@ -3598,25 +3614,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.5,
+      "trend": 0.6,
       "sentiment": 0.4,
       "novelty": 0.5,
-      "liquidity": 0.6,
-      "competition": 0.0
+      "liquidity": 0.8,
+      "competition": 0.5
     },
-    "edge": 0.495,
-    "bucket": "good",
-    "mood": "🟢 Bullish",
+    "edge": 0.17000000000000004,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
     "why": [
-      "Recent external posts indicate a mix of political turmoil and economic uncertainty, which often leads to cautious sentiment in the market.",
-      "Liquidity for tokens like XMR and BANANA has surged, suggesting some investor interest, but overall sentiment remains low due to political narratives."
+      "Recent liquidity surges in various tokens, particularly XMR, indicate growing market activity.",
+      "Political turmoil and ongoing tariff disputes create an environment of uncertainty, contributing to cautious sentiment."
     ],
-    "world_text": "The crypto and meme markets are currently experiencing a cautious sentiment driven by political instability and economic uncertainty. The recent surge in liquidity for certain tokens suggests some investor activity, but the overall market trend remains neutral. With no significant launches mentioned, competition levels are low.",
-    "ts": "2026-02-21T16:59:39+00:00",
+    "world_text": "The crypto market shows a mixed state with significant liquidity surges, especially in XMR. However, the current political landscape, including tariff disputes and comments from prominent figures, generates a sense of caution among investors. This duality reflects a trend of cautious optimism amid ongoing market developments.",
+    "ts": "2026-02-21T17:54:37+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T16:59:34.157143+00:00",
+      "updated_at": "2026-02-21T17:54:34.017199+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

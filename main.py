@@ -249,7 +249,7 @@ def get_active_position_count(memory: Dict[str, Any]) -> int:
     """
     portfolio = memory.get("portfolio", {})
     active = portfolio.get("active_positions", [])
-    return sum(1 for p in active if p.get("status") == "active")
+    return sum(1 for p in active if p.get("status") == "ACTIVE")
 
 # Portfolio logic moved to portfolio/portfolio.py
 
@@ -1005,19 +1005,25 @@ def main() -> None:
     if decision.get("launch"):
         token_idea = generate_token_idea(thought)
             #funding failure cooldown check
-        blocked_until = memory.get("core_guard", {}).get("launch_blocked_until", 0)
-        if utc_now_ts() < blocked_until:
-            print("[LAUNCH] Blocked due to recent funding failure")
-            append_event(memory, {
-                "type": "launch_blocked_cooldown",
-                "blocked_until": blocked_until
-            })
-            save_memory(memory, MEMORY_PATH)
-            return
-        
-        if not isinstance(token_idea, dict) or not token_idea.get("ticker"):
-            print("Invalid token idea generated, skipping.")
-            return
+    blocked_until = memory.get("core_guard", {}).get("launch_blocked_until", 0)
+    if utc_now_ts() < blocked_until:
+        print("[LAUNCH] Blocked due to recent funding failure")
+    
+        append_event(memory, {
+            "type": "launch_blocked_cooldown",
+            "blocked_until": blocked_until
+        })
+    
+        # Switch to defensive liquidation
+        for p in memory.get("portfolio", {}).get("active_positions", []):
+            if p.get("status") in ["EARLY", "ACTIVE"]:
+                p["status"] = "EXITING"
+    
+        # Immediately execute exit logic
+        manage_portfolio(memory)
+    
+        save_memory(memory, MEMORY_PATH)
+        return
 
         # 1️⃣ Launch Lock Check
         control = memory.setdefault("launch_control", {"last_launch_timestamp": 0, "launch_in_progress": False})

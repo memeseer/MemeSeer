@@ -3358,6 +3358,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771692986,
       "ts": 1771677030
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.29000000000000004,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771677081
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771692986,
+      "ts": 1771677089
     }
   ],
   "launches": {},
@@ -3501,25 +3517,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.6,
-      "sentiment": 0.5,
-      "novelty": 0.7,
+      "trend": 0.5,
+      "sentiment": 0.3,
+      "novelty": 0.6,
       "liquidity": 0.8,
       "competition": 0.3
     },
-    "edge": 0.395,
+    "edge": 0.29000000000000004,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Recent surge in liquidity for tokens like XMR indicates market activity.",
-      "External posts about government actions and Trump are generating mixed sentiments, with no clear hype or fear."
+      "Recent external posts indicate a mix of political distractions and economic concerns, leading to cautious sentiment.",
+      "The surge in token liquidity, particularly for XMR, suggests strong investment interest despite the uncertain political landscape."
     ],
-    "world_text": "The crypto market shows a moderate trend with a notable liquidity surge in certain tokens, especially XMR. While external news exhibits a mix of government actions and statements from political figures, there is no overwhelming sense of fear or excitement, leading to a neutral sentiment overall. The competition level remains low due to a lack of multiple launches.",
-    "ts": "2026-02-21T12:30:23+00:00",
+    "world_text": "The current crypto/meme market is experiencing cautious sentiment due to political distractions and economic uncertainty, especially surrounding tariffs and alien disclosures. However, the liquidity for tokens like XMR is surging, indicating ongoing investor interest. Overall, the trend appears neutral with elements of novelty in the discussions, but competition remains low.",
+    "ts": "2026-02-21T12:31:21+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T12:30:19.414106+00:00",
+      "updated_at": "2026-02-21T12:31:17.081954+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

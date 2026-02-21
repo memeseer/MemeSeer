@@ -3406,6 +3406,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771692986,
       "ts": 1771682082
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.17499999999999993,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771685788
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771692986,
+      "ts": 1771685797
     }
   ],
   "launches": {},
@@ -3551,24 +3567,23 @@
     "signals": {
       "trend": 0.6,
       "sentiment": 0.5,
-      "novelty": 0.7,
-      "liquidity": 0.8,
+      "novelty": 0.5,
+      "liquidity": 0.7,
       "competition": 0.5
     },
-    "edge": 0.235,
-    "bucket": "good",
-    "mood": "🟢 Bullish",
+    "edge": 0.17499999999999993,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
     "why": [
-      "Recent posts discussing extraterrestrial life and government decisions create a buzz, indicating a moderate level of hype.",
-      "Liquidity for various tokens is surging, suggesting increased trading activity.",
-      "However, the uncertainty regarding tariffs and economic policies contributes to a cautious sentiment."
+      "There is a notable liquidity surge in tokens, particularly XMR, indicating interest and investment.",
+      "Mixed external posts suggest a balance between positive and negative sentiment regarding the market."
     ],
-    "world_text": "The crypto market is experiencing a moderate trend driven by recent external discussions involving alien phenomena and government actions, while liquidity for several tokens is on the rise. Despite this, concerns over tariffs and economic policies introduce caution in sentiment, leading to a mixed outlook.",
-    "ts": "2026-02-21T13:54:35+00:00",
+    "world_text": "The crypto and meme market is experiencing a moderate trend with increased liquidity, especially in tokens like XMR. Recent news surrounding tariffs, government actions, and extraterrestrial discussions create a mixed sentiment, implying uncertainty while still attracting interest. Overall, the market remains dynamic but cautious.",
+    "ts": "2026-02-21T14:56:28+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T13:54:31.291696+00:00",
+      "updated_at": "2026-02-21T14:56:25.780588+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

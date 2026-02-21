@@ -1069,8 +1069,6 @@ def main() -> None:
                 print("[LAUNCH] Aborted: insufficient funding")
             
                 memory["launch_control"]["launch_in_progress"] = False
-            
-                # --- NEW: launch cooldown after funding failure ---
                 memory.setdefault("core_guard", {})
                 memory["core_guard"]["launch_blocked_until"] = utc_now_ts() + 6 * 3600
             
@@ -1079,6 +1077,11 @@ def main() -> None:
                     "ticker": token_idea.get("ticker"),
                     "blocked_until": memory["core_guard"]["launch_blocked_until"]
                 })
+            
+                # 🔥 NEW: force portfolio rebalance
+                for p in memory.get("portfolio", {}).get("active_positions", []):
+                    if p.get("status") in ["EARLY", "ACTIVE"]:
+                        p["status"] = "EXITING"
             
                 save_memory(memory, MEMORY_PATH)
                 return

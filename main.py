@@ -768,10 +768,10 @@ def main() -> None:
         subprocess.run([sys.executable, ingest_script], check=False)
     except Exception as e:
         print(f"[INGEST WARNING] Ingestion trigger failed: {e}")
-
+    
     memory = load_memory(MEMORY_PATH)
     ensure_memory(memory)
-
+    
     # 🛑 KILL SWITCH CHECK
     if memory.get("system", {}).get("kill_switch", False):
         append_event(memory, {
@@ -781,12 +781,12 @@ def main() -> None:
         print("[KILL SWITCH] Execution halted.")
         save_memory(memory)
         return
-
+    
     bootstrap_economy_if_needed(memory)
-
+    
     # Manage existing portfolio first
     manage_portfolio(memory)
-
+    
     # Initialize variables for safe failure paths
     outbox_path = None
     token_idea = None
@@ -795,18 +795,18 @@ def main() -> None:
     launch_successful = False
     decision = {"launch": False}
     chosen_policy = None
-
+    
     prev = get_prev_balances(memory)
     if prev is None:
         b0 = read_balances(memory)
         prev = {"seer": b0.seer, "mon": b0.mon}
         set_prev_balances(memory, prev)
-
+    
     # --- Observe / Edge / Policy-first gating ---
     from social_ritual import post_mood_update
     
     world_text = observe(memory)
-
+    
     world_data = memory.get("world", {})
     edge = world_data.get("edge", 0.0)
     
@@ -818,13 +818,13 @@ def main() -> None:
     mood = world_data.get("mood", "🟡 Neutral")
     why = world_data.get("why", [])
     post_mood_update(memory, mood, edge, bucket, mode, why, world_text, outbox_dir=OUTBOX_DIR)
-
+    
     # Policy gate
     if mode == "no_launch":
         append_event(memory, {"type": "gating_no_launch", "mode": mode, "bucket": bucket, "edge": edge})
         bandit_update = update_bandit(memory, bucket, mode, 0.0)
         append_event(memory, {"type": "learning_update", **bandit_update})
-
+    
         record = {
             "timestamp": datetime.now().isoformat(timespec="seconds"),
             "timestamp_utc": utc_now_iso(),
@@ -842,14 +842,14 @@ def main() -> None:
         save_memory(memory, MEMORY_PATH)
         print("memory.json saved.")
         return
-
+    
     # Economy gate
     ok, why_eco = can_launch(memory)
     if not ok:
         append_event(memory, {"type": "gating_economy", "mode": mode, "bucket": bucket, "edge": edge, "why": why_eco})
         bandit_update = update_bandit(memory, bucket, mode, 0.0)
         append_event(memory, {"type": "learning_update", **bandit_update})
-
+    
         record = {
             "timestamp": datetime.now().isoformat(timespec="seconds"),
             "timestamp_utc": utc_now_iso(),
@@ -867,7 +867,7 @@ def main() -> None:
         save_memory(memory, MEMORY_PATH)
         print("memory.json saved.")
         return
-
+    
     # Portfolio gate
     active_count = get_active_position_count(memory)
     if active_count >= MAX_ACTIVE_POSITIONS:
@@ -879,10 +879,10 @@ def main() -> None:
             "edge": edge,
             "reason": reason
         })
-
+    
         bandit_update = update_bandit(memory, bucket, mode, 0.0)
         append_event(memory, {"type": "learning_update", **bandit_update})
-
+    
         record = {
             "timestamp": datetime.now().isoformat(timespec="seconds"),
             "timestamp_utc": utc_now_iso(),
@@ -893,7 +893,7 @@ def main() -> None:
             "bucket": bucket,
             "reward": bandit_update.get("reward"),
         }
-
+    
         append_event(memory, {"type": "run", "record": record})
         print(f"World Edge: {edge:.2f}")
         print(f"Policy: {mode} ({bucket})")
@@ -901,14 +901,14 @@ def main() -> None:
         save_memory(memory, MEMORY_PATH)
         print("memory.json saved.")
         return
-
+    
     # Check if LLM should be called
     if not should_call_llm(mode):
         llm_reason = "MEMESEER_DISABLE_LLM=1" if os.getenv("MEMESEER_DISABLE_LLM") == "1" else "no_launch"
         append_event(memory, {"type": "gating_llm_disabled", "mode": mode, "bucket": bucket, "edge": edge, "reason": llm_reason})
         bandit_update = update_bandit(memory, bucket, mode, 0.0)
         append_event(memory, {"type": "learning_update", **bandit_update})
-
+    
         record = {
             "timestamp": datetime.now().isoformat(timespec="seconds"),
             "timestamp_utc": utc_now_iso(),
@@ -926,7 +926,7 @@ def main() -> None:
         save_memory(memory, MEMORY_PATH)
         print("memory.json saved.")
         return
-
+    
     # Check API key
     api_key = get_openrouter_key()
     if not api_key:
@@ -934,7 +934,7 @@ def main() -> None:
         append_event(memory, {"type": "gating_no_api_key", "mode": mode, "bucket": bucket, "edge": edge})
         bandit_update = update_bandit(memory, bucket, mode, 0.0)
         append_event(memory, {"type": "learning_update", **bandit_update})
-
+    
         record = {
             "timestamp": datetime.now().isoformat(timespec="seconds"),
             "timestamp_utc": utc_now_iso(),
@@ -949,7 +949,7 @@ def main() -> None:
         save_memory(memory, MEMORY_PATH)
         print("memory.json saved.")
         return
-
+    
     # --- LLM Branch ---
     print(f"Selected action: {mode} (LLM: yes)")
     
@@ -962,7 +962,7 @@ def main() -> None:
         append_event(memory, {"type": "gating_llm_error", "mode": mode, "bucket": bucket, "edge": edge, "error": error_msg})
         bandit_update = update_bandit(memory, bucket, mode, 0.0)
         append_event(memory, {"type": "learning_update", **bandit_update})
-
+    
         record = {
             "timestamp": datetime.now().isoformat(timespec="seconds"),
             "timestamp_utc": utc_now_iso(),
@@ -977,13 +977,13 @@ def main() -> None:
         save_memory(memory, MEMORY_PATH)
         print("memory.json saved.")
         return
-
+    
     # Decision gate
     if not decision.get("launch", False):
         append_event(memory, {"type": "gating_decide_no_launch", "mode": mode, "bucket": bucket, "edge": edge, "reason": decision.get("reason")})
         bandit_update = update_bandit(memory, bucket, mode, 0.0)
         append_event(memory, {"type": "learning_update", **bandit_update})
-
+    
         record = {
             "timestamp": datetime.now().isoformat(timespec="seconds"),
             "timestamp_utc": utc_now_iso(),
@@ -1001,9 +1001,8 @@ def main() -> None:
         save_memory(memory, MEMORY_PATH)
         print("memory.json saved.")
         return
-
+    
     if decision.get("launch"):
-        token_idea = generate_token_idea(thought)
             #funding failure cooldown check
         blocked_until = memory.get("core_guard", {}).get("launch_blocked_until", 0)
         if utc_now_ts() < blocked_until:
@@ -1014,18 +1013,28 @@ def main() -> None:
             })
             save_memory(memory, MEMORY_PATH)
             return
+    
+        token_idea = generate_token_idea(thought)
         
         if not isinstance(token_idea, dict) or not token_idea.get("ticker"):
             print("Invalid token idea generated, skipping.")
             return
-
+    
+        if duplicate_ticker(memory, token_idea):
+            append_event(memory, {
+                "type": "launch_blocked_duplicate_ticker",
+                "ticker": token_idea.get("ticker")
+            })
+            save_memory(memory, MEMORY_PATH)
+            return
+    
         # 1️⃣ Launch Lock Check
         control = memory.setdefault("launch_control", {"last_launch_timestamp": 0, "launch_in_progress": False})
         if control.get("launch_in_progress"):
             append_event(memory, {"type": "launch_blocked", "reason": "launch already in progress"})
             save_memory(memory, MEMORY_PATH)
             return
-
+    
         # 2️⃣ Daily Cooldown Check
         now = utc_now_ts()
         last_launch = control.get("last_launch_timestamp", 0)
@@ -1034,17 +1043,17 @@ def main() -> None:
             append_event(memory, {"type": "launch_blocked", "reason": "daily cooldown active"})
             save_memory(memory, MEMORY_PATH)
             return
-
+    
         # 3️⃣ Execute Launch via NadfunExecutor
         try:
             memory["launch_control"]["launch_in_progress"] = True
             save_memory(memory, MEMORY_PATH) # Save immediately to lock
-
+    
             # 3.1 Rate limit check
             if is_rate_limited(memory):
                 append_event(memory, {"type": "launch_blocked", "reason": "rate_limited"})
                 raise Exception("Rate limited")
-
+    
             # 3.2 Image generation
             print(f"[LAUNCH] Generating image for {token_idea.get('ticker')}...")
             img_path = generate_image(
@@ -1097,7 +1106,7 @@ def main() -> None:
                 "ladder_hits": [],
                 "tx_pending": False,
                 "mode": mode,
-                "status": "ACTIVE",
+                "status": "active",
                 "timestamp": utc_now_ts(),
                 "iso_date": utc_now_iso(),
                 "image_path": img_path,
@@ -1146,13 +1155,13 @@ def main() -> None:
             launch_successful = True
             save_memory(memory, MEMORY_PATH)
             print(f"[LAUNCH SUCCESS] Token: {token_address}, Tx: {tx_hash}")
-
+    
         except Exception as e:
             print(f"[LAUNCH ERROR] {e}")
             memory["launch_control"]["launch_in_progress"] = False
             append_event(memory, {"type": "launch_failed", "reason": str(e)})
             save_memory(memory, MEMORY_PATH)
-
+    
     record = {
         "timestamp": datetime.now().isoformat(timespec="seconds"),
         "timestamp_utc": utc_now_iso(),
@@ -1166,7 +1175,7 @@ def main() -> None:
         "learning": memory.get("learning", {}),
     }
     append_event(memory, {"type": "run", "record": record})
-
+    
     print("World:", world_text)
     print("Thought:", thought)
     print("Decision:", {k: v for k, v in decision.items() if k != "_raw"})
@@ -1177,7 +1186,7 @@ def main() -> None:
     if launch_successful and outbox_path:
         print("Ritual post:", outbox_path)
     print("Balances:", memory.get("economy", {}).get("balances"))
-
+    
     save_memory(memory, MEMORY_PATH)
     print("memory.json saved.")
 

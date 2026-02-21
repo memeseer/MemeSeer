@@ -3471,6 +3471,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771714797,
       "ts": 1771696484
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.295,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771700685
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771714797,
+      "ts": 1771700693
     }
   ],
   "launches": {},
@@ -3614,25 +3630,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.6,
+      "trend": 0.5,
       "sentiment": 0.4,
-      "novelty": 0.5,
-      "liquidity": 0.8,
-      "competition": 0.5
+      "novelty": 0.3,
+      "liquidity": 0.6,
+      "competition": 0.2
     },
-    "edge": 0.17000000000000004,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.295,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "Recent liquidity surges in various tokens, particularly XMR, indicate growing market activity.",
-      "Political turmoil and ongoing tariff disputes create an environment of uncertainty, contributing to cautious sentiment."
+      "Recent political turmoil and tariff discussions create a cautious market environment.",
+      "Liquidity has surged in specific tokens like XMR, indicating some interest despite broader market uncertainty."
     ],
-    "world_text": "The crypto market shows a mixed state with significant liquidity surges, especially in XMR. However, the current political landscape, including tariff disputes and comments from prominent figures, generates a sense of caution among investors. This duality reflects a trend of cautious optimism amid ongoing market developments.",
-    "ts": "2026-02-21T17:54:37+00:00",
+    "world_text": "The crypto/meme market is currently facing cautious sentiment due to political events surrounding tariffs and legal challenges. While there are signs of increased liquidity in certain tokens, the overall trend remains neutral, and the competition is low with fewer launches mentioned. This reflects a market that is observing external events closely while remaining somewhat active in specific areas.",
+    "ts": "2026-02-21T19:04:45+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T17:54:34.017199+00:00",
+      "updated_at": "2026-02-21T19:04:41.880826+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

@@ -3503,6 +3503,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771714797,
       "ts": 1771707104
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.44999999999999996,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771710323
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771714797,
+      "ts": 1771710331
     }
   ],
   "launches": {},
@@ -3646,25 +3662,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.5,
+      "trend": 0.6,
       "sentiment": 0.4,
-      "novelty": 0.5,
-      "liquidity": 0.7,
-      "competition": 0.7
+      "novelty": 0.7,
+      "liquidity": 0.8,
+      "competition": 0.2
     },
-    "edge": -0.04499999999999993,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.44999999999999996,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "Recent external posts indicate a cautious sentiment due to political and economic uncertainty, especially around tariffs and legal disputes.",
-      "Despite the cautious sentiment, there are significant liquidity surges in various tokens, suggesting active trading."
+      "There are significant liquidity surges in various tokens, especially XMR and YZY.",
+      "However, the political and economic climate, particularly with tariffs and Supreme Court rulings, is causing cautious sentiment."
     ],
-    "world_text": "The current crypto and meme market reflects a mixed sentiment with cautiousness stemming from political developments and tariff discussions. However, the liquidity levels are rising, particularly in tokens like XMR and YZY, indicating ongoing interest and activity in the market. The potential for competition is heightened due to multiple liquidity surges across various tokens.",
-    "ts": "2026-02-21T20:51:34+00:00",
+    "world_text": "The crypto market is experiencing a mixed state with notable liquidity increases in several tokens, indicating potential for growth. However, political tensions and tariff announcements are fostering a cautious sentiment among investors. The novelty of recent events, including statements from prominent figures like Elon Musk and Michael Saylor, adds to the dynamic atmosphere.",
+    "ts": "2026-02-21T21:45:23+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T20:51:31.013265+00:00",
+      "updated_at": "2026-02-21T21:45:19.966676+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

@@ -3519,6 +3519,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771714797,
       "ts": 1771710331
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.17500000000000004,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771714539
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771714797,
+      "ts": 1771714546
     }
   ],
   "launches": {},
@@ -3662,25 +3678,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.6,
+      "trend": 0.5,
       "sentiment": 0.4,
       "novelty": 0.7,
       "liquidity": 0.8,
-      "competition": 0.2
+      "competition": 0.5
     },
-    "edge": 0.44999999999999996,
-    "bucket": "good",
-    "mood": "🟢 Bullish",
+    "edge": 0.17500000000000004,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
     "why": [
-      "There are significant liquidity surges in various tokens, especially XMR and YZY.",
-      "However, the political and economic climate, particularly with tariffs and Supreme Court rulings, is causing cautious sentiment."
+      "There is a mix of political news and some speculative statements regarding Bitcoin, indicating uncertainty in the market.",
+      "Liquidity in tokens like XMR and YZY is surging, showing activity but not necessarily a strong bullish sentiment."
     ],
-    "world_text": "The crypto market is experiencing a mixed state with notable liquidity increases in several tokens, indicating potential for growth. However, political tensions and tariff announcements are fostering a cautious sentiment among investors. The novelty of recent events, including statements from prominent figures like Elon Musk and Michael Saylor, adds to the dynamic atmosphere.",
-    "ts": "2026-02-21T21:45:23+00:00",
+    "world_text": "The crypto and meme market is experiencing a cautious sentiment due to political news, particularly around tariffs and potential conflicts, which may distract from crypto investments. However, notable liquidity increases in certain tokens suggest active trading, and the mention of Bitcoin's extreme price predictions adds a layer of speculative novelty to the current atmosphere.",
+    "ts": "2026-02-21T22:55:39+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T21:45:19.966676+00:00",
+      "updated_at": "2026-02-21T22:55:36.203679+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

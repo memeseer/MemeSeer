@@ -3374,6 +3374,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771692986,
       "ts": 1771677089
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.5750000000000001,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771677525
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771692986,
+      "ts": 1771677534
     }
   ],
   "launches": {},
@@ -3518,24 +3534,24 @@
   "world": {
     "signals": {
       "trend": 0.5,
-      "sentiment": 0.3,
-      "novelty": 0.6,
+      "sentiment": 0.4,
+      "novelty": 0.7,
       "liquidity": 0.8,
-      "competition": 0.3
+      "competition": 0.0
     },
-    "edge": 0.29000000000000004,
+    "edge": 0.5750000000000001,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Recent external posts indicate a mix of political distractions and economic concerns, leading to cautious sentiment.",
-      "The surge in token liquidity, particularly for XMR, suggests strong investment interest despite the uncertain political landscape."
+      "Recent posts indicate a cautious sentiment regarding economic policies and geopolitical events, particularly around tariffs and Trump's controversial statements.",
+      "However, there is significant liquidity movement in crypto tokens, notably XMR, suggesting active market participation despite cautious sentiment."
     ],
-    "world_text": "The current crypto/meme market is experiencing cautious sentiment due to political distractions and economic uncertainty, especially surrounding tariffs and alien disclosures. However, the liquidity for tokens like XMR is surging, indicating ongoing investor interest. Overall, the trend appears neutral with elements of novelty in the discussions, but competition remains low.",
-    "ts": "2026-02-21T12:31:21+00:00",
+    "world_text": "The crypto and meme market is experiencing a cautious sentiment due to external political events, including tariff discussions and alien-related disclosures. However, liquidity in tokens like XMR is surging, indicating active trading. The novelty of current events, especially alien-related news, adds an unusual twist to market dynamics. Overall, caution prevails with a trend score reflecting uncer",
+    "ts": "2026-02-21T12:38:45+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T12:31:17.081954+00:00",
+      "updated_at": "2026-02-21T12:38:41.616024+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

@@ -3487,6 +3487,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771714797,
       "ts": 1771700693
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": -0.04499999999999993,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771707094
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771714797,
+      "ts": 1771707104
     }
   ],
   "launches": {},
@@ -3632,23 +3648,23 @@
     "signals": {
       "trend": 0.5,
       "sentiment": 0.4,
-      "novelty": 0.3,
-      "liquidity": 0.6,
-      "competition": 0.2
+      "novelty": 0.5,
+      "liquidity": 0.7,
+      "competition": 0.7
     },
-    "edge": 0.295,
-    "bucket": "good",
-    "mood": "🟢 Bullish",
+    "edge": -0.04499999999999993,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
     "why": [
-      "Recent political turmoil and tariff discussions create a cautious market environment.",
-      "Liquidity has surged in specific tokens like XMR, indicating some interest despite broader market uncertainty."
+      "Recent external posts indicate a cautious sentiment due to political and economic uncertainty, especially around tariffs and legal disputes.",
+      "Despite the cautious sentiment, there are significant liquidity surges in various tokens, suggesting active trading."
     ],
-    "world_text": "The crypto/meme market is currently facing cautious sentiment due to political events surrounding tariffs and legal challenges. While there are signs of increased liquidity in certain tokens, the overall trend remains neutral, and the competition is low with fewer launches mentioned. This reflects a market that is observing external events closely while remaining somewhat active in specific areas.",
-    "ts": "2026-02-21T19:04:45+00:00",
+    "world_text": "The current crypto and meme market reflects a mixed sentiment with cautiousness stemming from political developments and tariff discussions. However, the liquidity levels are rising, particularly in tokens like XMR and YZY, indicating ongoing interest and activity in the market. The potential for competition is heightened due to multiple liquidity surges across various tokens.",
+    "ts": "2026-02-21T20:51:34+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T19:04:41.880826+00:00",
+      "updated_at": "2026-02-21T20:51:31.013265+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

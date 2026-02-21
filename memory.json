@@ -3342,6 +3342,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771692986,
       "ts": 1771676559
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.395,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771677023
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771692986,
+      "ts": 1771677030
     }
   ],
   "launches": {},
@@ -3486,24 +3502,24 @@
   "world": {
     "signals": {
       "trend": 0.6,
-      "sentiment": 0.4,
-      "novelty": 0.5,
-      "liquidity": 0.7,
-      "competition": 0.8
+      "sentiment": 0.5,
+      "novelty": 0.7,
+      "liquidity": 0.8,
+      "competition": 0.3
     },
-    "edge": -0.09000000000000008,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.395,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "Recent external posts indicate a mix of political turmoil and economic uncertainty, which generally fosters a cautious sentiment in the market.",
-      "However, the liquidity surges in various tokens suggest a level of active trading and interest, indicating potential for growth."
+      "Recent surge in liquidity for tokens like XMR indicates market activity.",
+      "External posts about government actions and Trump are generating mixed sentiments, with no clear hype or fear."
     ],
-    "world_text": "The crypto/meme market is experiencing mixed signals amid political developments, particularly surrounding tariffs and alien disclosures, leading to a cautious sentiment. Nonetheless, a notable liquidity surge in tokens suggests that traders are actively engaging, hinting at potential growth amidst the uncertainty.",
-    "ts": "2026-02-21T12:22:32+00:00",
+    "world_text": "The crypto market shows a moderate trend with a notable liquidity surge in certain tokens, especially XMR. While external news exhibits a mix of government actions and statements from political figures, there is no overwhelming sense of fear or excitement, leading to a neutral sentiment overall. The competition level remains low due to a lack of multiple launches.",
+    "ts": "2026-02-21T12:30:23+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T12:22:29.139897+00:00",
+      "updated_at": "2026-02-21T12:30:19.414106+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

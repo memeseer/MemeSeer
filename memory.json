@@ -3294,6 +3294,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771692986,
       "ts": 1771674192
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.31499999999999995,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771675815
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771692986,
+      "ts": 1771675824
     }
   ],
   "launches": {},
@@ -3437,25 +3453,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.3,
-      "sentiment": 0.2,
-      "novelty": 0.0,
-      "liquidity": 0.5,
-      "competition": 0.0
+      "trend": 0.4,
+      "sentiment": 0.3,
+      "novelty": 0.5,
+      "liquidity": 0.8,
+      "competition": 0.2
     },
-    "edge": 0.255,
+    "edge": 0.31499999999999995,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "The current market sentiment is cautious due to political and economic uncertainties.",
-      "There is no significant hype or new launches to drive excitement in the memecoin space."
+      "There is a cautious sentiment in the market due to political and economic uncertainties, including recent Supreme Court rulings and political statements.",
+      "The liquidity surge in tokens like XMR suggests some investor interest, but overall caution prevails."
     ],
-    "world_text": "The crypto and meme market is currently experiencing a cautious sentiment marked by political turmoil, particularly surrounding tariffs and alien disclosures. Investors are hesitant, leading to a low trend and sentiment score. Liquidity appears moderate, but with no notable new entries or excitement, competition remains non-existent.",
-    "ts": "2026-02-21T11:43:03+00:00",
+    "world_text": "The crypto market is currently experiencing a cautious sentiment driven by political turmoil, including tariff controversies and discussions about alien disclosures. While liquidity in some tokens is surging, the overall market sentiment remains low due to the uncertainties, leading to a reluctance for new launches.",
+    "ts": "2026-02-21T12:10:15+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T11:43:00.259013+00:00",
+      "updated_at": "2026-02-21T12:10:11.531616+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

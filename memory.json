@@ -3310,6 +3310,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771692986,
       "ts": 1771675824
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.45499999999999996,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771676309
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771692986,
+      "ts": 1771676317
     }
   ],
   "launches": {},
@@ -3456,22 +3472,22 @@
       "trend": 0.4,
       "sentiment": 0.3,
       "novelty": 0.5,
-      "liquidity": 0.8,
-      "competition": 0.2
+      "liquidity": 0.7,
+      "competition": 0.0
     },
-    "edge": 0.31499999999999995,
+    "edge": 0.45499999999999996,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "There is a cautious sentiment in the market due to political and economic uncertainties, including recent Supreme Court rulings and political statements.",
-      "The liquidity surge in tokens like XMR suggests some investor interest, but overall caution prevails."
+      "External posts indicate uncertainty and concern around political and economic decisions, particularly regarding tariffs and alien-related distractions.",
+      "The liquidity surge in tokens indicates some market activity, but the overall sentiment is cautious due to external political factors."
     ],
-    "world_text": "The crypto market is currently experiencing a cautious sentiment driven by political turmoil, including tariff controversies and discussions about alien disclosures. While liquidity in some tokens is surging, the overall market sentiment remains low due to the uncertainties, leading to a reluctance for new launches.",
-    "ts": "2026-02-21T12:10:15+00:00",
+    "world_text": "The current crypto/meme market shows a cautious sentiment fueled by political turmoil, particularly regarding tariffs and alien disclosures, leading to mixed market signals. While liquidity in certain tokens has surged, the overall trend remains subdued as external events create uncertainty.",
+    "ts": "2026-02-21T12:18:29+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T12:10:11.531616+00:00",
+      "updated_at": "2026-02-21T12:18:25.927289+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

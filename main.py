@@ -1003,9 +1003,10 @@ def main() -> None:
         return
 
     if decision.get("launch"):
+    
         token_idea = generate_token_idea(thought)
     
-        # funding failure cooldown check
+        # 1️⃣ funding failure cooldown check
         blocked_until = memory.get("core_guard", {}).get("launch_blocked_until", 0)
         if utc_now_ts() < blocked_until:
             print("[LAUNCH] Blocked due to recent funding failure")
@@ -1015,13 +1016,13 @@ def main() -> None:
                 "blocked_until": blocked_until
             })
     
-            # Defensive liquidation
+            # defensive mode
             for p in memory.get("portfolio", {}).get("active_positions", []):
                 if p.get("status") in ["EARLY", "ACTIVE"]:
                     p["status"] = "EXITING"
     
             manage_portfolio(memory)
-            save_memory(memory, MEMORY_PATH)
+            save_memory(memory)
             return
 
         # 1️⃣ Launch Lock Check

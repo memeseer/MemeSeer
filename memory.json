@@ -3535,6 +3535,23 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771714797,
       "ts": 1771714546
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.29000000000000004,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771717670
+    },
+    {
+      "type": "launch_skipped_insufficient_funding",
+      "ticker": "DIPZ",
+      "blocked_until": 1771739286,
+      "ts": 1771717686
     }
   ],
   "launches": {},
@@ -3555,7 +3572,7 @@
     "max_daily_sell_pct_treasury": 0.05,
     "max_single_launch_pct_treasury": 0.05,
     "loss_streak": 0,
-    "launch_blocked_until": 1771714797
+    "launch_blocked_until": 1771739286
   },
   "system": {
     "kill_switch": false
@@ -3678,25 +3695,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.5,
+      "trend": 0.6,
       "sentiment": 0.4,
-      "novelty": 0.7,
-      "liquidity": 0.8,
-      "competition": 0.5
+      "novelty": 0.5,
+      "liquidity": 0.6,
+      "competition": 0.3
     },
-    "edge": 0.17500000000000004,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.29000000000000004,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "There is a mix of political news and some speculative statements regarding Bitcoin, indicating uncertainty in the market.",
-      "Liquidity in tokens like XMR and YZY is surging, showing activity but not necessarily a strong bullish sentiment."
+      "There's an increase in liquidity for various tokens, indicating market activity.",
+      "Statements from political figures and tariff discussions create cautious sentiment."
     ],
-    "world_text": "The crypto and meme market is experiencing a cautious sentiment due to political news, particularly around tariffs and potential conflicts, which may distract from crypto investments. However, notable liquidity increases in certain tokens suggest active trading, and the mention of Bitcoin's extreme price predictions adds a layer of speculative novelty to the current atmosphere.",
-    "ts": "2026-02-21T22:55:39+00:00",
+    "world_text": "The crypto/meme market reflects mixed signals with a notable liquidity surge in several tokens, suggesting increased trading activity. However, political turmoil, particularly surrounding tariffs and government actions, has fostered a cautious sentiment among participants. This duality may create volatility as market players navigate both potential opportunities and risks.",
+    "ts": "2026-02-21T23:47:50+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T22:55:36.203679+00:00",
+      "updated_at": "2026-02-21T23:47:47.747661+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

@@ -3633,6 +3633,23 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771768400,
       "ts": 1771760512
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.19499999999999995,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771768552
+    },
+    {
+      "type": "launch_skipped_insufficient_funding",
+      "ticker": "UDOGE",
+      "blocked_until": 1771790172,
+      "ts": 1771768572
     }
   ],
   "launches": {},
@@ -3653,7 +3670,7 @@
     "max_daily_sell_pct_treasury": 0.05,
     "max_single_launch_pct_treasury": 0.05,
     "loss_streak": 0,
-    "launch_blocked_until": 1771768400
+    "launch_blocked_until": 1771790172
   },
   "system": {
     "kill_switch": false
@@ -3776,25 +3793,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.5,
-      "sentiment": 0.4,
-      "novelty": 0.6,
+      "trend": 0.4,
+      "sentiment": 0.3,
+      "novelty": 0.0,
       "liquidity": 0.7,
-      "competition": 0.5
+      "competition": 0.2
     },
-    "edge": 0.135,
+    "edge": 0.19499999999999995,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "Recent Supreme Court rulings and political statements have created uncertainty in the market.",
-      "Surge in liquidity for various tokens indicates active trading despite the mixed sentiment."
+      "Recent posts indicate ongoing political tensions and economic uncertainty due to tariffs and legal battles, which contribute to cautious sentiment.",
+      "Liquidity is surging for multiple tokens, particularly XMR, indicating active trading despite the overall cautious sentiment."
     ],
-    "world_text": "The crypto market currently reflects a cautious sentiment due to political instability surrounding tariffs and legal rulings, leading to a sentiment score of 0.4. Liquidity remains high with several tokens experiencing significant surges, suggesting active trading. The competition remains stable with no overwhelming surge in new launches.",
-    "ts": "2026-02-22T11:41:45+00:00",
+    "world_text": "The crypto market is currently experiencing a mixed state, with significant liquidity increases in certain tokens like XMR, yet overall sentiment is low due to political instability and tariff controversies. There's little novelty or competition among launches, suggesting a wait-and-see approach from investors.",
+    "ts": "2026-02-22T13:55:52+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-22T11:41:41.877938+00:00",
+      "updated_at": "2026-02-22T13:55:46.386648+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

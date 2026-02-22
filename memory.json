@@ -3747,6 +3747,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771815316,
       "ts": 1771797019
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.135,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771801011
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771815316,
+      "ts": 1771801019
     }
   ],
   "launches": {},
@@ -3890,26 +3906,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.4,
-      "sentiment": 0.3,
-      "novelty": 0.5,
-      "liquidity": 0.8,
-      "competition": 0.6
+      "trend": 0.5,
+      "sentiment": 0.4,
+      "novelty": 0.7,
+      "liquidity": 0.6,
+      "competition": 0.5
     },
-    "edge": -0.0050000000000000044,
+    "edge": 0.135,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "External posts indicate a cautious sentiment due to political instability and tariff impositions.",
-      "Liquidity is high due to significant movements in various tokens.",
-      "While there is some novelty with recent token surges, overall market sentiment is low."
+      "Recent news about tariffs and legal rulings create uncertainty in the market, reflecting cautious sentiment.",
+      "The surge in liquidity for Token XMR indicates increased trading activity and interest."
     ],
-    "world_text": "The current crypto market is facing cautious sentiment primarily due to political turmoil, including tariff issues from the Trump administration. This has resulted in a mix of high liquidity from token surges, but overall sentiment remains low. Competition remains moderate, driven by ongoing liquidity movements, although the market is not currently showing strong bullish trends.",
-    "ts": "2026-02-22T21:50:10+00:00",
+    "world_text": "The crypto market is currently experiencing a mixed sentiment, driven by external factors like tariff announcements and political developments, leading to caution among investors. However, the liquidity surge in certain tokens suggests that there is still notable interest and trading activity in the market.",
+    "ts": "2026-02-22T22:56:51+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-22T21:50:06.271736+00:00",
+      "updated_at": "2026-02-22T22:56:47.810953+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

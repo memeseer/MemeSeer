@@ -3682,6 +3682,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771790172,
       "ts": 1771775580
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.05999999999999994,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771779638
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771790172,
+      "ts": 1771779648
     }
   ],
   "launches": {},
@@ -3826,24 +3842,24 @@
   "world": {
     "signals": {
       "trend": 0.4,
-      "sentiment": 0.3,
+      "sentiment": 0.4,
       "novelty": 0.5,
-      "liquidity": 0.7,
-      "competition": 0.6
+      "liquidity": 0.6,
+      "competition": 0.5
     },
-    "edge": -0.025000000000000022,
+    "edge": 0.05999999999999994,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "Recent tariff news and legal battles create uncertainty in traditional markets, which may spill over into crypto.",
-      "Liquidity surges in various tokens indicate active trading, but overall sentiment is cautious due to external factors."
+      "External posts show fear and cautious sentiment regarding tariffs and government policies.",
+      "There are notable liquidity surges in certain tokens, indicating some activity in the market."
     ],
-    "world_text": "The crypto market is currently experiencing cautious sentiment influenced by the political and economic environment, particularly around tariffs and legal challenges. Despite this, liquidity in certain tokens, especially XMR, shows active trading. Competition remains moderate with several tokens experiencing liquidity surges, indicating potential interest but also market saturation.",
-    "ts": "2026-02-22T15:52:53+00:00",
+    "world_text": "The current crypto and meme market reflects a cautious sentiment driven by political turmoil, particularly surrounding tariffs imposed by the Trump administration, which has elicited mixed reactions. While some tokens like XMR show significant liquidity surges, the overall trend indicates uncertainty and potential volatility.",
+    "ts": "2026-02-22T17:00:38+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-22T15:52:50.819363+00:00",
+      "updated_at": "2026-02-22T17:00:35.113768+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

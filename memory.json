@@ -3650,6 +3650,22 @@
       "ticker": "UDOGE",
       "blocked_until": 1771790172,
       "ts": 1771768572
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.03499999999999992,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771772277
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771790172,
+      "ts": 1771772285
     }
   ],
   "launches": {},
@@ -3795,23 +3811,23 @@
     "signals": {
       "trend": 0.4,
       "sentiment": 0.3,
-      "novelty": 0.0,
-      "liquidity": 0.7,
-      "competition": 0.2
+      "novelty": 0.5,
+      "liquidity": 0.6,
+      "competition": 0.5
     },
-    "edge": 0.19499999999999995,
+    "edge": 0.03499999999999992,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "Recent posts indicate ongoing political tensions and economic uncertainty due to tariffs and legal battles, which contribute to cautious sentiment.",
-      "Liquidity is surging for multiple tokens, particularly XMR, indicating active trading despite the overall cautious sentiment."
+      "Recent posts indicate a mix of political turmoil with Trump's tariff decisions affecting market sentiment negatively.",
+      "There is a notable surge in liquidity for certain tokens, suggesting some activity but overall sentiment remains cautious."
     ],
-    "world_text": "The crypto market is currently experiencing a mixed state, with significant liquidity increases in certain tokens like XMR, yet overall sentiment is low due to political instability and tariff controversies. There's little novelty or competition among launches, suggesting a wait-and-see approach from investors.",
-    "ts": "2026-02-22T13:55:52+00:00",
+    "world_text": "The crypto and meme markets are currently under a cloud of uncertainty due to ongoing political developments, particularly around tariffs imposed by the Trump administration despite a Supreme Court ruling. This has created a cautious atmosphere, reflected in the low sentiment score. However, liquidity in specific tokens suggests pockets of activity within the market.",
+    "ts": "2026-02-22T14:57:57+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-22T13:55:46.386648+00:00",
+      "updated_at": "2026-02-22T14:57:53.501756+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

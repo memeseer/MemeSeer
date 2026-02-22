@@ -3617,6 +3617,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771768400,
       "ts": 1771757733
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.135,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771760505
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771768400,
+      "ts": 1771760512
     }
   ],
   "launches": {},
@@ -3760,25 +3776,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.4,
-      "sentiment": 0.3,
-      "novelty": 0.5,
-      "liquidity": 0.5,
-      "competition": 0.2
+      "trend": 0.5,
+      "sentiment": 0.4,
+      "novelty": 0.6,
+      "liquidity": 0.7,
+      "competition": 0.5
     },
-    "edge": 0.2549999999999999,
-    "bucket": "good",
-    "mood": "🟢 Bullish",
+    "edge": 0.135,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
     "why": [
-      "Recent Supreme Court rulings and tariffs have created uncertainty in the market.",
-      "Mixed reactions to Trump's tariff policies are causing caution among investors."
+      "Recent Supreme Court rulings and political statements have created uncertainty in the market.",
+      "Surge in liquidity for various tokens indicates active trading despite the mixed sentiment."
     ],
-    "world_text": "The current crypto and meme market is experiencing caution due to recent political developments, particularly regarding tariffs and Supreme Court rulings. While there are some liquidity surges in specific tokens, the overall sentiment is low, reflecting uncertainty and fear about the economic implications of these events.",
-    "ts": "2026-02-22T10:55:26+00:00",
+    "world_text": "The crypto market currently reflects a cautious sentiment due to political instability surrounding tariffs and legal rulings, leading to a sentiment score of 0.4. Liquidity remains high with several tokens experiencing significant surges, suggesting active trading. The competition remains stable with no overwhelming surge in new launches.",
+    "ts": "2026-02-22T11:41:45+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-22T10:55:22.852314+00:00",
+      "updated_at": "2026-02-22T11:41:41.877938+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

@@ -3763,6 +3763,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771815316,
       "ts": 1771801019
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.1349999999999999,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771804431
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771815316,
+      "ts": 1771804437
     }
   ],
   "launches": {},
@@ -3906,25 +3922,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.5,
-      "sentiment": 0.4,
-      "novelty": 0.7,
-      "liquidity": 0.6,
-      "competition": 0.5
+      "trend": 0.4,
+      "sentiment": 0.3,
+      "novelty": 0.5,
+      "liquidity": 0.7,
+      "competition": 0.4
     },
-    "edge": 0.135,
+    "edge": 0.1349999999999999,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "Recent news about tariffs and legal rulings create uncertainty in the market, reflecting cautious sentiment.",
-      "The surge in liquidity for Token XMR indicates increased trading activity and interest."
+      "Recent posts indicate a cautious sentiment due to political instability and controversial rulings.",
+      "Liquidity for certain tokens is surging, suggesting interest, but overall sentiment remains low."
     ],
-    "world_text": "The crypto market is currently experiencing a mixed sentiment, driven by external factors like tariff announcements and political developments, leading to caution among investors. However, the liquidity surge in certain tokens suggests that there is still notable interest and trading activity in the market.",
-    "ts": "2026-02-22T22:56:51+00:00",
+    "world_text": "The current crypto/meme market is experiencing a cautious atmosphere influenced by significant political developments, including tariff increases and social media regulations. Despite this, there are notable liquidity surges in specific tokens, indicating some investor interest amidst the uncertainty.",
+    "ts": "2026-02-22T23:53:51+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-22T22:56:47.810953+00:00",
+      "updated_at": "2026-02-22T23:53:47.739594+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

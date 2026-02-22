@@ -3568,6 +3568,23 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771739286,
       "ts": 1771737130
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.43499999999999994,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771746782
+    },
+    {
+      "type": "launch_skipped_insufficient_funding",
+      "ticker": "HODLT",
+      "blocked_until": 1771768400,
+      "ts": 1771746800
     }
   ],
   "launches": {},
@@ -3588,7 +3605,7 @@
     "max_daily_sell_pct_treasury": 0.05,
     "max_single_launch_pct_treasury": 0.05,
     "loss_streak": 0,
-    "launch_blocked_until": 1771739286
+    "launch_blocked_until": 1771768400
   },
   "system": {
     "kill_switch": false
@@ -3711,25 +3728,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.5,
-      "sentiment": 0.4,
+      "trend": 0.4,
+      "sentiment": 0.3,
       "novelty": 0.5,
-      "liquidity": 0.7,
-      "competition": 0.8
+      "liquidity": 0.6,
+      "competition": 0.0
     },
-    "edge": -0.1250000000000001,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.43499999999999994,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "There is a significant amount of liquidity surge in various tokens, indicating increased trading activity.",
-      "However, external posts show a mix of political tension and cautious sentiment regarding tariffs and economic measures, leading to a lower sentiment score."
+      "Recent news about tariffs and political statements create a cautious sentiment in the market.",
+      "The surge in liquidity for certain tokens suggests some activity, but overall market sentiment appears fearful."
     ],
-    "world_text": "The crypto market is currently experiencing a liquidity surge, particularly in tokens like XMR and YZY, suggesting active trading. However, external factors, including political turmoil related to tariffs and cautious sentiments expressed by figures like Trump and Pence, contribute to an overall cautious market atmosphere.",
-    "ts": "2026-02-22T05:12:03+00:00",
+    "world_text": "The crypto and meme market is experiencing cautious sentiment due to political instability surrounding tariffs and the Supreme Court's rulings. Despite some token liquidity surges, the overarching mood is one of uncertainty, with external factors influencing investor confidence negatively.",
+    "ts": "2026-02-22T07:53:02+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-22T05:11:59.632502+00:00",
+      "updated_at": "2026-02-22T07:52:59.617891+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

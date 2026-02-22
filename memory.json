@@ -3714,6 +3714,23 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771790172,
       "ts": 1771787105
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.3549999999999999,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771793702
+    },
+    {
+      "type": "launch_skipped_insufficient_funding",
+      "ticker": "RACCOO",
+      "blocked_until": 1771815316,
+      "ts": 1771793716
     }
   ],
   "launches": {},
@@ -3734,7 +3751,7 @@
     "max_daily_sell_pct_treasury": 0.05,
     "max_single_launch_pct_treasury": 0.05,
     "loss_streak": 0,
-    "launch_blocked_until": 1771790172
+    "launch_blocked_until": 1771815316
   },
   "system": {
     "kill_switch": false
@@ -3861,21 +3878,21 @@
       "sentiment": 0.3,
       "novelty": 0.5,
       "liquidity": 0.6,
-      "competition": 0.2
+      "competition": 0.1
     },
-    "edge": 0.2749999999999999,
+    "edge": 0.3549999999999999,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "External posts reflect a cautious sentiment due to ongoing political tensions and tariff discussions.",
-      "Gold's price increase could indicate a flight to safety, suggesting market uncertainty."
+      "Recent news about tariffs and political instability creates a sense of caution.",
+      "Lack of significant positive market movements or hyped launches influences the overall sentiment negatively."
     ],
-    "world_text": "The current crypto/meme market is experiencing a cautious sentiment influenced by political developments such as President Trump's tariff policies and a Supreme Court ruling. Gold's price surge suggests increased market uncertainty, while liquidity in various tokens like XMR indicates some interest despite the overall fear. Competition remains low with few new launches reported.",
-    "ts": "2026-02-22T19:04:55+00:00",
+    "world_text": "The crypto and meme market is currently experiencing a cautious atmosphere driven by political developments, including tariff increases and controversial social policies. With liquidity surging in certain tokens, the market shows mixed signals, but overall sentiment remains low, reflecting apprehension among investors.",
+    "ts": "2026-02-22T20:55:02+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-22T19:04:49.842995+00:00",
+      "updated_at": "2026-02-22T20:54:58.957271+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

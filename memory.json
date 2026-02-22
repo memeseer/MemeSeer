@@ -3698,6 +3698,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771790172,
       "ts": 1771779648
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.2749999999999999,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771787095
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771790172,
+      "ts": 1771787105
     }
   ],
   "launches": {},
@@ -3842,24 +3858,24 @@
   "world": {
     "signals": {
       "trend": 0.4,
-      "sentiment": 0.4,
+      "sentiment": 0.3,
       "novelty": 0.5,
       "liquidity": 0.6,
-      "competition": 0.5
+      "competition": 0.2
     },
-    "edge": 0.05999999999999994,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.2749999999999999,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "External posts show fear and cautious sentiment regarding tariffs and government policies.",
-      "There are notable liquidity surges in certain tokens, indicating some activity in the market."
+      "External posts reflect a cautious sentiment due to ongoing political tensions and tariff discussions.",
+      "Gold's price increase could indicate a flight to safety, suggesting market uncertainty."
     ],
-    "world_text": "The current crypto and meme market reflects a cautious sentiment driven by political turmoil, particularly surrounding tariffs imposed by the Trump administration, which has elicited mixed reactions. While some tokens like XMR show significant liquidity surges, the overall trend indicates uncertainty and potential volatility.",
-    "ts": "2026-02-22T17:00:38+00:00",
+    "world_text": "The current crypto/meme market is experiencing a cautious sentiment influenced by political developments such as President Trump's tariff policies and a Supreme Court ruling. Gold's price surge suggests increased market uncertainty, while liquidity in various tokens like XMR indicates some interest despite the overall fear. Competition remains low with few new launches reported.",
+    "ts": "2026-02-22T19:04:55+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-22T17:00:35.113768+00:00",
+      "updated_at": "2026-02-22T19:04:49.842995+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

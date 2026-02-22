@@ -3552,6 +3552,22 @@
       "ticker": "DIPZ",
       "blocked_until": 1771739286,
       "ts": 1771717686
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": -0.1250000000000001,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771737123
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771739286,
+      "ts": 1771737130
     }
   ],
   "launches": {},
@@ -3695,25 +3711,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.6,
+      "trend": 0.5,
       "sentiment": 0.4,
       "novelty": 0.5,
-      "liquidity": 0.6,
-      "competition": 0.3
+      "liquidity": 0.7,
+      "competition": 0.8
     },
-    "edge": 0.29000000000000004,
-    "bucket": "good",
-    "mood": "🟢 Bullish",
+    "edge": -0.1250000000000001,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
     "why": [
-      "There's an increase in liquidity for various tokens, indicating market activity.",
-      "Statements from political figures and tariff discussions create cautious sentiment."
+      "There is a significant amount of liquidity surge in various tokens, indicating increased trading activity.",
+      "However, external posts show a mix of political tension and cautious sentiment regarding tariffs and economic measures, leading to a lower sentiment score."
     ],
-    "world_text": "The crypto/meme market reflects mixed signals with a notable liquidity surge in several tokens, suggesting increased trading activity. However, political turmoil, particularly surrounding tariffs and government actions, has fostered a cautious sentiment among participants. This duality may create volatility as market players navigate both potential opportunities and risks.",
-    "ts": "2026-02-21T23:47:50+00:00",
+    "world_text": "The crypto market is currently experiencing a liquidity surge, particularly in tokens like XMR and YZY, suggesting active trading. However, external factors, including political turmoil related to tariffs and cautious sentiments expressed by figures like Trump and Pence, contribute to an overall cautious market atmosphere.",
+    "ts": "2026-02-22T05:12:03+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-21T23:47:47.747661+00:00",
+      "updated_at": "2026-02-22T05:11:59.632502+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

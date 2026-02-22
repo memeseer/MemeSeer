@@ -3601,6 +3601,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771768400,
       "ts": 1771750930
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.2549999999999999,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771757726
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771768400,
+      "ts": 1771757733
     }
   ],
   "launches": {},
@@ -3744,26 +3760,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.5,
-      "sentiment": 0.4,
-      "novelty": 0.3,
-      "liquidity": 0.6,
-      "competition": 0.7
+      "trend": 0.4,
+      "sentiment": 0.3,
+      "novelty": 0.5,
+      "liquidity": 0.5,
+      "competition": 0.2
     },
-    "edge": -0.10499999999999993,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.2549999999999999,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "Recent tariff disputes and political tensions are creating uncertainty in the market.",
-      "Liquidity for certain tokens like XMR and BANANA has surged, indicating some movement.",
-      "Multiple launches were mentioned, indicating increased competition in the market."
+      "Recent Supreme Court rulings and tariffs have created uncertainty in the market.",
+      "Mixed reactions to Trump's tariff policies are causing caution among investors."
     ],
-    "world_text": "The current crypto and meme market is experiencing mixed signals, with a cautious sentiment due to ongoing political tensions surrounding tariffs and legal rulings. Meanwhile, liquidity for select tokens has surged, suggesting some investor interest. The mention of several launches indicates heightened competition, which may influence future market dynamics.",
-    "ts": "2026-02-22T09:02:04+00:00",
+    "world_text": "The current crypto and meme market is experiencing caution due to recent political developments, particularly regarding tariffs and Supreme Court rulings. While there are some liquidity surges in specific tokens, the overall sentiment is low, reflecting uncertainty and fear about the economic implications of these events.",
+    "ts": "2026-02-22T10:55:26+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-22T09:02:00.552595+00:00",
+      "updated_at": "2026-02-22T10:55:22.852314+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

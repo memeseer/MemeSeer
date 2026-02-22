@@ -3666,6 +3666,22 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771790172,
       "ts": 1771772285
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": -0.025000000000000022,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771775573
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771790172,
+      "ts": 1771775580
     }
   ],
   "launches": {},
@@ -3812,22 +3828,22 @@
       "trend": 0.4,
       "sentiment": 0.3,
       "novelty": 0.5,
-      "liquidity": 0.6,
-      "competition": 0.5
+      "liquidity": 0.7,
+      "competition": 0.6
     },
-    "edge": 0.03499999999999992,
+    "edge": -0.025000000000000022,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "Recent posts indicate a mix of political turmoil with Trump's tariff decisions affecting market sentiment negatively.",
-      "There is a notable surge in liquidity for certain tokens, suggesting some activity but overall sentiment remains cautious."
+      "Recent tariff news and legal battles create uncertainty in traditional markets, which may spill over into crypto.",
+      "Liquidity surges in various tokens indicate active trading, but overall sentiment is cautious due to external factors."
     ],
-    "world_text": "The crypto and meme markets are currently under a cloud of uncertainty due to ongoing political developments, particularly around tariffs imposed by the Trump administration despite a Supreme Court ruling. This has created a cautious atmosphere, reflected in the low sentiment score. However, liquidity in specific tokens suggests pockets of activity within the market.",
-    "ts": "2026-02-22T14:57:57+00:00",
+    "world_text": "The crypto market is currently experiencing cautious sentiment influenced by the political and economic environment, particularly around tariffs and legal challenges. Despite this, liquidity in certain tokens, especially XMR, shows active trading. Competition remains moderate with several tokens experiencing liquidity surges, indicating potential interest but also market saturation.",
+    "ts": "2026-02-22T15:52:53+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-22T14:57:53.501756+00:00",
+      "updated_at": "2026-02-22T15:52:50.819363+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

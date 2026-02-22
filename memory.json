@@ -3585,6 +3585,22 @@
       "ticker": "HODLT",
       "blocked_until": 1771768400,
       "ts": 1771746800
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": -0.10499999999999993,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771750924
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771768400,
+      "ts": 1771750930
     }
   ],
   "launches": {},
@@ -3728,25 +3744,26 @@
   },
   "world": {
     "signals": {
-      "trend": 0.4,
-      "sentiment": 0.3,
-      "novelty": 0.5,
+      "trend": 0.5,
+      "sentiment": 0.4,
+      "novelty": 0.3,
       "liquidity": 0.6,
-      "competition": 0.0
+      "competition": 0.7
     },
-    "edge": 0.43499999999999994,
-    "bucket": "good",
-    "mood": "🟢 Bullish",
+    "edge": -0.10499999999999993,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
     "why": [
-      "Recent news about tariffs and political statements create a cautious sentiment in the market.",
-      "The surge in liquidity for certain tokens suggests some activity, but overall market sentiment appears fearful."
+      "Recent tariff disputes and political tensions are creating uncertainty in the market.",
+      "Liquidity for certain tokens like XMR and BANANA has surged, indicating some movement.",
+      "Multiple launches were mentioned, indicating increased competition in the market."
     ],
-    "world_text": "The crypto and meme market is experiencing cautious sentiment due to political instability surrounding tariffs and the Supreme Court's rulings. Despite some token liquidity surges, the overarching mood is one of uncertainty, with external factors influencing investor confidence negatively.",
-    "ts": "2026-02-22T07:53:02+00:00",
+    "world_text": "The current crypto and meme market is experiencing mixed signals, with a cautious sentiment due to ongoing political tensions surrounding tariffs and legal rulings. Meanwhile, liquidity for select tokens has surged, suggesting some investor interest. The mention of several launches indicates heightened competition, which may influence future market dynamics.",
+    "ts": "2026-02-22T09:02:04+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-22T07:52:59.617891+00:00",
+      "updated_at": "2026-02-22T09:02:00.552595+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

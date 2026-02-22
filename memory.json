@@ -3731,6 +3731,22 @@
       "ticker": "RACCOO",
       "blocked_until": 1771815316,
       "ts": 1771793716
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": -0.0050000000000000044,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771797010
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771815316,
+      "ts": 1771797019
     }
   ],
   "launches": {},
@@ -3877,22 +3893,23 @@
       "trend": 0.4,
       "sentiment": 0.3,
       "novelty": 0.5,
-      "liquidity": 0.6,
-      "competition": 0.1
+      "liquidity": 0.8,
+      "competition": 0.6
     },
-    "edge": 0.3549999999999999,
-    "bucket": "good",
-    "mood": "🟢 Bullish",
+    "edge": -0.0050000000000000044,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
     "why": [
-      "Recent news about tariffs and political instability creates a sense of caution.",
-      "Lack of significant positive market movements or hyped launches influences the overall sentiment negatively."
+      "External posts indicate a cautious sentiment due to political instability and tariff impositions.",
+      "Liquidity is high due to significant movements in various tokens.",
+      "While there is some novelty with recent token surges, overall market sentiment is low."
     ],
-    "world_text": "The crypto and meme market is currently experiencing a cautious atmosphere driven by political developments, including tariff increases and controversial social policies. With liquidity surging in certain tokens, the market shows mixed signals, but overall sentiment remains low, reflecting apprehension among investors.",
-    "ts": "2026-02-22T20:55:02+00:00",
+    "world_text": "The current crypto market is facing cautious sentiment primarily due to political turmoil, including tariff issues from the Trump administration. This has resulted in a mix of high liquidity from token surges, but overall sentiment remains low. Competition remains moderate, driven by ongoing liquidity movements, although the market is not currently showing strong bullish trends.",
+    "ts": "2026-02-22T21:50:10+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-22T20:54:58.957271+00:00",
+      "updated_at": "2026-02-22T21:50:06.271736+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

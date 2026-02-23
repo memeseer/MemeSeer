@@ -3796,6 +3796,22 @@
       "ticker": "HOLDUP",
       "blocked_until": 1771845623,
       "ts": 1771824023
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.315,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771833982
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771845623,
+      "ts": 1771833992
     }
   ],
   "launches": {},
@@ -3941,23 +3957,23 @@
     "signals": {
       "trend": 0.3,
       "sentiment": 0.2,
-      "novelty": 0.0,
-      "liquidity": 0.1,
+      "novelty": 0.5,
+      "liquidity": 0.3,
       "competition": 0.0
     },
-    "edge": 0.175,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.315,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "Significant liquidations in the crypto market ($200,000,000 worth of crypto longs liquidated).",
-      "External posts indicate a situation of violence and unrest in Mexico, which can create fear and uncertainty in the market."
+      "Recent news of significant liquidations in the crypto market indicates fear and volatility.",
+      "The drop in Bitcoin value and external geopolitical tensions contribute to a cautious sentiment."
     ],
-    "world_text": "The crypto market is currently experiencing a downturn with a large number of long liquidations and external factors contributing to a fearful sentiment. Recent reports of violence related to cartel activities in Mexico and political tensions in the U.S. are creating an atmosphere of caution, leading to decreased liquidity and interest in the market.",
-    "ts": "2026-02-23T05:20:09+00:00",
+    "world_text": "The current crypto market reflects a cautious sentiment, with Bitcoin dropping below $65,000 and significant liquidations of crypto longs. External factors, such as geopolitical tensions in Mexico and tariff issues in the U.S., add to the uncertainty, resulting in a low overall trend and liquidity.",
+    "ts": "2026-02-23T08:06:22+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-23T05:20:05.198869+00:00",
+      "updated_at": "2026-02-23T08:06:18.475649+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

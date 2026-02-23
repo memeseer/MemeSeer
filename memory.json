@@ -3829,6 +3829,22 @@
       "ticker": "HODLDR",
       "blocked_until": 1771867680,
       "ts": 1771846080
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "good",
+      "edge": 0.29500000000000004,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771857490
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771867680,
+      "ts": 1771857500
     }
   ],
   "launches": {},
@@ -3976,21 +3992,21 @@
       "sentiment": 0.2,
       "novelty": 0.5,
       "liquidity": 0.2,
-      "competition": 0.1
+      "competition": 0.0
     },
-    "edge": 0.21500000000000002,
+    "edge": 0.29500000000000004,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Recent events indicate high volatility in the crypto market, with significant liquidations.",
-      "External posts reflect fear and caution due to geopolitical unrest and economic policies."
+      "Recent news indicates significant fear in the market with Bitcoin dropping under $65,000 and $200 million in crypto longs liquidated.",
+      "External events, including geopolitical tensions and domestic policy changes, contribute to a cautious market environment."
     ],
-    "world_text": "The crypto market is experiencing a downturn with Bitcoin falling under $65,000 and $200 million in crypto longs liquidated recently. External factors like cartel violence in Mexico and economic instability from U.S. tariffs contribute to a cautious sentiment, leading to decreased liquidity and market activity.",
-    "ts": "2026-02-23T11:27:41+00:00",
+    "world_text": "The crypto market is currently experiencing a downturn, driven by a significant drop in Bitcoin prices and large liquidations of longs. External factors, including geopolitical tensions and domestic political actions, are fostering a climate of fear and uncertainty among investors. Liquidity appears low, and competition is not evident due to a lack of new launches.",
+    "ts": "2026-02-23T14:38:10+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-23T11:27:36.366484+00:00",
+      "updated_at": "2026-02-23T14:38:06.350316+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

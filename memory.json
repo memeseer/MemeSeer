@@ -3779,6 +3779,23 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771815316,
       "ts": 1771804437
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.175,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771824009
+    },
+    {
+      "type": "launch_skipped_insufficient_funding",
+      "ticker": "HOLDUP",
+      "blocked_until": 1771845623,
+      "ts": 1771824023
     }
   ],
   "launches": {},
@@ -3799,7 +3816,7 @@
     "max_daily_sell_pct_treasury": 0.05,
     "max_single_launch_pct_treasury": 0.05,
     "loss_streak": 0,
-    "launch_blocked_until": 1771815316
+    "launch_blocked_until": 1771845623
   },
   "system": {
     "kill_switch": false
@@ -3922,25 +3939,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.4,
-      "sentiment": 0.3,
-      "novelty": 0.5,
-      "liquidity": 0.7,
-      "competition": 0.4
+      "trend": 0.3,
+      "sentiment": 0.2,
+      "novelty": 0.0,
+      "liquidity": 0.1,
+      "competition": 0.0
     },
-    "edge": 0.1349999999999999,
+    "edge": 0.175,
     "bucket": "neutral",
     "mood": "🟡 Neutral",
     "why": [
-      "Recent posts indicate a cautious sentiment due to political instability and controversial rulings.",
-      "Liquidity for certain tokens is surging, suggesting interest, but overall sentiment remains low."
+      "Significant liquidations in the crypto market ($200,000,000 worth of crypto longs liquidated).",
+      "External posts indicate a situation of violence and unrest in Mexico, which can create fear and uncertainty in the market."
     ],
-    "world_text": "The current crypto/meme market is experiencing a cautious atmosphere influenced by significant political developments, including tariff increases and social media regulations. Despite this, there are notable liquidity surges in specific tokens, indicating some investor interest amidst the uncertainty.",
-    "ts": "2026-02-22T23:53:51+00:00",
+    "world_text": "The crypto market is currently experiencing a downturn with a large number of long liquidations and external factors contributing to a fearful sentiment. Recent reports of violence related to cartel activities in Mexico and political tensions in the U.S. are creating an atmosphere of caution, leading to decreased liquidity and interest in the market.",
+    "ts": "2026-02-23T05:20:09+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-22T23:53:47.739594+00:00",
+      "updated_at": "2026-02-23T05:20:05.198869+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

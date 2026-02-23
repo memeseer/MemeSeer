@@ -3862,6 +3862,52 @@
       "ticker": "HODL",
       "blocked_until": 1771892044,
       "ts": 1771870444
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.07500000000000001,
+      "ucb_score": 1000000000.0,
+      "t": 3,
+      "buyback_pct": 0.65,
+      "burn_pct": 0.01,
+      "ts": 1771882250
+    },
+    {
+      "type": "gating_decide_no_launch",
+      "mode": "growth",
+      "bucket": "neutral",
+      "edge": 0.07500000000000001,
+      "reason": "The current bearish sentiment and investor anxiety indicate a lack of confidence in the market, making it an unsuitable time to launch a memecoin.",
+      "ts": 1771882256
+    },
+    {
+      "type": "learning_update",
+      "bucket": "neutral",
+      "mode": "growth",
+      "n": 1,
+      "mean_reward": 0.0,
+      "reward": 0.0,
+      "ts": 1771882256
+    },
+    {
+      "type": "run",
+      "record": {
+        "timestamp": "2026-02-23T21:30:56",
+        "timestamp_utc": "2026-02-23T21:30:56+00:00",
+        "agent": "MemeSeer",
+        "world_edge": 0.07500000000000001,
+        "decision": {
+          "launch": false,
+          "reason": "The current bearish sentiment and investor anxiety indicate a lack of confidence in the market, making it an unsuitable time to launch a memecoin.",
+          "_raw": "{\n  \"launch\": false,\n  \"reason\": \"The current bearish sentiment and investor anxiety indicate a lack of confidence in the market, making it an unsuitable time to launch a memecoin.\"\n}"
+        },
+        "mode": "growth",
+        "bucket": "neutral",
+        "reward": 0.0
+      },
+      "ts": 1771882256
     }
   ],
   "launches": {},
@@ -3951,7 +3997,7 @@
             "mean_reward": 0.0
           },
           "growth": {
-            "n": 0,
+            "n": 1,
             "mean_reward": 0.0
           },
           "signal": {
@@ -4008,23 +4054,23 @@
       "trend": 0.3,
       "sentiment": 0.2,
       "novelty": 0.5,
-      "liquidity": 0.2,
-      "competition": 0.1
+      "liquidity": 0.3,
+      "competition": 0.3
     },
-    "edge": 0.21500000000000002,
-    "bucket": "good",
-    "mood": "🟢 Bullish",
+    "edge": 0.07500000000000001,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
     "why": [
-      "Bitcoin has fallen under $65,000, indicating bearish sentiment.",
-      "$200,000,000 worth of crypto longs liquidated reflects market fear.",
-      "External political turmoil related to tariffs and deportations adds to market uncertainty."
+      "Recent liquidation of $200 million worth of crypto longs suggests a negative sentiment.",
+      "Bitcoin falling under $65,000 indicates bearish market conditions.",
+      "News about increased tariffs and geopolitical tensions may contribute to market uncertainty."
     ],
-    "world_text": "The crypto market is currently experiencing a bearish trend, highlighted by Bitcoin's drop below $65,000 and significant liquidations in longs. Political instability from tariff increases and controversial policies is contributing to a cautious sentiment among investors. Despite some liquidity surges in specific tokens, overall market confidence remains low.",
-    "ts": "2026-02-23T18:13:46+00:00",
+    "world_text": "The crypto market is currently facing bearish sentiment, highlighted by a significant liquidation of long positions and Bitcoin's drop below $65,000. External factors such as political tensions and economic instability are further contributing to the cautious atmosphere, leading to low liquidity and a trend towards fear among investors.",
+    "ts": "2026-02-23T21:30:50+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-23T18:13:39.715063+00:00",
+      "updated_at": "2026-02-23T21:30:45.895481+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

@@ -4004,6 +4004,22 @@
       "ticker": "HOLD",
       "blocked_until": 1771954117,
       "ts": 1771932517
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "aggressive",
+      "bucket": "good",
+      "edge": 0.235,
+      "ucb_score": 1000000000.0,
+      "t": 5,
+      "buyback_pct": 0.3,
+      "burn_pct": 0.03,
+      "ts": 1771945909
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771954117,
+      "ts": 1771945917
     }
   ],
   "launches": {},
@@ -4147,25 +4163,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.2,
-      "sentiment": 0.25,
-      "novelty": 0.1,
+      "trend": 0.3,
+      "sentiment": 0.2,
+      "novelty": 0.5,
       "liquidity": 0.3,
       "competition": 0.1
     },
-    "edge": 0.1325,
-    "bucket": "neutral",
-    "mood": "🟡 Neutral",
+    "edge": 0.235,
+    "bucket": "good",
+    "mood": "🟢 Bullish",
     "why": [
-      "The current market sentiment is overwhelmingly bearish, driven by significant market losses and the liquidation of crypto positions.",
-      "Recent news indicates a drop in Bitcoin's value and a considerable amount of crypto longs being liquidated, contributing to investor anxiety."
+      "Significant liquidations in crypto market indicate fear and caution among traders.",
+      "Overall market downturn with major losses in the US stock market and Bitcoin falling under $65,000 adds to negative sentiment."
     ],
-    "world_text": "The crypto market is experiencing a bearish trend, with Bitcoin falling below $65,000 and over $200 million in crypto longs liquidated recently. External factors, including significant losses in the stock market and geopolitical tensions, are contributing to a cautious sentiment among investors, limiting liquidity and competition within the space.",
-    "ts": "2026-02-24T11:28:19+00:00",
+    "world_text": "The crypto market is currently facing significant challenges, with Bitcoin dropping below $65,000 and over $200 million in crypto longs liquidated in a short span. The broader economic context shows a substantial loss in the US stock market, leading to a cautious sentiment among investors. Amidst this, some positive news like Crypto.com receiving conditional approval as a national crypto bank offe",
+    "ts": "2026-02-24T15:11:49+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-24T11:28:15.745609+00:00",
+      "updated_at": "2026-02-24T15:11:44.932587+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

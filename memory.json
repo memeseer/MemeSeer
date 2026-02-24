@@ -3987,6 +3987,23 @@
       "type": "launch_blocked_cooldown",
       "blocked_until": 1771931694,
       "ts": 1771920313
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "signal",
+      "bucket": "neutral",
+      "edge": 0.1325,
+      "ucb_score": 1000000000.0,
+      "t": 4,
+      "buyback_pct": 0.4,
+      "burn_pct": 0.02,
+      "ts": 1771932499
+    },
+    {
+      "type": "launch_skipped_insufficient_funding",
+      "ticker": "HOLD",
+      "blocked_until": 1771954117,
+      "ts": 1771932517
     }
   ],
   "launches": {},
@@ -4007,7 +4024,7 @@
     "max_daily_sell_pct_treasury": 0.05,
     "max_single_launch_pct_treasury": 0.05,
     "loss_streak": 0,
-    "launch_blocked_until": 1771931694
+    "launch_blocked_until": 1771954117
   },
   "system": {
     "kill_switch": false
@@ -4130,25 +4147,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.3,
-      "sentiment": 0.2,
-      "novelty": 0.0,
+      "trend": 0.2,
+      "sentiment": 0.25,
+      "novelty": 0.1,
       "liquidity": 0.3,
-      "competition": 0.0
+      "competition": 0.1
     },
-    "edge": 0.215,
-    "bucket": "good",
-    "mood": "🟢 Bullish",
+    "edge": 0.1325,
+    "bucket": "neutral",
+    "mood": "🟡 Neutral",
     "why": [
-      "The crypto market is experiencing significant liquidations and bearish sentiment.",
-      "Recent news indicates a major decline in Bitcoin's value and a large amount of crypto longs being liquidated."
+      "The current market sentiment is overwhelmingly bearish, driven by significant market losses and the liquidation of crypto positions.",
+      "Recent news indicates a drop in Bitcoin's value and a considerable amount of crypto longs being liquidated, contributing to investor anxiety."
     ],
-    "world_text": "The current crypto market is facing a bearish trend, with Bitcoin falling below $65,000 and over $200 million in crypto longs liquidated in a short period. This comes amid a broader decline in the US stock market, eroding investor confidence. Liquidity is low, and there's no significant new competition or launches to generate excitement.",
-    "ts": "2026-02-24T08:05:03+00:00",
+    "world_text": "The crypto market is experiencing a bearish trend, with Bitcoin falling below $65,000 and over $200 million in crypto longs liquidated recently. External factors, including significant losses in the stock market and geopolitical tensions, are contributing to a cautious sentiment among investors, limiting liquidity and competition within the space.",
+    "ts": "2026-02-24T11:28:19+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-24T08:04:58.592886+00:00",
+      "updated_at": "2026-02-24T11:28:15.745609+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",

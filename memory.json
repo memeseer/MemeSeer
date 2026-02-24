@@ -3971,6 +3971,22 @@
       "ticker": "HERO",
       "blocked_until": 1771931694,
       "ts": 1771910094
+    },
+    {
+      "type": "policy_chosen",
+      "mode": "aggressive",
+      "bucket": "good",
+      "edge": 0.215,
+      "ucb_score": 1000000000.0,
+      "t": 5,
+      "buyback_pct": 0.3,
+      "burn_pct": 0.03,
+      "ts": 1771920303
+    },
+    {
+      "type": "launch_blocked_cooldown",
+      "blocked_until": 1771931694,
+      "ts": 1771920313
     }
   ],
   "launches": {},
@@ -4114,25 +4130,25 @@
   },
   "world": {
     "signals": {
-      "trend": 0.2,
-      "sentiment": 0.3,
-      "novelty": 0.5,
+      "trend": 0.3,
+      "sentiment": 0.2,
+      "novelty": 0.0,
       "liquidity": 0.3,
-      "competition": 0.1
+      "competition": 0.0
     },
-    "edge": 0.22499999999999998,
+    "edge": 0.215,
     "bucket": "good",
     "mood": "🟢 Bullish",
     "why": [
-      "Recent events show significant bearish sentiment with Bitcoin falling under $65,000 and $200 million in crypto longs liquidated.",
-      "The external political climate and stock market drops contribute to a cautious atmosphere among investors."
+      "The crypto market is experiencing significant liquidations and bearish sentiment.",
+      "Recent news indicates a major decline in Bitcoin's value and a large amount of crypto longs being liquidated."
     ],
-    "world_text": "The current crypto market is experiencing a bearish trend, with Bitcoin's price decline and significant liquidations indicating investor anxiety. External factors, including political controversies and stock market losses, further exacerbate this cautious sentiment, leading to low liquidity and minimal competition for new launches.",
-    "ts": "2026-02-24T05:14:37+00:00",
+    "world_text": "The current crypto market is facing a bearish trend, with Bitcoin falling below $65,000 and over $200 million in crypto longs liquidated in a short period. This comes amid a broader decline in the US stock market, eroding investor confidence. Liquidity is low, and there's no significant new competition or launches to generate excitement.",
+    "ts": "2026-02-24T08:05:03+00:00",
     "feed": {
       "source": "ingestion_v1",
       "status": "ok",
-      "updated_at": "2026-02-24T05:14:33.808444+00:00",
+      "updated_at": "2026-02-24T08:04:58.592886+00:00",
       "count": 30
     },
     "feed_source": "ingestion_v1",
